@@ -57,7 +57,7 @@ if (-e radar.gif) then
   pqinsert -p "GIS_${ftime}_${rad}_N0R_4326.ts" tmp/${rad}.ts
   gdal_translate -of GTiff radar.gif test.tif >& /dev/null
   compress test.tif
-  pqinsert -p "gis r ${ftime} gis/images/4326/${rad}/n0r_ bogus tif.Z" test.tif.Z
+  pqinsert -p "gis r ${ftime} gis/images/4326/${rad}/n0r_ bogus tif.Z" test.tif.Z >& /dev/null
 endif
 
 rm radar.gif test.tif* >& /dev/null
