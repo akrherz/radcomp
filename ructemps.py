@@ -11,7 +11,7 @@ os.putenv('NCARG_ROOT', '/mesonet/local/ncarg')
 # Search for valid file
 for i in range(10):
   ts = mx.DateTime.gmt() - mx.DateTime.RelativeDateTime(hours=i)
-  fp = ts.strftime("/mnt/mesonet/data/nccf/com/ruc/prod/ruc2a.%Y%m%d/ruc2.t%Hz.pgrb20anl.grib2")
+  fp = ts.strftime("/mesonet/data/nccf/com/ruc/prod/ruc2a.%Y%m%d/ruc2.t%Hz.pgrb20anl.grib2")
   if (os.path.isfile(fp)):
     break
 
