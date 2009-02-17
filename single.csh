@@ -6,6 +6,7 @@
 
 source /mesonet/nawips/Gemenviron
 setenv RAD /mesonet/data/nexrad/
+setenv PATH "${PATH}:/home/ldm/bin:/mesonet/local/bin"
 
 set ftime="$1$2$3$4$5"
 set gtime=`date -u +'%y%m%d/%H%M'`

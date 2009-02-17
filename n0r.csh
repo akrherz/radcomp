@@ -113,4 +113,4 @@ if ($realtime == "t") then
   pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/n0r_ bogus gtif.Z" n0r_$$_out.gtif.Z
 endif
 
-rm -f n0r${ftime}.tfw test_$$.png net_$$_in.tif n0r_$$_in.tif n0r_$$_out.tif n0r_$$_out.tif.Z n0r_$$_out.gtif.Z google_n0r_$$_out.tif.Z google_n0r_$$_out.tif
+rm -f n0r${ftime}.tfw test_$$.png net_$$_in.tif n0r_$$_in.tif n0r_$$_out.tif n0r_$$_out.tif.Z n0r_$$_out.gtif.Z google_n0r_$$_out.tif.Z google_n0r_$$_out.tif n0r_$$_out.gtif
