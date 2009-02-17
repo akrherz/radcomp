@@ -1,11 +1,11 @@
 #!/bin/csh
 # 23 Dec 2003	Make this smarter such that it doesn't just completely stop
 
-set yyyy=`date -u +'%Y'`
-set mm=`date -u +'%m'`
-set dd=`date -u +'%d'`
-set HH=`date -u +'%H'`
-set MM=`date -u +'%M'`
+set yyyy=`date --date '1 minute' -u +'%Y'`
+set mm=`date --date '1 minute' -u +'%m'`
+set dd=`date --date '1 minute' -u +'%d'`
+set HH=`date --date '1 minute' -u +'%H'`
+set MM=`date --date '1 minute' -u +'%M'`
 
 if (-e /tmp/.nexcomp.lock) then
  echo "Lock file exists! Evasive Manuver Rikker Gamma"
