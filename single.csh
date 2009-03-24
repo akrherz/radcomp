@@ -55,9 +55,10 @@ EOF
 if (-e radar.gif) then
   echo "${rad} ${ftime}" > tmp/${rad}.ts
   pqinsert -p "GIS_${ftime}_${rad}_N0R_4326.ts" tmp/${rad}.ts
+  cp tables/${rad}.wld radar.wld
   gdal_translate -of GTiff radar.gif test.tif >& /dev/null
   compress test.tif
   pqinsert -p "gis r ${ftime} gis/images/4326/${rad}/n0r_ bogus tif.Z" test.tif.Z >& /dev/null
 endif
 
-rm radar.gif test.tif* >& /dev/null
+rm radar.gif radar.wld test.tif* >& /dev/null
