@@ -111,6 +111,17 @@ if ($realtime == "t") then
 
   compress n0r_$$_out.gtif
   pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/n0r_ bogus gtif.Z" n0r_$$_out.gtif.Z
+
+  # Save a file locally for rotation
+  cd tmp/
+  foreach i (10 9 8 7 6 5 4 3 2 1 0)
+    set j = `echo "${i} + 1" | bc `
+    mv n0r_${i}.gif n0r_${j}.gif
+  end
+  convert ../test_$$.png tmp/n0r_0.gif
+  gifsicle --loopcount=0 --delay=100 n0r_0.gif n0r_1.gif n0r_2.gif n0r_3.gif n0r_4.gif n0r_5.gif n0r_6.gif n0r_7.gif n0r_8.gif n0r_9.gif n0r_10.gif n0r_11.gif > anim.gif
+  pqinsert -p 'gis c ${ftime} gis/images/4326/USCOMP/n0r_anim_large.gif bogus gif' anim.gif
+  cd ../
 endif
 
 rm -f n0r${ftime}.tfw test_$$.png net_$$_in.tif n0r_$$_in.tif n0r_$$_out.tif n0r_$$_out.tif.Z n0r_$$_out.gtif.Z google_n0r_$$_out.tif.Z google_n0r_$$_out.tif n0r_$$_out.gtif
