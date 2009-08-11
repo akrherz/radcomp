@@ -120,10 +120,10 @@ if ($realtime == "t") then
   end
   convert ../test_$$.png n0r_0.gif
   gifsicle --loopcount=0 --delay=100 n0r_0.gif n0r_1.gif n0r_2.gif n0r_3.gif n0r_4.gif n0r_5.gif n0r_6.gif n0r_7.gif n0r_8.gif n0r_9.gif n0r_10.gif n0r_11.gif > anim.gif
-  pqinsert -p 'gis c ${ftime} gis/images/4326/USCOMP/n0r_anim_large.gif bogus gif' anim.gif
+  pqinsert -p "gis c ${ftime} gis/images/4326/USCOMP/n0r_anim_large.gif bogus gif" anim.gif
   convert anim.gif -coalesce coalesce.gif
   convert -size 600x240 coalesce.gif -resize 600x240 small.gif
-  pqinsert -p 'gis c ${ftime} gis/images/4326/USCOMP/n0r_anim_600x240.gif bogus gif' small.gif
+  pqinsert -p "gis c ${ftime} gis/images/4326/USCOMP/n0r_anim_600x240.gif bogus gif" small.gif
   
   cd ../
 endif
