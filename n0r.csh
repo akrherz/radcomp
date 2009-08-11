@@ -121,8 +121,8 @@ if ($realtime == "t") then
   convert ../test_$$.png n0r_0.gif
   gifsicle -U --transparent "#000" --loopcount=0 --delay=100 n0r_11.gif n0r_10.gif  n0r_9.gif n0r_8.gif n0r_7.gif n0r_6.gif n0r_5.gif n0r_4.gif n0r_3.gif n0r_2.gif n0r_1.gif n0r_0.gif  > anim.gif
   pqinsert -p "gis c ${ftime} gis/images/4326/USCOMP/n0r_anim_large.gif bogus gif" anim.gif
-  convert anim.gif -coalesce coalesce.gif
-  convert -size 600x260 coalesce.gif -resize 600x260 small.gif
+  #convert anim.gif -coalesce coalesce.gif
+  convert -size 600x260 anim.gif -resize 600x260 small.gif
   pqinsert -p "gis c ${ftime} gis/images/4326/USCOMP/n0r_anim_600x260.gif bogus gif" small.gif
   
   cd ../
