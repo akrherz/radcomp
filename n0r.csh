@@ -118,7 +118,7 @@ if ($realtime == "t") then
     set j = `echo "${i} + 1" | bc `
     mv n0r_${i}.gif n0r_${j}.gif
   end
-  convert ../test_$$.png tmp/n0r_0.gif
+  convert ../test_$$.png n0r_0.gif
   gifsicle --loopcount=0 --delay=100 n0r_0.gif n0r_1.gif n0r_2.gif n0r_3.gif n0r_4.gif n0r_5.gif n0r_6.gif n0r_7.gif n0r_8.gif n0r_9.gif n0r_10.gif n0r_11.gif > anim.gif
   pqinsert -p 'gis c ${ftime} gis/images/4326/USCOMP/n0r_anim_large.gif bogus gif' anim.gif
   cd ../
