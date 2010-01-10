@@ -42,13 +42,13 @@ EOF
 if (-e $fp) then
 
   convert -depth 8 $fp test_$$.png
-  pqinsert -p "gis cr ${ftime} gis/images/4326/USCOMP/${PROD}_ GIS/uscomp/${PROD}_${ftime}.png png" test_$$.png
+  pqinsert -p "gis cr ${ftime} gis/images/4326/USCOMP/${PROD}_ GIS/uscomp/${PROD}_${ftime}.png png" test_$$.png >& /dev/null
   convert -compress none test_$$.png test.tif
   geotifcp -e n0r.tfw test.tif test.gtif
   compress test.tif
   compress test.gtif
-  pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/${PROD}_ bogus tif.Z" test.tif.Z
-  pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/${PROD}_ bogus gtif.Z" test.gtif.Z
+  pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/${PROD}_ bogus tif.Z" test.tif.Z >& /dev/null
+  pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/${PROD}_ bogus gtif.Z" test.gtif.Z >& /dev/null
   rm test.*tif* >& /dev/null
 
 endif
