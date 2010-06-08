@@ -77,10 +77,10 @@ rm -f $fp
 
 # Lets finish up, finally
 convert -depth 8 n0r_$$_out.tif test_$$.png
-pqinsert -q /home/ldm/ldm.pq -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_${ftime}.png png" test_$$.png
+pqinsert  -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_${ftime}.png png" test_$$.png
 
 /mesonet/python/bin/python gentfw.py ${ftime} n0r
-pqinsert -q /home/ldm/ldm.pq -p "gis a ${ftime} bogus GIS/uscomp/n0r_${ftime}.wld wld" n0r${ftime}.tfw
+pqinsert  -p "gis a ${ftime} bogus GIS/uscomp/n0r_${ftime}.wld wld" n0r${ftime}.tfw
 
 
 rm -f n0r${ftime}.tfw test_$$.png net_$$_in.tif n0r_$$_in.tif n0r_$$_out.tif
