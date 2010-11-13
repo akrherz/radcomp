@@ -58,8 +58,8 @@ net = numpy.where( tmpc > 3.0, net, 15)
 # Load N0Q
 n0qpng = Image.open("N0Q_%s.gif" % (job,))
 n0q = (numpy.fromstring(n0qpng.tostring(), numpy.uint8)).reshape( (5200,12000))
-print numpy.min(n0q)
-print numpy.max(n0q)
+#print numpy.min(n0q)
+#print numpy.max(n0q)
 
 # Clean n0q
 n0q = numpy.where( net < 2, 0, n0q )
