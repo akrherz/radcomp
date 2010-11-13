@@ -1,10 +1,10 @@
 #!/bin/bash
 
-export YYYY="`date -u +%Y`"
-export MM="`date -u +%m`"
-export DD="`date -u +%d`"
-export HH="`date -u +%H`"
-export MI="`date -u +%M`"
+export YYYY="`date --date '1 minute' -u +%Y`"
+export MM="`date --date '1 minute' -u +%m`"
+export DD="`date --date '1 minute' -u +%d`"
+export HH="`date --date '1 minute' -u +%H`"
+export MI="`date --date '1 minute' -u +%M`"
 
 # Our Job ID will be $$
 touch N0Q_LOCK_$$
