@@ -2,23 +2,21 @@
 
 import time, mx.DateTime, sys, pg, random
 
-
 v = sys.argv[1]
 ts = mx.DateTime.strptime(v, "%Y%m%d%H%M")
 
-out = open("n0r%s.tfw" % (v,), 'w')
+out = open("%s.tfw" % (v,), 'w')
 
-out.write("""   0.0100000000000%s
+out.write("""   0.0050000000000%s
    0.00000
    0.00000
-  -0.010000000000000%s
+  -0.005000000000000%s
 -126.000000
   50.0000""" % (v, random.randint(0,1000) ) )
 
 out.close()
 
-if (sys.argv[2] != "n0r"):
-  sys.exit(0)
+sys.exit(0)
 
 mydb = pg.connect('postgis', 'iemdb')
 mydb.query("SET TIME ZONE 'GMT'")
