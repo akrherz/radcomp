@@ -27,7 +27,7 @@ python process.py $HH $$
 /home/ldm/bin/pqinsert -p 'gis acr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/USCOMP/n0q_ GIS/uscomp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png' N0Q_CLEAN_$$.png
 
 # Do TFW
-python gentfw.py
+python gentfw.py $$
 /home/ldm/bin/pqinsert -p 'gis a ${YYYY}${MM}${DD}${HH}${MI} bogus GIS/uscomp/n0q_${YYYY}${MM}${DD}${HH}${MI}.wld wld' $$.tfw
 
 # Cleanup
