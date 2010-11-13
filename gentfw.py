@@ -3,7 +3,7 @@
 import time, mx.DateTime, sys, pg, random
 
 v = sys.argv[1]
-ts = mx.DateTime.strptime(v, "%Y%m%d%H%M")
+#ts = mx.DateTime.strptime(v, "%Y%m%d%H%M")
 
 out = open("%s.tfw" % (v,), 'w')
 
