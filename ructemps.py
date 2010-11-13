@@ -33,6 +33,6 @@ data = nc.variables['tmpc']
 writehr = ts.hour + 1
 if writehr == 24:
     writehr = 23
-print 'Updated RUCTEMPS HR %s' % (writehr,)
+#print 'Updated RUCTEMPS HR %s' % (writehr,)
 data[writehr,:,:] = T - 273.15
 nc.close()
