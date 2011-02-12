@@ -69,6 +69,7 @@ n0q = numpy.where( net < 2, 0, n0q )
 
 # Make the image, please!
 png = Image.fromarray( n0q )
-png.putpalette( make_colorramp() )
+#png.putpalette( make_colorramp() )
+png.putpalette( n0qpng.getpalette() )
 png.save('N0Q_CLEAN_%s.png' % (job,))
     
