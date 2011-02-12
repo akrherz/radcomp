@@ -24,7 +24,7 @@ nex2img << EOF > logs/nex2gini_${PROD}.log
  STNFIL   = nexrad.tbl
  RADMODE  = PC
  RADFIL   = ${PROD}_${JOB}.gif
- LUTFIL   = lut256.tbl
+ LUTFIL   = iem_lut256.tbl
  list
  run
 
