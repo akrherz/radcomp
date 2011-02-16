@@ -19,7 +19,7 @@ elif sector == 'AK':
     sz = (1550,4000)
     
 elif sector == 'HI':
-    sz = (900,1000)
+    sz = (1800,2000)
     
 
 # Load NET
