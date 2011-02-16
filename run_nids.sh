@@ -8,22 +8,41 @@ export HH="$4"
 export MI="$5"
 export JOB="$6"
 export PROD="$7"
+export SECTOR="$8"
+
+
+if [ "${SECTOR}" == "US" ]; 
+	then
+	GRDAREA="24.01;-126.00;50.00;-66.01"
+	KXKY="12000;5200"
+	STNFIL="conus.tbl"
+elif [ "${SECTOR}" == "HI" ];
+	then
+	GRDAREA="15.44;-162.41;24.44;-152.41"
+	KXKY="2000;1800"
+	STNFIL="hawaii.tbl"
+elif [ "${SECTOR}" == "AK" ];
+	then
+	GRDAREA="53.21;-170.50;68.71;-130.50"
+	KXKY="4000;1550"
+	STNFIL="alaska.tbl"
+fi
 
 source /usr/local/nawips/Gemenviron.profile
 export RAD=/home/ldm/data/nexrad/
 
-nex2img << EOF > logs/nex2gini_${PROD}.log
- GRDAREA  = 24.01;-126.00;50.00;-66.01
+nex2img << EOF > logs/nex2img_${SECTOR}_${PROD}.log
+ GRDAREA  = ${GRDAREA}
  PROJ     = CED
- KXKY     = 12000;5200
+ KXKY     = ${KXKY}
  CPYFIL   =  
  GFUNC    = ${PROD}
  RADTIM   = ${YY}${MM}${DD}/${HH}${MI}
  RADDUR   = 15
  RADFRQ   =
- STNFIL   = nexrad.tbl
+ STNFIL   = ${STNFIL}
  RADMODE  = PC
- RADFIL   = ${PROD}_${JOB}.gif
+ RADFIL   = ${SECTOR}_${PROD}_${JOB}.gif
  LUTFIL   = iem_lut256.tbl
  list
  run
@@ -31,4 +50,4 @@ nex2img << EOF > logs/nex2gini_${PROD}.log
  exit
 EOF
 
-rm -f ${PROD}_LOCK_${JOB}
+rm -f ${SECTOR}_${PROD}_LOCK_${JOB}
