@@ -6,7 +6,7 @@ v = sys.argv[1]
 sector = sys.argv[2]
 
 
-out = open("%s_%s.tfw" % (sector, v), 'w')
+out = open("%s_N0Q_CLEAN_%s.tfw" % (sector, v), 'w')
 
 if sector == 'US':
     out.write("""   0.0050000000000%s
