@@ -28,20 +28,26 @@ python process.py $HH $$ $1
 # Lets insert it into LDM
 /home/ldm/bin/pqinsert -p "gis acr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
 
-# Now, lets create a raw TIF variant, insert compressed to save some bandwidth
-convert -compress none ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_CLEAN_$$.tif
-compress ${1}_N0Q_CLEAN_$$.tif
-/home/ldm/bin/pqinsert -p "gis r ${ftime} gis/images/4326/${1}COMP/n0q_ bogus tif.Z" ${1}_N0Q_CLEAN_$$.tif.Z
-
 # Do TFW
 python gentfw.py $$ $1
 /home/ldm/bin/pqinsert -p "gis a ${YYYY}${MM}${DD}${HH}${MI} bogus GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.wld wld" ${1}_N0Q_CLEAN_$$.tfw
 
+
+# Now, lets create a raw TIF variant, insert compressed to save some bandwidth
+convert -compress none ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_CLEAN_$$.tif
+
 # Now, lets create a google TIF variant
 gdalwarp  -q -s_srs EPSG:4326 -t_srs '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_def' ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif
+
+# Compress, insert
 compress google_${1}_N0Q_CLEAN_$$.tif
 /home/ldm/bin/pqinsert -p "gis r ${ftime} gis/images/900913/${1}COMP/n0q_ bogus tif.Z" google_${1}_N0Q_CLEAN_$$.tif.Z
   
+# Compress, insert
+compress ${1}_N0Q_CLEAN_$$.tif
+/home/ldm/bin/pqinsert -p "gis r ${ftime} gis/images/4326/${1}COMP/n0q_ bogus tif.Z" ${1}_N0Q_CLEAN_$$.tif.Z
+
+
 # Cleanup
 rm -f ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_$$.gif ${1}_NET_$$.gif ${1}_N0Q_CLEAN_$$.tfw 
 rm -f ${1}_N0Q_CLEAN_$$.tif.Z ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif.Z google_${1}_N0Q_CLEAN_$$.tif
