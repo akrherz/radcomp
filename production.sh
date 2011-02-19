@@ -23,7 +23,7 @@ while [ -e ${1}_NET_LOCK_$$  ]; do
 done
 
 # Now we are free to produce clean N0Q
-python process.py $HH $$ $1
+/usr/local/python/bin/python process.py $HH $$ $1
 
 # Lets insert it into LDM
 /home/ldm/bin/pqinsert -p "gis acr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
@@ -41,11 +41,11 @@ gdalwarp  -q -s_srs EPSG:4326 -t_srs '+proj=merc +a=6378137 +b=6378137 +lat_ts=0
 
 # Compress, insert
 compress google_${1}_N0Q_CLEAN_$$.tif
-/home/ldm/bin/pqinsert -p "gis r ${ftime} gis/images/900913/${1}COMP/n0q_ bogus tif.Z" google_${1}_N0Q_CLEAN_$$.tif.Z
+/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/900913/${1}COMP/n0q_ bogus tif.Z" google_${1}_N0Q_CLEAN_$$.tif.Z
   
 # Compress, insert
 compress ${1}_N0Q_CLEAN_$$.tif
-/home/ldm/bin/pqinsert -p "gis r ${ftime} gis/images/4326/${1}COMP/n0q_ bogus tif.Z" ${1}_N0Q_CLEAN_$$.tif.Z
+/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ bogus tif.Z" ${1}_N0Q_CLEAN_$$.tif.Z
 
 
 # Cleanup
