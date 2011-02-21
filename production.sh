@@ -29,7 +29,7 @@ done
 /home/ldm/bin/pqinsert -p "gis acr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
 
 # Do TFW
-python gentfw.py $$ $1
+python gentfw.py $$ $1 ${YYYY}${MM}${DD}${HH}${MI}
 /home/ldm/bin/pqinsert -p "gis a ${YYYY}${MM}${DD}${HH}${MI} bogus GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.wld wld" ${1}_N0Q_CLEAN_$$.tfw
 
 

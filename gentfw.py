@@ -4,6 +4,8 @@ import time, mx.DateTime, sys, pg, random
 
 v = sys.argv[1]
 sector = sys.argv[2]
+sts = sys.argv[3]
+ts = mx.DateTime.strptime(sts, '%Y%m%d%H%M')
 
 
 out = open("%s_N0Q_CLEAN_%s.tfw" % (sector, v), 'w')
@@ -33,14 +35,10 @@ elif sector == 'HI':
 
 out.close()
 
-sys.exit(0)
-
 mydb = pg.connect('postgis', 'iemdb')
 mydb.query("SET TIME ZONE 'GMT'")
-sql = "SELECT * from nexrad_n0r_tindex WHERE datetime = '%s'" % \
-  (ts.strftime("%Y-%m-%d %H:%M"), )
-sql2 = "INSERT into nexrad_n0r_tindex( the_geom, datetime, filepath) values \
-  ('SRID=4326;MULTIPOLYGON(((-126 50,-66 50,-66 24,-126 24,-126 50)))', '%s', '/mesonet/ARCHIVE/data/%s/GIS/uscomp/n0r_%s.png')" % (ts.strftime("%Y-%m-%d %H:%M"), ts.strftime("%Y/%m/%d"), ts.strftime("%Y%m%d%H%M") )
-rs = mydb.query(sql).dictresult()
-if len(rs) == 0:
-  mydb.query(sql2)
+sql = """INSERT into nexrad_n0q_tindex( the_geom, datetime, filepath) values 
+  ('SRID=4326;MULTIPOLYGON(((-126 50,-66 50,-66 24,-126 24,-126 50)))', '%s', 
+  '/mesonet/ARCHIVE/data/%s/GIS/%scomp/n0q_%s.png')""" % (ts.strftime("%Y-%m-%d %H:%M"), 
+  ts.strftime("%Y/%m/%d"), sector.lower(), ts.strftime("%Y%m%d%H%M") )
+mydb.query(sql)
