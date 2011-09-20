@@ -29,7 +29,7 @@ nex2img << EOF > logs/nex2gini_n0r.log
  RADTIM   = ${gtime}
  RADDUR   = 15
  RADFRQ   =
- STNFIL   = nexrad.tbl
+ STNFIL   = conus.tbl
  RADMODE  = ${radmode}
  RADFIL   = ${fp}
  LUTFIL   = ${lut}
