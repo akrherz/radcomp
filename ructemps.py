@@ -8,11 +8,11 @@ os.putenv('NCARG_ROOT', '/mesonet/local/ncarg')
 now = mx.DateTime.gmt() + mx.DateTime.RelativeDateTime(hours=1)
 # Look for F001 for this current hour!
 ts = mx.DateTime.gmt()
-fp = ts.strftime("/home/ldm/data/nccf/com/ruc/prod/ruc2a.%Y%m%d/ruc2.t%Hz.pgrb20f01.grib2")
+fp = ts.strftime("/home/ldm/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp252pgrbf01.grib2")
 if not os.path.isfile(fp):
     # Look for F002 for the previous hour
     ts = mx.DateTime.gmt() - mx.DateTime.RelativeDateTime(hours=1)
-    fp = ts.strftime("/home/ldm/data/nccf/com/ruc/prod/ruc2a.%Y%m%d/ruc2.t%Hz.pgrb20f02.grib2")
+    fp = ts.strftime("/home/ldm/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp252pgrbf01.grib2")
     if not os.path.isfile(fp):
         print "FAIL! Missing both RUC2 files"
         sys.exit()
