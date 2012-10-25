@@ -1,5 +1,5 @@
 4,9,14,19,24,29,34,39,44,49,54,59 * * * * cd radcomp; sh production.sh US $(date --date '1 minute' -u +'\%Y \%m \%d \%H \%M') RT
-*/5 * * * * cd radcomp; sh production.sh AK $(date -u +'%Y %m %d %H %M') RT
+*/5 * * * * cd radcomp; sh production.sh AK $(date -u +'\%Y \%m \%d \%H \%M') RT
 3,8,13,18,23,28,33,38,43,48,53,58 * * * * cd radcomp; sh production.sh HI $(date --date '2 minute' -u +'\%Y \%m \%d \%H \%M') RT
 #22 * * * * cd radcomp; ./rerunhour.py
 58 * * * * cd radcomp; python ructemps.py
