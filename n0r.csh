@@ -2,7 +2,7 @@
 # Special script for gridding the NEXRAD composites
 
 source /mesonet/nawips/Gemenviron
-setenv RAD /mesonet/data/nexrad/
+setenv RAD /home/ldm/data/nexrad/
 setenv PATH "${PATH}:/home/ldm/bin:/mesonet/local/bin"
 
 set yy="`echo $1 | cut -c 3-4`"
