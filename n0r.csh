@@ -84,7 +84,7 @@ convert -compress none $fp net_$$_in.tif
 rm -f $fp
 
 # Clean it! 
-/usr/bin/python gdal-clean.py $$ $1$2$3$4$5
+python gdal_clean.py $$ $1$2$3$4$5
 
 # Convert result file to PNG and send it on its way!
 convert -depth 8 n0r_$$_out.tif test_$$.png

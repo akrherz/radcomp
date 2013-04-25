@@ -1,12 +1,14 @@
 #!/usr/bin/env python
-# 21 Jun 2007 - Runs in 4 seconds, good!
 
-import numpy, sys, mx.DateTime
+import numpy
+import sys
+import datetime
+import pytz
 from osgeo import gdal,  gdalconst
 
 n = sys.argv[1]
-ts = mx.DateTime.strptime(sys.argv[2], "%Y%m%d%H%M")
-now = mx.DateTime.gmt()
+ts = datetime.datetime.strptime(sys.argv[2], "%Y%m%d%H%M")
+ts = ts.replace(tzinfo=pytz.timezone("UTC"))
 
 # Open base reflectivity layer (n0r)
 n0r = gdal.Open('n0r_%s_in.tif' % (n,), 0)
@@ -14,10 +16,8 @@ n0rct = n0r.GetRasterBand(1).GetRasterColorTable()
 n0rd = n0r.ReadAsArray()
 n0rt = gdalconst.GDT_Byte
 
-if (now.hour == ts.hour):
-  ifreeze = gdal.Open('data/ifreeze.tif', 0)
-else:
-  ifreeze = gdal.Open('data/ifreeze%02i.tif' % (ts.hour,) , 0)
+fn = 'data/ifreeze%02i.tif' % (ts.hour,) 
+ifreeze = gdal.Open(fn, 0)
 ifr = ifreeze.ReadAsArray()
 
 # Open net echo tops composite

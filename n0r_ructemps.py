@@ -12,13 +12,14 @@ from scipy import interpolate
 os.putenv('NCARG_ROOT', '/mesonet/local/ncarg')
 
 utc = datetime.datetime.utcnow()
+utc = utc + datetime.timedelta(hours=1)
 utc = utc.replace(tzinfo=pytz.timezone("UTC"))
 
 # Search for valid file
 for i in range(10):
     ts = utc - datetime.timedelta(hours=i)
     # rap.t02z.awp236pgrbf00.grib2
-    fp = ts.strftime("/mesonet/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp236pgrbf00.grib2")
+    fp = ts.strftime("/mesonet/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp236pgrbf01.grib2")
     if os.path.isfile(fp):
         break
 
@@ -56,4 +57,4 @@ outdataset.GetRasterBand(1).WriteArray( ifreezing )
 
 # Force a cleanup, to make sure we close the output file
 del outdataset
-shutil.copyfile('data/ifreeze.tif', 'data/ifreeze%02i.tif' % (ts.hour,) )
+shutil.copyfile('data/ifreeze.tif', 'data/ifreeze%02i.tif' % (utc.hour,) )
