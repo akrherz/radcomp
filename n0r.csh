@@ -91,7 +91,7 @@ convert -depth 8 n0r_$$_out.tif test_$$.png
 pqinsert -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_${ftime}.png png" test_$$.png
 
 # Also insert the world file, so that the archive gets it!
-./gentfw.py ${ftime} n0r
+python n0r_gentfw.py ${ftime} n0r
 pqinsert -p "gis a ${ftime} bogus GIS/uscomp/n0r_${ftime}.wld wld" n0r${ftime}.tfw
 
 if ($realtime == "t") then

@@ -1,4 +1,4 @@
-#!/mesonet/python-2.5/bin/python
+#!/usr/bin/env python
 # 21 Jun 2007 - Runs in 4 seconds, good!
 
 import numpy, sys, mx.DateTime
