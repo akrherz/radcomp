@@ -20,8 +20,8 @@ echo $$ > /tmp/.nexcomp.lock
 ./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} n1p
 ./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} ntp
 
-foreach rad (DMX DVN ARX MPX FSD OAX ABR UDX EAX)
-  ./single.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} $rad
-end
+#foreach rad (DMX DVN ARX MPX FSD OAX ABR UDX EAX)
+#  ./single.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} $rad
+#end
 
 rm -f /tmp/.nexcomp.lock
