@@ -17,7 +17,7 @@ utc = utc.replace(tzinfo=pytz.timezone("UTC"))
 for i in range(10):
     ts = utc - datetime.timedelta(hours=i)
     # rap.t02z.awp236pgrbf00.grib2
-    fp = ts.strftime("/home/ldm/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp236pgrbf00.grib2")
+    fp = ts.strftime("/home/ldm/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp252pgrbf00.grib2")
     if os.path.isfile(fp):
         break
 
