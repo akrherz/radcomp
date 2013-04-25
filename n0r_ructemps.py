@@ -1,34 +1,46 @@
 #!/usr/bin/env python
 
-import numpy, sys, Ngl, Nio, os
-import mx.DateTime, shutil
+import numpy
+import Nio
+import  os
+import datetime
+import pytz
+import shutil
 from osgeo import gdal, gdalconst
+from scipy import interpolate
 
 os.putenv('NCARG_ROOT', '/mesonet/local/ncarg')
 
-# /mnt/mesonet/data/nccf/com/ruc/prod/ruc2a.20081111/ruc2.t03z.pgrb20anl.grib2
+utc = datetime.datetime.utcnow()
+utc = utc.replace(tzinfo=pytz.timezone("UTC"))
 
 # Search for valid file
 for i in range(10):
-  ts = mx.DateTime.gmt() - mx.DateTime.RelativeDateTime(hours=i)
-  # rap.t02z.awp236pgrbf00.grib2
-  fp = ts.strftime("/mesonet/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp236pgrbf00.grib2")
-  if (os.path.isfile(fp)):
-    break
+    ts = utc - datetime.timedelta(hours=i)
+    # rap.t02z.awp236pgrbf00.grib2
+    fp = ts.strftime("/mesonet/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp236pgrbf00.grib2")
+    if os.path.isfile(fp):
+        break
 
 grib = Nio.open_file(fp, 'r')
-lon = numpy.ravel( grib.variables['gridlon_0'][:] )
-lat = numpy.ravel( grib.variables['gridlat_0'][:] )
-tmpk_2m = numpy.ravel( grib.variables['TMP_P0_L103_GLC0'][:] )
-xgrid = numpy.arange(-126., -66., 0.25)
-ygrid = numpy.arange(24., 50., 0.25)
-res = Ngl.natgrid(lon[::3], lat[::3], tmpk_2m[::3], xgrid, ygrid)
+lon = grib.variables['gridlon_0'][:]
+lat = grib.variables['gridlat_0'][:]
+tmpk_2m = grib.variables['TMP_P0_L103_GLC0'][:]
 
-T = numpy.zeros( (2600,6000), numpy.float32 )
-(xl,yl) = numpy.shape( res )
-for x in range(xl):
-  for y in range(yl):
-    T[ (y*25):((y+1)*25), (x*25):((x+1)*25) ] = res[x,yl-y-1]
+x = numpy.arange(-126., -66., 0.1)
+y = numpy.arange(24., 50., 0.1)
+xx, yy = numpy.meshgrid(x,y)
+
+T = interpolate.griddata((lon.ravel(), lat.ravel()), tmpk_2m.ravel(), (xx,yy),
+                         method='cubic')
+
+"""
+import matplotlib.pyplot as plt
+plt.subplot(111)
+im = plt.imshow(T, extent=(0,1,1,0))
+plt.colorbar(im)
+plt.savefig('test.png')
+"""
 
 ifreezing = numpy.where( T < 279.0, 1., 0.)
 
