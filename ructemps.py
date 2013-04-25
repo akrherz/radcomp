@@ -26,8 +26,8 @@ lon =  grib.variables['gridlon_0'][:]
 lat = grib.variables['gridlat_0'][:] 
 tmpk_2m = grib.variables['TMP_P0_L103_GLC0'][:]
 
-x = numpy.arange(-126., -66., 0.05)
-y = numpy.arange(24., 50., 0.05)
+x = numpy.arange(-126., -66., 0.005)
+y = numpy.arange(24., 50., 0.005)
 xx, yy = numpy.meshgrid(x,y)
 
 T = interpolate.griddata((lon.ravel(), lat.ravel()), tmpk_2m.ravel(), (xx,yy),
