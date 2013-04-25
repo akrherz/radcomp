@@ -1,12 +1,10 @@
 # Our hope is to get data valid for the next hour, so we'll try hard to do just that!
 import numpy
-import sys
 import Nio
 import os
 import datetime
 import pytz
-import shutil
-import netCDF3
+import netCDF4
 from scipy import interpolate
 
 os.putenv('NCARG_ROOT', '/mesonet/local/ncarg')
@@ -35,7 +33,7 @@ xx, yy = numpy.meshgrid(x,y)
 T = interpolate.griddata((lon.ravel(), lat.ravel()), tmpk_2m.ravel(), (xx,yy),
                          method='cubic')
 
-nc = netCDF3.Dataset('data/ructemps.nc', 'a')
+nc = netCDF4.Dataset('data/ructemps.nc', 'a')
 data = nc.variables['tmpc']
 writehr = utc.hour 
 #print 'Updated RUCTEMPS HR %s' % (writehr,)
