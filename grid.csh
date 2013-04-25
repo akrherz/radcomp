@@ -7,7 +7,7 @@
 # 21 Apr 2005	Add something to add metadata
 
 source /mesonet/nawips/Gemenviron
-setenv RAD /mesonet/data/nexrad/
+setenv RAD /home/ldm/data/nexrad/
 setenv PATH "${PATH}:/home/ldm/bin:/mesonet/local/bin"
 setenv PROD ${6}
 
@@ -45,8 +45,8 @@ if (-e $fp) then
   pqinsert -p "gis cr ${ftime} gis/images/4326/USCOMP/${PROD}_ GIS/uscomp/${PROD}_${ftime}.png png" test_$$.png >& /dev/null
   convert -compress none test_$$.png test.tif
   geotifcp -e n0r.tfw test.tif test.gtif
-  compress test.tif
-  compress test.gtif
+  gzip -c test.tif > test.tif.Z
+  gzip -c test.gtif > test.gtif.Z
   pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/${PROD}_ bogus tif.Z" test.tif.Z >& /dev/null
   pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/${PROD}_ bogus gtif.Z" test.gtif.Z >& /dev/null
   rm test.*tif* >& /dev/null

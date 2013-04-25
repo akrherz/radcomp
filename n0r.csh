@@ -84,7 +84,7 @@ convert -compress none $fp net_$$_in.tif
 rm -f $fp
 
 # Clean it! 
-./gdal-clean.py $$ $1$2$3$4$5
+/usr/bin/python gdal-clean.py $$ $1$2$3$4$5
 
 # Convert result file to PNG and send it on its way!
 convert -depth 8 n0r_$$_out.tif test_$$.png
@@ -103,13 +103,13 @@ if ($realtime == "t") then
   gdalwarp  -q -s_srs EPSG:4326 -t_srs '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_def' n0r_$$_out.tif google_n0r_$$_out.tif
   rm -f n0r_$$_out.tfw
 
-  compress n0r_$$_out.tif
+  gzip -c n0r_$$_out.tif > n0r_$$_out.tif.Z
   pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/n0r_ bogus tif.Z" n0r_$$_out.tif.Z
 
-  compress google_n0r_$$_out.tif
+  gzip -c google_n0r_$$_out.tif > google_n0r_$$_out.tif.Z
   pqinsert -p "gis r ${ftime} gis/images/900913/USCOMP/n0r_ bogus tif.Z" google_n0r_$$_out.tif.Z
 
-  compress n0r_$$_out.gtif
+  gzip -c n0r_$$_out.gtif > n0r_$$_out.gtif.Z
   pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/n0r_ bogus gtif.Z" n0r_$$_out.gtif.Z
 
   # Save a file locally for rotation
