@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+"""
+Runs at :58 after and looks for any data valid for the next hour
+"""
 
 import numpy
 import Nio
@@ -16,14 +18,15 @@ utc = utc + datetime.timedelta(hours=1)
 utc = utc.replace(tzinfo=pytz.timezone("UTC"))
 
 # Search for valid file
-for i in range(10):
-    ts = utc - datetime.timedelta(hours=i)
-    # rap.t02z.awp236pgrbf00.grib2
-    fp = ts.strftime("/mesonet/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp252pgrbf01.grib2")
-    if os.path.isfile(fp):
+for fhour in range(10):
+    ts = utc - datetime.timedelta(hours=fhour)
+    fstr = "%03i" % (fhour,)
+    fn = ts.strftime("/mesonet/ARCHIVE/data/%Y/%m/%d/model/rap/"+
+                     "%H/rap.t%Hz.awp252pgrbf"+fstr+".grib2")
+    if os.path.isfile(fn):
         break
 
-grib = Nio.open_file(fp, 'r')
+grib = Nio.open_file(fn, 'r')
 lon = grib.variables['gridlon_0'][:]
 lat = grib.variables['gridlat_0'][:]
 tmpk_2m = grib.variables['TMP_P0_L103_GLC0'][:]
