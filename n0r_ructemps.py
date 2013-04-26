@@ -34,6 +34,7 @@ xx, yy = numpy.meshgrid(x,y)
 
 T = interpolate.griddata((lon.ravel(), lat.ravel()), tmpk_2m.ravel(), (xx,yy),
                          method='cubic')
+T = numpy.flipud(T)
 
 """
 import matplotlib.pyplot as plt
