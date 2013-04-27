@@ -22,7 +22,7 @@ for fhour in range(10):
     ts = utc - datetime.timedelta(hours=fhour)
     fstr = "%03i" % (fhour,)
     fn = ts.strftime("/mesonet/ARCHIVE/data/%Y/%m/%d/model/rap/"+
-                     "%H/rap.t%Hz.awp252pgrbf"+fstr+".grib2")
+                     "%H/rap.t%Hz.awp130f"+fstr+".grib2")
     if os.path.isfile(fn):
         break
 
