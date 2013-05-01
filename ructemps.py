@@ -10,18 +10,19 @@ from scipy import interpolate
 os.putenv('NCARG_ROOT', '/mesonet/local/ncarg')
 
 utc = datetime.datetime.utcnow()
+utc = utc + datetime.timedelta(hours=1)
 utc = utc.replace(tzinfo=pytz.timezone("UTC"))
-# Look for F001 for this current hour!
 
 # Search for valid file
-for i in range(10):
-    ts = utc - datetime.timedelta(hours=i)
-    # rap.t02z.awp236pgrbf00.grib2
-    fp = ts.strftime("/home/ldm/data/nccf/com/rap/prod/rap.%Y%m%d/rap.t%Hz.awp252pgrbf00.grib2")
-    if os.path.isfile(fp):
+for fhour in range(10):
+    ts = utc - datetime.timedelta(hours=fhour)
+    fstr = "%03i" % (fhour,)
+    fn = ts.strftime("/mesonet/ARCHIVE/data/%Y/%m/%d/model/rap/"+
+                     "%H/rap.t%Hz.awp130f"+fstr+".grib2")
+    if os.path.isfile(fn):
         break
 
-grib = Nio.open_file(fp, 'r')
+grib = Nio.open_file(fn, 'r')
 lon =  grib.variables['gridlon_0'][:] 
 lat = grib.variables['gridlat_0'][:] 
 tmpk_2m = grib.variables['TMP_P0_L103_GLC0'][:]
