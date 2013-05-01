@@ -1,4 +1,7 @@
-# Now we need to process the files, nicely, please
+"""
+  tmpc in the netcdf file is stored with 0,0 in lower left
+  PIL will have imagery with 0,0 in upper left
+"""
 
 import sys
 from PIL import Image
@@ -13,6 +16,7 @@ if sector == "US":
     # Load up our tmpc surface data
     nc = netCDF3.Dataset('data/ructemps.nc')
     tmpc = nc.variables['tmpc'][hour,:,:]
+    tmpc = numpy.flipud( tmpc )
     nc.close()
     sz = (5200,12000)
 elif sector == 'AK':
