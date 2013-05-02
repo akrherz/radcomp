@@ -38,7 +38,7 @@ nex2img << EOF > logs/nex2img_${SECTOR}_${PROD}.log
  CPYFIL   =  
  GFUNC    = ${PROD}
  RADTIM   = ${YY}${MM}${DD}/${HH}${MI}
- RADDUR   = 15
+RADDUR   = 25
  RADFRQ   =
  STNFIL   = ${STNFIL}
  RADMODE  = PC
