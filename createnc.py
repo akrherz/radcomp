@@ -1,10 +1,12 @@
-# Bootstrap to setup the netcdf data file that will hold our
-# RUC temperature analysis for later use by our gridders
+"""
+ Bootstrap to setup the netcdf data file that will hold our
+ RUC temperature analysis for later use by our gridders
+"""
 
-import netCDF3
+import netCDF4
 import numpy
 
-nc = netCDF3.Dataset('data/ructemps.nc', 'w')
+nc = netCDF4.Dataset('data/ructemps.nc', 'w')
 nc.createDimension('x', 12000)
 nc.createDimension('y', 5200)
 nc.createDimension('hour', 24)
