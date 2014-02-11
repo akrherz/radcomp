@@ -1,5 +1,5 @@
 
-import time, mx.DateTime, sys, pg, random
+import mx.DateTime, sys, pg, random
 
 
 v = sys.argv[1]
@@ -16,8 +16,7 @@ out.write("""   0.0100000000000%s
 
 out.close()
 
-if (sys.argv[2] != "n0r"):
-  sys.exit(0)
+sys.exit(0)
 
 mydb = pg.connect('postgis', 'iemdb')
 mydb.query("SET TIME ZONE 'GMT'")
@@ -27,4 +26,4 @@ sql2 = "INSERT into nexrad_n0r_tindex( the_geom, datetime, filepath) values \
   ('SRID=4326;MULTIPOLYGON(((-126 50,-66 50,-66 24,-126 24,-126 50)))', '%s', '/mesonet/ARCHIVE/data/%s/GIS/uscomp/n0r_%s.png')" % (ts.strftime("%Y-%m-%d %H:%M"), ts.strftime("%Y/%m/%d"), ts.strftime("%Y%m%d%H%M") )
 rs = mydb.query(sql).dictresult()
 if len(rs) == 0:
-  mydb.query(sql2)
+    mydb.query(sql2)

@@ -1,24 +1,32 @@
-#!/usr/bin/python
+'''
+ Proctor the reprocessing of NEXRAD data provide to me by NCDC
+'''
 
-import mx.DateTime, os
+import datetime
+import subprocess
+import pytz
 
-sts = mx.DateTime.DateTime(2002,10,1,0,0)
-ets = mx.DateTime.DateTime(2002,12,1,0,0)
-interval = mx.DateTime.RelativeDateTime(minutes=5)
+sts = datetime.datetime(2003,1,1,0,0)
+sts = sts.replace(tzinfo=pytz.timezone("UTC"))
+ets = datetime.datetime(2003,2,1,0,0)
+ets = ets.replace(tzinfo=pytz.timezone("UTC"))
+interval = datetime.timedelta(minutes=5)
 
 now = sts
-while (now < ets):
-  print now
-  if (now.hour == 0 and now.minute == 0):
-    # Extract tomorrow
-    cmd = "./extract.py %s" % (now.strftime("%Y %m %d"),)
-    os.system(cmd)
-  cmd = "./n0r-p2000.csh %s n0r 1" % (now.strftime("%Y %m %d %H %M"),)
-  os.system(cmd)
-  if (now.hour == 23 and now.minute == 55):
-    os.system("rm -rf /mesonet/data/nexrad/NIDS/*")
-    os.system("rm -rf /mesonet/data/nexrad/incoming/nexrad3-herz")
-    # reextract today :(
-    cmd = "./extract.py %s" % (now.strftime("%Y %m %d"),)
-    os.system(cmd)
-  now += interval
+while now < ets:
+    print now
+    if now.hour == 0 and now.minute == 0:
+        # Extract tomorrow
+        cmd = "python extract.py %s" % (now.strftime("%Y %m %d"),)
+        subprocess.call(cmd, shell=True)
+  
+    cmd = "csh n0r.csh %s n0r 1" % (now.strftime("%Y %m %d %H %M"),)
+    subprocess.call(cmd, shell=True)
+    if (now.hour == 23 and now.minute == 55):
+        subprocess.call("rm -rf /tmp/nexrad/NIDS/*", shell=True)
+        subprocess.call("rm -rf /tmp/nexrad3-herz",
+                        shell=True)
+        # reextract today :(
+        cmd = "python extract.py %s" % (now.strftime("%Y %m %d"),)
+        subprocess.call(cmd, shell=True)
+    now += interval
