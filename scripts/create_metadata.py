@@ -12,12 +12,13 @@ import subprocess
 
 if __name__ == '__main__':
     # Go Main Go
-    ts = datetime.datetime( int(sys.argv[1]), int(sys.argv[2]), 
-                            int(sys.argv[3]), int(sys.argv[4]),
-                            int(sys.argv[5]) )
-    prod = sys.argv[6]
+    sector = sys.argv[1]
+    ts = datetime.datetime( int(sys.argv[2]), int(sys.argv[3]), 
+                            int(sys.argv[4]), int(sys.argv[5]),
+                            int(sys.argv[6]) )
+    prod = sys.argv[7]
     
-    res = {'meta': {'vcp': None, 'product': prod, 'site': 'USCOMP',
+    res = {'meta': {'vcp': None, 'product': prod, 'site': '%sCOMP' % (sector,),
                     'valid': ts.strftime("%Y-%m-%dT%H:%M:%SZ")}}
     
     (tmpfp, tmpfn) = tempfile.mkstemp()

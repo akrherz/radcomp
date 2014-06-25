@@ -59,5 +59,5 @@ fi
 rm -f ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_$$.gif ${1}_NET_$$.gif ${1}_N0Q_CLEAN_$$.tfw 
 rm -f ${1}_N0Q_CLEAN_$$.tif.Z ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif.Z google_${1}_N0Q_CLEAN_$$.tif
 
-python scripts/create_metadata.py $YYYY $MM $DD $HH $MI N0Q
-python scripts/create_metadata.py $YYYY $MM $DD $HH $MI NET
+python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI N0Q
+python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI NET
