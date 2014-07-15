@@ -24,7 +24,7 @@ if __name__ == '__main__':
     (tmpfp, tmpfn) = tempfile.mkstemp()
     os.write(tmpfp, json.dumps(res) )
     os.close(tmpfp)
-    cmd = ("/home/ldm/bin/pqinsert -p 'gis r %s gis/images/4326/%s/%s_"
+    cmd = ("/home/ldm/bin/pqinsert -p 'gis r %s gis/images/4326/%sCOMP/%s_"
            +" bogus json' %s") % (ts.strftime("%Y%m%d%H%M"), sector,
                                   prod.lower(), tmpfn)
     subprocess.call(cmd, shell=True)
