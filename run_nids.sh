@@ -36,6 +36,7 @@ export GEMPAKHOME=gempak
 export CONFIGDIR=gempak/config
 export GEMERR=gempak/error
 export RAD=/home/ldm/data/nexrad/
+export GEMPDF=gempak/pdf
 
 ./bin/nex2img << EOF > logs/nex2img_${SECTOR}_${PROD}.log
  GRDAREA  = ${GRDAREA}
