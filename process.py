@@ -5,7 +5,7 @@
 
 import sys
 from PIL import Image
-import netCDF3
+import netCDF4
 import numpy
 
 hour = int(sys.argv[1])
@@ -14,7 +14,7 @@ sector = sys.argv[3]
 
 if sector == "US":
     # Load up our tmpc surface data
-    nc = netCDF3.Dataset('data/ructemps.nc')
+    nc = netCDF4.Dataset('data/ructemps.nc')
     tmpc = nc.variables['tmpc'][hour,:,:]
     tmpc = numpy.flipud( tmpc )
     nc.close()
@@ -27,8 +27,8 @@ elif sector == 'HI':
     
 
 # Load NET
-netpng = Image.open("%s_NET_%s.gif" % (sector, job))
-net = (numpy.fromstring(netpng.tostring(), numpy.uint8)).reshape( sz )
+netpng = Image.open("%s_EET_%s.gif" % (sector, job))
+net = (numpy.fromstring(netpng.tobytes(), numpy.uint8)).reshape( sz )
 
 if sector == 'US':
     # mask out the net based on temperature
@@ -39,10 +39,10 @@ else:
 
 # Load N0Q
 n0qpng = Image.open("%s_N0Q_%s.gif" % (sector, job))
-n0q = (numpy.fromstring(n0qpng.tostring(), numpy.uint8)).reshape( sz )
+n0q = (numpy.fromstring(n0qpng.tobytes(), numpy.uint8)).reshape( sz )
 
 # Clean n0q
-n0q = numpy.where( net < 2, 0, n0q )
+n0q = numpy.where( net < 10, 0, n0q )
 
 #for i in range(256):
 #    n0q[i*10:i*10+10,0:100] = i

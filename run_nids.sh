@@ -28,10 +28,16 @@ elif [ "${SECTOR}" == "AK" ];
 	STNFIL="alaska.tbl"
 fi
 
-source /usr/local/nawips/Gemenviron.profile
+#source /usr/local/nawips/Gemenviron.profile
+export NA_OS=linux64
+export GEMTBL=gempak/tables
+export GEMPARM=gempak/param
+export GEMPAKHOME=gempak
+export CONFIGDIR=gempak/config
+export GEMERR=gempak/error
 export RAD=/home/ldm/data/nexrad/
 
-nex2img << EOF > logs/nex2img_${SECTOR}_${PROD}.log
+./bin/nex2img << EOF > logs/nex2img_${SECTOR}_${PROD}.log
  GRDAREA  = ${GRDAREA}
  PROJ     = CED
  KXKY     = ${KXKY}

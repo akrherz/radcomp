@@ -17,18 +17,18 @@ fi
 touch ${1}_N0Q_LOCK_$$
 touch ${1}_NET_LOCK_$$
 sh run_nids.sh $YYYY $MM $DD $HH $MI $$ N0Q $1 &
-sh run_nids.sh $YYYY $MM $DD $HH $MI $$ NET $1 &
+sh run_nids.sh $YYYY $MM $DD $HH $MI $$ EET $1 &
 
 # we need to wait for the above to finish
 while [ -e ${1}_N0Q_LOCK_$$  ]; do
   sleep 10
 done
-while [ -e ${1}_NET_LOCK_$$  ]; do
+while [ -e ${1}_EET_LOCK_$$  ]; do
   sleep 10
 done
 
 # Now we are free to produce clean N0Q
-/usr/local/python/bin/python process.py $HH $$ $1
+python process.py $HH $$ $1
 
 # Lets insert it into LDM
 /home/ldm/bin/pqinsert -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
