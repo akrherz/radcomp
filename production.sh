@@ -15,7 +15,7 @@ fi
 
 # Our Job ID will be $$
 touch ${1}_N0Q_LOCK_$$
-touch ${1}_NET_LOCK_$$
+touch ${1}_EET_LOCK_$$
 sh run_nids.sh $YYYY $MM $DD $HH $MI $$ N0Q $1 &
 sh run_nids.sh $YYYY $MM $DD $HH $MI $$ EET $1 &
 
