@@ -27,7 +27,7 @@ set lut = "upc_${PROD}.tbl"
 set radmode=""
 set fp="radar_$$.gif"
 
-./bin/nex2img << EOF > logs/nex2gini_${PROD}.log
+./bin/nex2img << EOF > logs/nex2img_${PROD}.log
  GRDAREA  = 24.02;-126.00;50.00;-66.02
  PROJ     = CED
  KXKY     = 6000;2600
