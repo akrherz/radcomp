@@ -1,9 +1,16 @@
 #!/bin/csh
 # Special script for gridding the NEXRAD composites
 
-source /mesonet/nawips/Gemenviron
 setenv RAD /home/ldm/data/nexrad/
 setenv PATH "${PATH}:/home/ldm/bin:/mesonet/local/bin"
+setenv NA_OS linux64
+setenv GEMTBL gempak/tables
+setenv GEMPARM gempak/param
+setenv GEMPAKHOME gempak
+setenv CONFIGDIR gempak/config
+setenv GEMERR gempak/error
+setenv RAD /home/ldm/data/nexrad/
+setenv GEMPDF gempak/pdf
 
 set yy="`echo $1 | cut -c 3-4`"
 set gtime="$yy$2$3/$4$5"
@@ -20,7 +27,7 @@ endif
 set fp="n0r_$$.gif"
 
 # Run nex2img to generate the nationwide composite of N0R!
-nex2img << EOF > logs/nex2gini_n0r.log
+./bin/nex2img << EOF > logs/nex2gini_n0r.log
  GRDAREA  = 24.02;-126.00;50.00;-66.02
  PROJ     = CED
  KXKY     = 6000;2600
@@ -52,7 +59,7 @@ rm -f $fp
 
 # Now generate NET
 set fp="net_$$.gif"
-nex2img << EOF > logs/nex2gini_net.log
+./bin/nex2img << EOF > logs/nex2gini_net.log
  GRDAREA  = 24.02;-126.00;50.00;-66.02
  PROJ     = CED
  KXKY     = 6000;2600
