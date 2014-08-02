@@ -24,6 +24,8 @@ elif sector == 'AK':
     
 elif sector == 'HI':
     sz = (1800,2000)
+elif sector == 'PR':
+    sz = (1000,1000)
     
 
 # Load NET
