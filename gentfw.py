@@ -36,6 +36,15 @@ elif sector == 'HI':
 -162.400000
   24.4400""" % (v, random.randint(0,1000) ) )
 
+elif sector == 'PR': 
+    wkt = "-71.07 23.1,-61.07 23.1,-61.07 13.1,-71.07 13.01,-71.07 23.1"
+    out.write("""   0.01000000000%s
+   0.00000
+   0.00000
+  -0.0100000000000%s
+-71.070000
+  23.100""" % (v, random.randint(0,1000) ) )
+
 out.close()
 
 mydb = pg.connect('postgis', 'iemdb')
