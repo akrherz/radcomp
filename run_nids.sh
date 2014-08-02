@@ -26,6 +26,11 @@ elif [ "${SECTOR}" == "AK" ];
 	GRDAREA="53.21;-170.50;68.71;-130.50"
 	KXKY="4000;1550"
 	STNFIL="alaska.tbl"
+elif [ "${SECTOR}" == "PR" ];
+	then
+	GRDAREA="13.1;-71.07;23.1;-61.07"
+	KXKY="1000;1000"
+	STNFIL="PR.tbl"
 fi
 
 #source /usr/local/nawips/Gemenviron.profile
