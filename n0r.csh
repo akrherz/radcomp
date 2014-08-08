@@ -27,7 +27,7 @@ endif
 set fp="n0r_$$.gif"
 
 # Run nex2img to generate the nationwide composite of N0R!
-./bin/nex2img << EOF > logs/nex2img_n0r.log
+./bin/nex2img << EOF > logs/nex2img_US_N0R.log
  GRDAREA  = 24.02;-126.00;50.00;-66.02
  PROJ     = CED
  KXKY     = 6000;2600
@@ -59,7 +59,7 @@ rm -f $fp
 
 # Now generate NET
 set fp="net_$$.gif"
-./bin/nex2img << EOF > logs/nex2img_net.log
+./bin/nex2img << EOF > logs/nex2img_US_NET.log
  GRDAREA  = 24.02;-126.00;50.00;-66.02
  PROJ     = CED
  KXKY     = 6000;2600

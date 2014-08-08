@@ -1,4 +1,4 @@
-#!/bin/bash
+#set -x
 
 export YYYY="$1"
 export YY="`echo $1 | cut -c 3-4`"

@@ -1,7 +1,0 @@
-nexrad compositing technology :)
-
-python install requirements
-
- * Pillow
- * numpy
- * netCDF4
