@@ -13,8 +13,8 @@ export SECTOR="$8"
 
 if [ "${SECTOR}" == "US" ]; 
 	then
-	GRDAREA="24.01;-126.00;50.00;-66.01"
-	KXKY="12000;5200"
+	GRDAREA="23.01;-126.00;50.00;-65.01"
+	KXKY="12200;5400"
 	STNFIL="conus.tbl"
 elif [ "${SECTOR}" == "HI" ];
 	then

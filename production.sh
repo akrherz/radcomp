@@ -31,7 +31,7 @@ done
 python process.py $HH $$ $1
 
 # Lets insert it into LDM
-/home/ldm/bin/pqinsert -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png >& /dev/null
+/home/ldm/bin/pqinsert -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
 
 # Do TFW
 python gentfw.py $$ $1 ${YYYY}${MM}${DD}${HH}${MI}

@@ -1,17 +1,20 @@
-#!/usr/bin/env python
+""" Generate World files """
 
-import time, mx.DateTime, sys, pg, random
+import datetime
+import sys
+import pg
+import random
 
 v = sys.argv[1]
 sector = sys.argv[2]
 sts = sys.argv[3]
-ts = mx.DateTime.strptime(sts, '%Y%m%d%H%M')
+ts = datetime.datetime.strptime(sts, '%Y%m%d%H%M')
 
 
 out = open("%s_N0Q_CLEAN_%s.tfw" % (sector, v), 'w')
 
 if sector == 'US':
-    wkt = "-126 50,-66 50,-66 24,-126 24,-126 50"
+    wkt = "-126 50,-65 50,-65 23,-126 23,-126 50"
     out.write("""   0.0050000000000%s
    0.00000
    0.00000
