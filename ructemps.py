@@ -1,16 +1,16 @@
 # Our hope is to get data valid for the next hour, so we'll try hard to do just that!
-import numpy
-import Nio
+import numpy as np
+import pygrib
 import os
 import datetime
 import pytz
 import netCDF4
+import sys
 from scipy import interpolate
 
-os.putenv('NCARG_ROOT', '/mesonet/local/ncarg')
-
 utc = datetime.datetime.utcnow()
-utc = utc + datetime.timedelta(hours=1)
+hr = 1 if len(sys.argv) == 1 else int(sys.argv[1])
+utc = utc + datetime.timedelta(hours=hr)
 utc = utc.replace(tzinfo=pytz.timezone("UTC"))
 
 # Search for valid file
@@ -22,19 +22,20 @@ for fhour in range(10):
     if os.path.isfile(fn):
         break
 
-grib = Nio.open_file(fn, 'r')
-lon =  grib.variables['gridlon_0'][:] 
-lat = grib.variables['gridlat_0'][:] 
-tmpk_2m = grib.variables['TMP_P0_L103_GLC0'][:]
+grib = pygrib.open(fn)
+grbs = grib.select(name='2 metre temperature')
+if len(grbs) == 0:
+    print 'Could not find 2m Temperature! %s' % (fn,)
+    sys.exit()
+tmpk_2m = grbs[0].values
+lat, lon = grbs[0].latlons()
 
-x = numpy.arange(-126., -66., 0.005)
-y = numpy.arange(24., 50., 0.005)
-xx, yy = numpy.meshgrid(x,y)
+nc = netCDF4.Dataset('data/ructemps.nc', 'a')
+xx, yy = np.meshgrid(nc.variables['lon'][:], nc.variables['lat'][:])
 
 T = interpolate.griddata((lon.ravel(), lat.ravel()), tmpk_2m.ravel(), (xx,yy),
                          method='cubic')
 
-nc = netCDF4.Dataset('data/ructemps.nc', 'a')
 data = nc.variables['tmpc']
 writehr = utc.hour 
 #print 'Updated RUCTEMPS HR %s' % (writehr,)

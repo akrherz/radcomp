@@ -4,15 +4,23 @@
 """
 
 import netCDF4
-import numpy
+import numpy as np
 
 nc = netCDF4.Dataset('data/ructemps.nc', 'w')
-nc.createDimension('x', 12000)
-nc.createDimension('y', 5200)
+nc.createDimension('lon', 12200)
+nc.createDimension('lat', 5400)
 nc.createDimension('hour', 24)
 
-data = nc.createVariable('tmpc', numpy.int8, ('hour','y','x') )
+data = nc.createVariable('tmpc', np.int8, ('hour','lat','lon') )
 data.long_name = '2m Temperature'
 data.units = 'Celsius'
+
+lat = nc.createVariable('lat', np.float, ('lat'))
+lat.long_name = 'Latitude'
+lat[:] = np.arange(23., 50., 0.005)
+
+lon = nc.createVariable('lon', np.float, ('lon'))
+lon.long_name = 'Longitude'
+lon[:] = np.arange(-126., -65., 0.005)
 
 nc.close()
