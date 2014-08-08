@@ -18,6 +18,10 @@ if __name__ == '__main__':
                             int(sys.argv[6]) )
     prod = sys.argv[7]
     
+    starttime = datetime.datetime.strptime(sys.argv[8], '%Y%m%d%H%M%S')
+    utcnow = datetime.datetime.utcnow()
+    
+    
     radars = 0
     used = 0
     logfn = "logs/nex2img_%s_%s.log" % (sector, prod)
@@ -31,6 +35,7 @@ if __name__ == '__main__':
     
     res = {'meta': {'vcp': None, 'product': prod, 'site': '%sCOMP' % (sector,),
                     'valid': ts.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    'processing_time_secs': (utcnow - starttime).seconds,
                     'radar_quorum': "%s/%s" % (used, radars)}}
     
     (tmpfp, tmpfn) = tempfile.mkstemp()

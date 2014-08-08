@@ -2,6 +2,8 @@
 # $1 is the sector
 # $2 is the minutes offset
 
+export STARTTIME=$(date -u +'%Y%m%d%H%M%S')
+
 export YYYY=$2
 export MM=$3
 export DD=$4
@@ -66,6 +68,6 @@ rm -f ${1}_N0Q_CLEAN_$$.tif.Z ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif
 
 # Only do JSON metadata when we are in realtime mode
 if [ $7 = "RT" ]; then
-	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI N0Q
-	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI $netprod
+	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI N0Q $STARTTIME
+	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI $netprod $STARTTIME
 fi
