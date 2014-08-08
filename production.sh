@@ -12,23 +12,28 @@ if [ $7 = "RT" ]; then
 else
 	export routes="a"
 fi
+if [ $YYYY -lt 2014 ]; then
+	export netprod="NET"
+else
+	export netprod="EET"
+fi
 
 # Our Job ID will be $$
 touch ${1}_N0Q_LOCK_$$
-touch ${1}_EET_LOCK_$$
+touch ${1}_${netprod}_LOCK_$$
 sh run_nids.sh $YYYY $MM $DD $HH $MI $$ N0Q $1 &
-sh run_nids.sh $YYYY $MM $DD $HH $MI $$ EET $1 &
+sh run_nids.sh $YYYY $MM $DD $HH $MI $$ $netprod $1 &
 
 # we need to wait for the above to finish
 while [ -e ${1}_N0Q_LOCK_$$  ]; do
   sleep 10
 done
-while [ -e ${1}_EET_LOCK_$$  ]; do
+while [ -e ${1}_${netprod}_LOCK_$$  ]; do
   sleep 10
 done
 
 # Now we are free to produce clean N0Q
-python process.py $HH $$ $1
+python process.py $HH $$ $1 $netprod
 
 # Lets insert it into LDM
 /home/ldm/bin/pqinsert -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
@@ -56,11 +61,11 @@ if [ $7 = "RT" ]; then
 fi
 
 # Cleanup
-rm -f ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_$$.gif ${1}_EET_$$.gif ${1}_N0Q_CLEAN_$$.tfw 
+rm -f ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_$$.gif ${1}_${netprod}_$$.gif ${1}_N0Q_CLEAN_$$.tfw 
 rm -f ${1}_N0Q_CLEAN_$$.tif.Z ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif.Z google_${1}_N0Q_CLEAN_$$.tif
 
 # Only do JSON metadata when we are in realtime mode
 if [ $7 = "RT" ]; then
 	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI N0Q
-	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI EET
+	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI $netprod
 fi
