@@ -1,15 +1,21 @@
 """
-Runs at :58 after and looks for any data valid for the next hour
+ Use the RAP model to provide a mask for use in clutter suppression by 
+ the NEXRAD compositer
 """
 
-import numpy
-import Nio
+import numpy as np
+import pygrib
 import  os
+import sys
 import datetime
 import pytz
 import shutil
 from osgeo import gdal, gdalconst
 from scipy import interpolate
+import warnings
+# n0r_ructemps.py:55: RuntimeWarning: invalid value encountered in less
+#  ifreezing = np.where( T < 279.0, 1., 0.)
+warnings.simplefilter("ignore", RuntimeWarning)
 
 os.putenv('NCARG_ROOT', '/mesonet/local/ncarg')
 
@@ -26,18 +32,21 @@ for fhour in range(10):
     if os.path.isfile(fn):
         break
 
-grib = Nio.open_file(fn, 'r')
-lon = grib.variables['gridlon_0'][:]
-lat = grib.variables['gridlat_0'][:]
-tmpk_2m = grib.variables['TMP_P0_L103_GLC0'][:]
+grib = pygrib.open(fn)
+grbs = grib.select(name='2 metre temperature')
+if len(grbs) == 0:
+    print 'Could not find 2m Temperature! %s' % (fn,)
+    sys.exit()
+tmpk_2m = grbs[0].values
+lat, lon = grbs[0].latlons()
 
-x = numpy.arange(-126., -66., 0.01)
-y = numpy.arange(24., 50., 0.01)
-xx, yy = numpy.meshgrid(x,y)
+x = np.arange(-126., -66., 0.01)
+y = np.arange(24., 50., 0.01)
+xx, yy = np.meshgrid(x,y)
 
 T = interpolate.griddata((lon.ravel(), lat.ravel()), tmpk_2m.ravel(), (xx,yy),
                          method='cubic')
-T = numpy.flipud(T)
+T = np.flipud(T)
 
 """
 import matplotlib.pyplot as plt
@@ -47,7 +56,7 @@ plt.colorbar(im)
 plt.savefig('test.png')
 """
 
-ifreezing = numpy.where( T < 279.0, 1., 0.)
+ifreezing = np.where( T < 279.0, 1., 0.)
 
 n0r = gdal.Open('data/ifreeze.tif', 0)
 n0rct = gdal.ColorTable()
