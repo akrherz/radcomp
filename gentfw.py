@@ -53,7 +53,7 @@ out.close()
 mydb = pg.connect('postgis', 'iemdb')
 mydb.query("SET TIME ZONE 'GMT'")
 sql = """INSERT into nexrad_n0q_tindex( the_geom, datetime, filepath) values 
-  ('SRID=4326;MULTIPOLYGON(((%s)))', '%s', 
+  (ST_GeomFromEWKT('SRID=4326;MULTIPOLYGON(((%s)))'), '%s', 
   '/mesonet/ARCHIVE/data/%s/GIS/%scomp/n0q_%s.png')""" % (wkt, ts.strftime("%Y-%m-%d %H:%M"), 
   ts.strftime("%Y/%m/%d"), sector.lower(), ts.strftime("%Y%m%d%H%M") )
 mydb.query(sql)
