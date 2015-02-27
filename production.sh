@@ -42,7 +42,7 @@ python process.py $HH $$ $1 $netprod
 
 # Do TFW
 python gentfw.py $$ $1 ${YYYY}${MM}${DD}${HH}${MI}
-/home/ldm/bin/pqinsert -p "gis a ${YYYY}${MM}${DD}${HH}${MI} bogus GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.wld wld" ${1}_N0Q_CLEAN_$$.tfw
+/home/ldm/bin/pqinsert -i -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.wld wld" ${1}_N0Q_CLEAN_$$.tfw
 
 
 # Now, lets create a raw TIF variant, insert compressed to save some bandwidth
