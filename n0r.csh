@@ -2,7 +2,7 @@
 
 setenv STARTTIME `date -u +'%Y%m%d%H%M%S'`
 
-setenv RAD /home/ldm/data/nexrad/
+setenv RAD /mnt/nexrad3/nexrad/
 setenv PATH "${PATH}:/home/ldm/bin:/mesonet/local/bin"
 setenv NA_OS linux64
 setenv GEMTBL gempak/tables

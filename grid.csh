@@ -6,7 +6,7 @@
 # 31 Mar 2004	Whoaaa, updates.  This is running on newmesonet!
 # 21 Apr 2005	Add something to add metadata
 
-setenv RAD /home/ldm/data/nexrad/
+setenv RAD /mnt/nexrad3/nexrad/
 setenv PATH "${PATH}:/home/ldm/bin:/mesonet/local/bin"
 setenv PROD ${6}
 setenv NA_OS linux64
