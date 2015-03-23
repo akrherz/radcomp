@@ -10,7 +10,6 @@ setenv GEMPARM gempak/param
 setenv GEMPAKHOME gempak
 setenv CONFIGDIR gempak/config
 setenv GEMERR gempak/error
-setenv RAD /home/ldm/data/nexrad/
 setenv GEMPDF gempak/pdf
 
 set yy="`echo $1 | cut -c 3-4`"
