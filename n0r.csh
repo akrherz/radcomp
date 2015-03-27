@@ -48,7 +48,7 @@ EOF
 
 if ($realtime == "t") then
   # Some users want the full imagery before I corrupt it below :)
-  convert -depth 8 $fp test_$$.png
+  convert -define PNG:preserve-colormap $fp test_$$.png
   pqinsert -p "gis cr ${ftime} gis/images/4326/USCOMP/n0r_full_ bogus png" test_$$.png
   rm -f test_$$.png
 endif
@@ -81,7 +81,7 @@ EOF
 
 if ($realtime == "t") then
   # Insert NET file
-  convert -depth 8 $fp test_$$.png
+  convert -define PNG:preserve-colormap $fp test_$$.png
   pqinsert -p "gis cr ${ftime} gis/images/4326/USCOMP/net_ bogus png" test_$$.png
   rm -f test_$$.png
 endif
