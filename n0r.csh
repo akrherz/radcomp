@@ -94,7 +94,7 @@ rm -f $fp
 python gdal_clean.py $$ $1$2$3$4$5
 
 # Convert result file to PNG and send it on its way!
-convert -depth 8 n0r_$$_out.tif test_$$.png
+convert -define PNG:preserve-colormap n0r_$$_out.tif test_$$.png
 pqinsert -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_${ftime}.png png" test_$$.png
 
 # Also insert the world file, so that the archive gets it!
