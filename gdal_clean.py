@@ -16,7 +16,7 @@ n0rct = n0r.GetRasterBand(1).GetRasterColorTable()
 n0rd = n0r.ReadAsArray()
 n0rt = gdalconst.GDT_Byte
 
-fn = 'data/ifreeze%02i.tif' % (ts.hour,) 
+fn = 'data/ifreeze-%s.tif' % (ts.strftime("%Y%m%d%H"),)
 ifreeze = gdal.Open(fn, 0)
 ifr = ifreeze.ReadAsArray()
 
