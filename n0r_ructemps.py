@@ -9,7 +9,6 @@ import os
 import sys
 import datetime
 import pytz
-import shutil
 from osgeo import gdal, gdalconst
 from scipy import interpolate
 import warnings
@@ -19,21 +18,27 @@ warnings.simplefilter("ignore", RuntimeWarning)
 
 
 def run(utc):
+    """Run for a valid timestamp"""
+    grbs = None
     # Search for valid file
     for fhour in range(10):
         ts = utc - datetime.timedelta(hours=fhour)
         fstr = "%03i" % (fhour,)
         fn = ts.strftime("/mesonet/ARCHIVE/data/%Y/%m/%d/model/rap/"
                          "%H/rap.t%Hz.awp130f"+fstr+".grib2")
-        if os.path.isfile(fn):
+        # print fn
+        if not os.path.isfile(fn):
+            continue
+        try:
+            grib = pygrib.open(fn)
+            grbs = grib.select(name='2 metre temperature')
+        except:
+            continue
+        if grbs is not None:
             break
-
-    grib = pygrib.open(fn)
-    grbs = grib.select(name='2 metre temperature')
-    if len(grbs) == 0:
-        print(('%s n0r_ructemps.py Could not find 2m Temperature! %s'
-               ) % (utc.strftime("%Y%m%d%H"), fn))
-        sys.exit()
+    if grbs is None:
+        print("n0r_ructemps major failure! No data found for %s" % (utc,))
+        return
     tmpk_2m = grbs[0].values
     lat, lon = grbs[0].latlons()
 
