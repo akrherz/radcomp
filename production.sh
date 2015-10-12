@@ -44,6 +44,11 @@ python process.py $HH $$ $1 $netprod
 python gentfw.py $$ $1 ${YYYY}${MM}${DD}${HH}${MI}
 /home/ldm/bin/pqinsert -i -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.wld wld" ${1}_N0Q_CLEAN_$$.tfw
 
+# Send the EET composite to LDM, when in realtime
+if [ $7 = "RT" ]; then
+	/home/ldm/bin/pqinsert -i -p "gis cr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/eet_ bogus gif" ${1}_${netprod}_$$.gif
+	/home/ldm/bin/pqinsert -i -p "gis cr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/eet_ bogus wld" ${1}_N0Q_CLEAN_$$.tfw
+fi
 
 # Now, lets create a raw TIF variant, insert compressed to save some bandwidth
 convert -compress none ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_CLEAN_$$.tif
