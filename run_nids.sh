@@ -33,6 +33,12 @@ elif [ "${SECTOR}" == "PR" ];
 	STNFIL="PR.tbl"
 fi
 
+LUTFIL="iem_lut256.tbl"
+if [ "$PROD" == "EET" ];
+	then
+	LUTFIL="iem_eet.tbl"
+fi
+
 #source /usr/local/nawips/Gemenviron.profile
 export NA_OS=linux64
 export GEMTBL=gempak/tables
@@ -55,7 +61,7 @@ RADDUR   = 25
  STNFIL   = ${STNFIL}
  RADMODE  = PC
  RADFIL   = ${SECTOR}_${PROD}_${JOB}.gif
- LUTFIL   = iem_lut256.tbl
+LUTFIL   = ${LUTFIL}
  list
  run
 
