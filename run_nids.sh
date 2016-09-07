@@ -46,7 +46,7 @@ export GEMPARM=gempak/param
 export GEMPAKHOME=gempak
 export CONFIGDIR=gempak/config
 export GEMERR=gempak/error
-export RAD=/home/ldm/data/nexrad/
+export RAD=/mnt/nexrad3/nexrad/
 export GEMPDF=gempak/pdf
 
 ./bin/nex2img << EOF > logs/nex2img_${SECTOR}_${PROD}.log

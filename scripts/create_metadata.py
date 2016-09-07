@@ -3,6 +3,30 @@
 {"meta": {"vcp": 212, "product": "N0Q", "valid": "2014-06-25T20:43:55Z",
 "site": "DMX"}}
 
+This magic requires that some modifications were done to nex2img to get this
+information included in the GEMPAK log file
+
+--- a/gempak/source/programs/upc/programs/nex2img/nex2img.f
++++ b/gempak/source/programs/upc/programs/nex2img/nex2img.f
+@@ -221,7 +221,7 @@ C
+                         IF (ierf.eq.0) THEN
+                           viewable = .true.
+                           ifile = 1
+-
++                          write(*, *) 'Searching radar: ', stid
+                           CALL ST_RPST(tpath,'%SITE%',stid,ipos,
+      +                                 outstr, ier)
+                           CALL ST_RPST(outstr,'%PROD%',gfunc,ipos,
+@@ -256,6 +256,7 @@ C
+                              radproj = 'RAD|D'
+                              radarea = 'dset'
+                              idrpfl = 0
++                             write(*, *) 'Using image: ', imgfls
+                               CALL GG_MAPS ( radproj, radarea, imgfls,
+      +                                     idrpfl, ier )
+ C
+
+
 """
 import json
 import sys
