@@ -1,21 +1,17 @@
-
-import osgeo.gdal as gdal
 import psycopg2
 pgconn = psycopg2.connect(database='mesosite', host='localhost', port=5555,
                           user='mesonet')
 cursor = pgconn.cursor()
 
-feet = 0
-for i, line in enumerate(open("../gempak/tables/luts/iem_eet.tbl")):
+for i, line in enumerate(open("../gempak/tables/luts/iem_lut256.tbl")):
     if i == 0:
-        continue
-    if i == 72:
-        break
-    (r, g, b) = line.split()
+        value = None
+    else:
+        value = -32.5 + (0.5 * i)
+    (r, g, b) = line.strip().split()
     cursor.execute("""INSERT into iemrasters_lookup(
         iemraster_id, coloridx, value, r, g, b) VALUES (%s,%s,%s,%s,%s,%s)
-        """, (9, i - 1, feet, r, g, b))
-    feet += 1000
+        """, (2, i, value, r, g, b))
 
 cursor.close()
 pgconn.commit()
