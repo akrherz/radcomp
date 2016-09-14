@@ -1,5 +1,5 @@
 2,7,12,17,22,27,32,37,42,47,52,57 * * * * cd radcomp; sh production.sh US $(date --date '3 minute' -u +'\%Y \%m \%d \%H \%M') RT
-3,8,13,18,23,28,33,38,43,48,53,58 * * * * cd radcomp; sh production.sh AK $(date --date '1 minute' -u +'\%Y \%m \%d \%H \%M') RT
-3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 15; cd radcomp; sh production.sh HI $(date --date '1 minute' -u +'\%Y \%m \%d \%H \%M') RT
-3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 30;cd radcomp; sh production.sh PR $(date --date '1 minute' -u +'\%Y \%m \%d \%H \%M') RT
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * cd radcomp; sh production.sh AK $(date --date '2 minute' -u +'\%Y \%m \%d \%H \%M') RT
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 15; cd radcomp; sh production.sh HI $(date --date '2 minute' -u +'\%Y \%m \%d \%H \%M') RT
+3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 30;cd radcomp; sh production.sh PR $(date --date '2 minute' -u +'\%Y \%m \%d \%H \%M') RT
 58 * * * * cd radcomp; python ructemps.py
