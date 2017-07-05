@@ -52,22 +52,31 @@ fi
 
 # Now, lets create a raw TIF variant, insert compressed to save some bandwidth
 convert -compress none ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_CLEAN_$$.tif
+convert -compress none ${1}_${netprod}_$$.gif ${1}_${netprod}_$$.tif
 
 # Now, lets create a google TIF variant
-gdalwarp  -q -s_srs EPSG:4326 -t_srs '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_def' ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif
+gdalwarp  -q -s_srs EPSG:4326 -t_srs EPSG:3857 ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif
+cp ${1}_N0Q_CLEAN_$$.tfw ${1}_${netprod}_$$.tfw
+gdalwarp  -q -s_srs EPSG:4326 -t_srs EPSG:3857 ${1}_${netprod}_$$.tif google_${1}_${netprod}_$$.tif
+rm ${1}_${netprod}_$$.tfw 
 
 # Compress, insert
 gzip -c google_${1}_N0Q_CLEAN_$$.tif > google_${1}_N0Q_CLEAN_$$.tif.Z
+gzip -c google_${1}_${netprod}_$$.tif > google_${1}_${netprod}_$$.tif.Z
 if [ $7 = "RT" ]; then
 	/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/900913/${1}COMP/n0q_ bogus tif.Z" google_${1}_N0Q_CLEAN_$$.tif.Z
+	/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/900913/${1}COMP/eet_ bogus tif.Z" google_${1}_${netprod}_$$.tif.Z
 fi
 # Compress, insert
 gzip -c ${1}_N0Q_CLEAN_$$.tif > ${1}_N0Q_CLEAN_$$.tif.Z
+gzip -c ${1}_${netprod}_$$.tif > ${1}_${netprod}_$$.tif.Z
 if [ $7 = "RT" ]; then
 	/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ bogus tif.Z" ${1}_N0Q_CLEAN_$$.tif.Z
+	/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/eet_ bogus tif.Z" ${1}_${netprod}_$$.tif.Z
 fi
 
 # Cleanup
+rm -f google_${1}_${netprod}_$$.tif.Z google_${1}_${netprod}_$$.tif ${1}_${netprod}_$$.tif ${1}_${netprod}_$$.tif.Z
 rm -f ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_$$.gif ${1}_${netprod}_$$.gif ${1}_N0Q_CLEAN_$$.tfw 
 rm -f ${1}_N0Q_CLEAN_$$.tif.Z ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif.Z google_${1}_N0Q_CLEAN_$$.tif
 
