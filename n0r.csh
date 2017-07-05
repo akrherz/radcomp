@@ -102,7 +102,7 @@ pqinsert -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_$
 
 # Also insert the world file, so that the archive gets it!
 python n0r_gentfw.py ${ftime} n0r
-pqinsert -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_${ftime}.wld wld" n0r${ftime}.tfw
+pqinsert -i -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_${ftime}.wld wld" n0r${ftime}.tfw
 
 if ($realtime == "t") then
   # Generate GeoTIFF
