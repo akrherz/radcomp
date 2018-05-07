@@ -4,3 +4,5 @@
 /gemglb.nts
 /last.nts
 /logs
+/tmp/*
+/.vscode

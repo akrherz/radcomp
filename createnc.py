@@ -6,21 +6,28 @@
 import netCDF4
 import numpy as np
 
-nc = netCDF4.Dataset('data/ructemps.nc', 'w')
-nc.createDimension('lon', 12200)
-nc.createDimension('lat', 5400)
-nc.createDimension('hour', 24)
 
-data = nc.createVariable('tmpc', np.int8, ('hour','lat','lon') )
-data.long_name = '2m Temperature'
-data.units = 'Celsius'
+def main():
+    """Go Main Go"""
+    nc = netCDF4.Dataset('data/ructemps.nc', 'w')
+    nc.createDimension('lon', 12200)
+    nc.createDimension('lat', 5400)
+    nc.createDimension('hour', 24)
 
-lat = nc.createVariable('lat', np.float, ('lat'))
-lat.long_name = 'Latitude'
-lat[:] = np.arange(23., 50., 0.005)
+    data = nc.createVariable('tmpc', np.int8, ('hour', 'lat', 'lon'))
+    data.long_name = '2m Temperature'
+    data.units = 'Celsius'
 
-lon = nc.createVariable('lon', np.float, ('lon'))
-lon.long_name = 'Longitude'
-lon[:] = np.arange(-126., -65., 0.005)
+    lat = nc.createVariable('lat', np.float, ('lat'))
+    lat.long_name = 'Latitude'
+    lat[:] = np.arange(23., 50., 0.005)
 
-nc.close()
+    lon = nc.createVariable('lon', np.float, ('lon'))
+    lon.long_name = 'Longitude'
+    lon[:] = np.arange(-126., -65., 0.005)
+
+    nc.close()
+
+
+if __name__ == '__main__':
+    main()
