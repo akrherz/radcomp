@@ -2,7 +2,8 @@
 
 import datetime
 import sys
-import pg
+
+from pyiem.util import get_dbconn
 
 v = sys.argv[1]
 sector = sys.argv[2]
@@ -51,12 +52,15 @@ elif sector == 'PR':
 
 out.close()
 
-mydb = pg.connect('postgis', 'iemdb')
-mydb.query("SET TIME ZONE 'UTC'")
+mydb = get_dbconn('postgis')
+cursor = mydb.cursor()
+cursor.execute("SET TIME ZONE 'UTC'")
 sql = """
     INSERT into nexrad_n0q_tindex( the_geom, datetime, filepath) values
     (ST_GeomFromEWKT('SRID=4326;MULTIPOLYGON(((%s)))'), '%s',
     '/mesonet/ARCHIVE/data/%s/GIS/%scomp/n0q_%s.png')
     """ % (wkt, ts.strftime("%Y-%m-%d %H:%M"),
            ts.strftime("%Y/%m/%d"), sector.lower(), ts.strftime("%Y%m%d%H%M"))
-mydb.query(sql)
+cursor.execute(sql)
+mydb.commit()
+mydb.close()
