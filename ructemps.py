@@ -1,52 +1,64 @@
 """Our hope is to get data valid for the next hour, so we'll try hard to do
 just that!
 """
-import numpy as np
-import pygrib
+from __future__ import print_function
 import os
 import datetime
+import sys
+
+import numpy as np
 import pytz
 import netCDF4
-import sys
 from scipy import interpolate
+import pygrib
+from pyiem.datatypes import temperature
 
-utc = datetime.datetime.utcnow()
-hr = 1 if len(sys.argv) == 1 else int(sys.argv[1])
-utc = utc + datetime.timedelta(hours=hr)
-utc = utc.replace(tzinfo=pytz.timezone("UTC"))
 
-# Search for valid file
-grbs = None
-for fhour in range(10):
-    ts = utc - datetime.timedelta(hours=fhour)
-    fstr = "%03i" % (fhour,)
-    fn = ts.strftime(("/mesonet/ARCHIVE/data/%Y/%m/%d/model/rap/"
-                      "%H/rap.t%Hz.awp130f"+fstr+".grib2"))
-    if not os.path.isfile(fn):
-        continue
+def main(argv):
+    """Go Main Go"""
+    utc = datetime.datetime.utcnow()
+    hr = 1 if len(argv) == 1 else int(argv[1])
+    utc = utc + datetime.timedelta(hours=hr)
+    utc = utc.replace(tzinfo=pytz.utc)
 
-    try:
-        grib = pygrib.open(fn)
-        grbs = grib.select(name='2 metre temperature')
-    except:
-        print('ructemps.py error with fn: %s' % (fn,))
-        continue
-    if len(grbs) > 0:
-        break
+    # Search for valid file
+    grbs = None
+    for fhour in range(10):
+        ts = utc - datetime.timedelta(hours=fhour)
+        fstr = "%03i" % (fhour,)
+        fn = ts.strftime(("/mesonet/ARCHIVE/data/%Y/%m/%d/model/rap/"
+                          "%H/rap.t%Hz.awp130f"+fstr+".grib2"))
+        if not os.path.isfile(fn):
+            # print("Missing %s" % (fn, ))
+            continue
 
-if grbs is None:
-    print("Complete ructemps.py failure for %s" % (utc,))
-    sys.exit()
-tmpk_2m = grbs[0].values
-lat, lon = grbs[0].latlons()
+        try:
+            grib = pygrib.open(fn)
+            grbs = grib.select(name='2 metre temperature')
+        except Exception as exp:
+            print('ructemps.py error with fn: %s, continuing' % (fn,))
+            print(exp)
+            continue
+        if grbs:
+            break
 
-nc = netCDF4.Dataset('data/ructemps.nc', 'a')
-xx, yy = np.meshgrid(nc.variables['lon'][:], nc.variables['lat'][:])
+    if grbs is None:
+        print("Complete ructemps.py failure for %s" % (utc,))
+        sys.exit()
+    tmpk_2m = grbs[0].values
+    lat, lon = grbs[0].latlons()
 
-T = interpolate.griddata((lon.ravel(), lat.ravel()), tmpk_2m.ravel(), (xx, yy),
-                         method='cubic')
+    nc = netCDF4.Dataset('data/ructemps.nc', 'a')
+    xx, yy = np.meshgrid(nc.variables['lon'][:], nc.variables['lat'][:])
 
-data = nc.variables['tmpc']
-writehr = utc.hour
-data[writehr, :, :] = T - 273.15
-nc.close()
+    T = interpolate.griddata((lon.ravel(), lat.ravel()), tmpk_2m.ravel(),
+                             (xx, yy), method='cubic')
+
+    data = nc.variables['tmpc']
+    writehr = utc.hour
+    data[writehr, :, :] = temperature(T, 'K').value('C')
+    nc.close()
+
+
+if __name__ == '__main__':
+    main(sys.argv)

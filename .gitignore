@@ -6,3 +6,4 @@
 /logs
 /tmp/*
 /.vscode
+/data/*.tif

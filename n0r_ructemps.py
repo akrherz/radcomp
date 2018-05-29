@@ -2,16 +2,17 @@
  Use the RAP model to provide a mask for use in clutter suppression by
  the NEXRAD compositer
 """
-
-import numpy as np
-import pygrib
+from __future__ import print_function
 import os
 import sys
 import datetime
+import warnings
+
+import numpy as np
 import pytz
 from osgeo import gdal, gdalconst
 from scipy import interpolate
-import warnings
+import pygrib
 # n0r_ructemps.py:55: RuntimeWarning: invalid value encountered in less
 #  ifreezing = np.where( T < 279.0, 1., 0.)
 warnings.simplefilter("ignore", RuntimeWarning)
@@ -32,7 +33,7 @@ def run(utc):
         try:
             grib = pygrib.open(fn)
             grbs = grib.select(name='2 metre temperature')
-        except:
+        except Exception as _exp:
             continue
         if grbs is not None:
             break
@@ -74,15 +75,17 @@ def run(utc):
     outdataset.GetRasterBand(1).WriteArray(ifreezing)
 
 
-def main():
+def main(argv):
+    """Go Main Go"""
     # Script runs at :58 after and we generate a file valid for the next hour
     utc = datetime.datetime.utcnow()
     utc = utc + datetime.timedelta(hours=1)
-    utc = utc.replace(tzinfo=pytz.timezone("UTC"))
-    if len(sys.argv) == 5:
-        utc = utc.replace(year=int(sys.argv[1]), month=int(sys.argv[2]),
-                          day=int(sys.argv[3]), hour=int(sys.argv[4]))
+    utc = utc.replace(tzinfo=pytz.utc)
+    if len(argv) == 5:
+        utc = utc.replace(year=int(argv[1]), month=int(argv[2]),
+                          day=int(argv[3]), hour=int(argv[4]))
     run(utc)
 
+
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
