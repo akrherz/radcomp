@@ -66,7 +66,7 @@ if __name__ == '__main__':
                     'radar_quorum': "%s/%s" % (used, radars)}}
 
     (tmpfp, tmpfn) = tempfile.mkstemp()
-    os.write(tmpfp, json.dumps(res))
+    os.write(tmpfp, json.dumps(res).encode('utf-8'))
     os.close(tmpfp)
     cmd = ("/home/ldm/bin/pqinsert -p 'gis r %s gis/images/4326/%sCOMP/%s_"
            " bogus json' %s") % (ts.strftime("%Y%m%d%H%M"), sector,
