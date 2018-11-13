@@ -1,6 +1,4 @@
-"""Our hope is to get data valid for the next hour, so we'll try hard to do
-just that!
-"""
+"""Merge Grib2 RAP temps into netcdf file."""
 from __future__ import print_function
 import os
 import datetime
@@ -19,7 +17,7 @@ def main(argv):
     utc = datetime.datetime.utcnow()
     hr = 1 if len(argv) == 1 else int(argv[1])
     utc = utc + datetime.timedelta(hours=hr)
-    utc = utc.replace(tzinfo=pytz.utc)
+    utc = utc.replace(tzinfo=pytz.UTC)
 
     # Search for valid file
     grbs = None
@@ -36,8 +34,9 @@ def main(argv):
             grib = pygrib.open(fn)
             grbs = grib.select(name='2 metre temperature')
         except Exception as exp:
-            print('ructemps.py error with fn: %s, continuing' % (fn,))
-            print(exp)
+            if fhour > 1:
+                print('ructemps.py error with fn: %s, continuing' % (fn,))
+                print(exp)
             continue
         if grbs:
             break
