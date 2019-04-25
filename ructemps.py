@@ -34,9 +34,6 @@ def main(argv):
             grib = pygrib.open(fn)
             grbs = grib.select(name='2 metre temperature')
         except Exception as exp:
-            if fhour > 1:
-                print('ructemps.py error with fn: %s, continuing' % (fn,))
-                print(exp)
             continue
         if grbs:
             break
