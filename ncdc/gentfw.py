@@ -18,7 +18,7 @@ out.close()
 
 sys.exit(0)
 
-mydb = pg.connect('postgis', 'iemdb')
+mydb = pg.connect('postgis', 'iemdb-postgis.local')
 mydb.query("SET TIME ZONE 'GMT'")
 sql = "SELECT * from nexrad_n0r_tindex WHERE datetime = '%s'" % \
   (ts.strftime("%Y-%m-%d %H:%M"), )
