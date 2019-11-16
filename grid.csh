@@ -48,7 +48,7 @@ EOF
 
 if (-e $fp) then
 
-  convert -define PNG:preserve-colormap $fp test_$$.png
+  convert -define PNG:preserve-colormap $fp PNG8:test_$$.png >& /dev/null
   pqinsert -p "gis cr ${ftime} gis/images/4326/USCOMP/${PROD}_ GIS/uscomp/${PROD}_${ftime}.png png" test_$$.png >& /dev/null
   convert -compress none test_$$.png test.tif
   geotifcp -e n0r.tfw test.tif test.gtif

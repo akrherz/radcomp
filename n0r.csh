@@ -51,7 +51,7 @@ EOF
 
 if ($realtime == "t") then
   # Some users want the full imagery before I corrupt it below :)
-  convert -define PNG:preserve-colormap $fp test_$$.png
+  convert -define PNG:preserve-colormap $fp PNG8:test_$$.png >& /dev/null
   pqinsert -p "gis cr ${ftime} gis/images/4326/USCOMP/n0r_full_ bogus png" test_$$.png
   rm -f test_$$.png
 endif
@@ -84,7 +84,7 @@ EOF
 
 if ($realtime == "t") then
   # Insert NET file
-  convert -define PNG:preserve-colormap $fp test_$$.png >& /dev/null
+  convert -define PNG:preserve-colormap $fp PNG8:test_$$.png >& /dev/null
   pqinsert -p "gis cr ${ftime} gis/images/4326/USCOMP/net_ bogus png" test_$$.png
   rm -f test_$$.png
 endif
@@ -97,7 +97,7 @@ rm -f $fp
 python gdal_clean.py $$ $1$2$3$4$5
 
 # Convert result file to PNG and send it on its way!
-convert -define PNG:preserve-colormap n0r_$$_out.tif test_$$.png >& /dev/null
+convert -define PNG:preserve-colormap n0r_$$_out.tif PNG8:test_$$.png >& /dev/null
 pqinsert -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_${ftime}.png png" test_$$.png
 
 # Also insert the world file, so that the archive gets it!
