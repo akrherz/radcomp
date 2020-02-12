@@ -25,22 +25,22 @@ def main(argv):
 
     if sector == "US":
         # Load up our tmpc surface data
-        with ncopen('data/ructemps.nc') as nc:
-            tmpc = nc.variables['tmpc'][hour, :, :]
+        with ncopen("data/ructemps.nc") as nc:
+            tmpc = nc.variables["tmpc"][hour, :, :]
         tmpc = np.flipud(tmpc)
 
         # mask out the net based on temperature
         net = np.where(tmpc > 3.0, net, 15)
     else:
         # No Filtering... for now
-        net[:, :] = 15.
+        net[:, :] = 15.0
 
     # Load N0Q
     n0qpng = Image.open("%s_N0Q_%s.gif" % (sector, job))
     n0q = (np.frombuffer(n0qpng.tobytes(), dtype=np.uint8)).reshape(sz)
 
     # Clean n0q
-    if netprod == 'EET':
+    if netprod == "EET":
         n0q = np.where(net < 10, 0, n0q)
     else:
         n0q = np.where(net < 2, 0, n0q)
@@ -50,10 +50,9 @@ def main(argv):
     # png.putpalette( make_colorramp() )
     png.putpalette(n0qpng.getpalette())
     meta = PngImagePlugin.PngInfo()
-    meta.add_text('gentime',
-                  datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"))
-    png.save('%s_N0Q_CLEAN_%s.png' % (sector, job), pnginfo=meta)
+    meta.add_text("gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"))
+    png.save("%s_N0Q_CLEAN_%s.png" % (sector, job), pnginfo=meta)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main(sys.argv)

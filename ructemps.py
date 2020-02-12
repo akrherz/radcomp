@@ -24,15 +24,19 @@ def main(argv):
     for fhour in range(10):
         ts = utc - datetime.timedelta(hours=fhour)
         fstr = "%03i" % (fhour,)
-        fn = ts.strftime(("/mesonet/ARCHIVE/data/%Y/%m/%d/model/rap/"
-                          "%H/rap.t%Hz.awp130f"+fstr+".grib2"))
+        fn = ts.strftime(
+            (
+                "/mesonet/ARCHIVE/data/%Y/%m/%d/model/rap/"
+                "%H/rap.t%Hz.awp130f" + fstr + ".grib2"
+            )
+        )
         if not os.path.isfile(fn):
             # print("Missing %s" % (fn, ))
             continue
 
         try:
             grib = pygrib.open(fn)
-            grbs = grib.select(name='2 metre temperature')
+            grbs = grib.select(name="2 metre temperature")
         except Exception as exp:
             continue
         if grbs:
@@ -44,17 +48,18 @@ def main(argv):
     tmpk_2m = grbs[0].values
     lat, lon = grbs[0].latlons()
 
-    nc = netCDF4.Dataset('data/ructemps.nc', 'a')
-    xx, yy = np.meshgrid(nc.variables['lon'][:], nc.variables['lat'][:])
+    nc = netCDF4.Dataset("data/ructemps.nc", "a")
+    xx, yy = np.meshgrid(nc.variables["lon"][:], nc.variables["lat"][:])
 
-    T = interpolate.griddata((lon.ravel(), lat.ravel()), tmpk_2m.ravel(),
-                             (xx, yy), method='cubic')
+    T = interpolate.griddata(
+        (lon.ravel(), lat.ravel()), tmpk_2m.ravel(), (xx, yy), method="cubic"
+    )
 
-    data = nc.variables['tmpc']
+    data = nc.variables["tmpc"]
     writehr = utc.hour
-    data[writehr, :, :] = temperature(T, 'K').value('C')
+    data[writehr, :, :] = temperature(T, "K").value("C")
     nc.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main(sys.argv)
