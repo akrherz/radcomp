@@ -21,7 +21,7 @@ def main(argv):
     # Load EET
     netpng = Image.open("%s_%s_%s.gif" % (sector, netprod, job))
     sz = (netpng.size[1], netpng.size[0])
-    net = (np.frombuffer(netpng.tobytes(), dtype=np.uint8)).reshape(sz)
+    net = np.array(np.frombuffer(netpng.tobytes(), dtype=np.uint8).reshape(sz))
 
     if sector == "US":
         # Load up our tmpc surface data
