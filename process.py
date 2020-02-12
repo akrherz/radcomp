@@ -21,14 +21,13 @@ def main(argv):
     # Load EET
     netpng = Image.open("%s_%s_%s.gif" % (sector, netprod, job))
     sz = (netpng.size[1], netpng.size[0])
-    net = (np.fromstring(netpng.tobytes(), np.uint8)).reshape(sz)
+    net = (np.frombuffer(netpng.tobytes(), dtype=np.uint8)).reshape(sz)
 
     if sector == "US":
         # Load up our tmpc surface data
-        nc = ncopen('data/ructemps.nc')
-        tmpc = nc.variables['tmpc'][hour, :, :]
+        with ncopen('data/ructemps.nc') as nc:
+            tmpc = nc.variables['tmpc'][hour, :, :]
         tmpc = np.flipud(tmpc)
-        nc.close()
 
         # mask out the net based on temperature
         net = np.where(tmpc > 3.0, net, 15)
@@ -38,7 +37,7 @@ def main(argv):
 
     # Load N0Q
     n0qpng = Image.open("%s_N0Q_%s.gif" % (sector, job))
-    n0q = (np.fromstring(n0qpng.tobytes(), np.uint8)).reshape(sz)
+    n0q = (np.frombuffer(n0qpng.tobytes(), dtype=np.uint8)).reshape(sz)
 
     # Clean n0q
     if netprod == 'EET':
