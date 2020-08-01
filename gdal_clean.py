@@ -7,7 +7,7 @@ import datetime
 
 import numpy
 import pytz
-from PIL import Image
+from PIL import Image, PngImagePlugin
 from osgeo import gdal
 
 
@@ -45,7 +45,9 @@ def main(argv):
     png = Image.fromarray(n0rd2)
     n0rpng = Image.open("n0r_%s.gif" % (pid,))
     png.putpalette(n0rpng.getpalette())
-    png.save("test_%s.png" % (pid,))
+    meta = PngImagePlugin.PngInfo()
+    meta.add_text("gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"))
+    png.save("test_%s.png" % (pid,), pnginfo=meta)
 
 
 if __name__ == "__main__":
