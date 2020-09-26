@@ -65,6 +65,8 @@ def main():
                 radars += 1
             elif line.find("Using image:") > 0:
                 used += 1
+    else:
+        print(f"create_metadata log file {logfn} missing")
 
     res = {
         "meta": {
@@ -80,12 +82,9 @@ def main():
     (tmpfp, tmpfn) = tempfile.mkstemp()
     os.write(tmpfp, json.dumps(res).encode("utf-8"))
     os.close(tmpfp)
-    cmd = ("pqinsert -p 'gis r %s gis/images/4326/%sCOMP/%s_" " bogus json' %s") % (
-        ts.strftime("%Y%m%d%H%M"),
-        sector,
-        prod.lower(),
-        tmpfn,
-    )
+    cmd = (
+        "pqinsert -p 'gis r %s gis/images/4326/%sCOMP/%s_ bogus json' %s"
+    ) % (ts.strftime("%Y%m%d%H%M"), sector, prod.lower(), tmpfn)
     subprocess.call(cmd, shell=True)
     os.unlink(tmpfn)
 
