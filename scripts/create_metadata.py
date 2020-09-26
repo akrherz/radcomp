@@ -35,8 +35,9 @@ import datetime
 import tempfile
 import subprocess
 
-if __name__ == "__main__":
-    # Go Main Go
+
+def main():
+    """Go Main Go."""
     sector = sys.argv[1]
     ts = datetime.datetime(
         int(sys.argv[2]),
@@ -50,19 +51,21 @@ if __name__ == "__main__":
     if seconds > 300:
         sys.exit()
     prod = sys.argv[7]
+    job = sys.argv[8]
 
     starttime = datetime.datetime.strptime(sys.argv[8], "%Y%m%d%H%M%S")
     utcnow = datetime.datetime.utcnow()
 
     radars = 0
     used = 0
-    logfn = "logs/nex2img_%s_%s.log" % (sector, prod)
+    logfn = "logs/nex2img_%s_%s_%s.log" % (sector, prod, job)
     if os.path.isfile(logfn):
         for line in open(logfn):
             if line.find("Searching radar:") > 0:
                 radars += 1
             elif line.find("Using image:") > 0:
                 used += 1
+    os.unlink(logfn)
 
     res = {
         "meta": {
@@ -78,9 +81,15 @@ if __name__ == "__main__":
     (tmpfp, tmpfn) = tempfile.mkstemp()
     os.write(tmpfp, json.dumps(res).encode("utf-8"))
     os.close(tmpfp)
-    cmd = (
-        "/home/ldm/bin/pqinsert -p 'gis r %s gis/images/4326/%sCOMP/%s_"
-        " bogus json' %s"
-    ) % (ts.strftime("%Y%m%d%H%M"), sector, prod.lower(), tmpfn)
+    cmd = ("pqinsert -p 'gis r %s gis/images/4326/%sCOMP/%s_" " bogus json' %s") % (
+        ts.strftime("%Y%m%d%H%M"),
+        sector,
+        prod.lower(),
+        tmpfn,
+    )
     subprocess.call(cmd, shell=True)
     os.unlink(tmpfn)
+
+
+if __name__ == "__main__":
+    main()

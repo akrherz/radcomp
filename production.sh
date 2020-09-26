@@ -38,16 +38,16 @@ done
 python process.py $HH $$ $1 $netprod
 
 # Lets insert it into LDM
-/home/ldm/bin/pqinsert -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
+pqinsert -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
 
 # Do TFW
 python gentfw.py $$ $1 ${YYYY}${MM}${DD}${HH}${MI}
-/home/ldm/bin/pqinsert -i -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.wld wld" ${1}_N0Q_CLEAN_$$.tfw
+pqinsert -i -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.wld wld" ${1}_N0Q_CLEAN_$$.tfw
 
 # Send the EET composite to LDM, when in realtime
 if [ $7 = "RT" ]; then
-	/home/ldm/bin/pqinsert -i -p "gis cr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/eet_ bogus gif" ${1}_${netprod}_$$.gif
-	/home/ldm/bin/pqinsert -i -p "gis cr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/eet_ bogus wld" ${1}_N0Q_CLEAN_$$.tfw
+	pqinsert -i -p "gis cr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/eet_ bogus gif" ${1}_${netprod}_$$.gif
+	pqinsert -i -p "gis cr ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/eet_ bogus wld" ${1}_N0Q_CLEAN_$$.tfw
 fi
 
 # Now, lets create a raw TIF variant, insert compressed to save some bandwidth
@@ -64,15 +64,15 @@ rm ${1}_${netprod}_$$.tfw
 gzip -c google_${1}_N0Q_CLEAN_$$.tif > google_${1}_N0Q_CLEAN_$$.tif.Z
 gzip -c google_${1}_${netprod}_$$.tif > google_${1}_${netprod}_$$.tif.Z
 if [ $7 = "RT" ]; then
-	/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/900913/${1}COMP/n0q_ bogus tif.Z" google_${1}_N0Q_CLEAN_$$.tif.Z
-	/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/900913/${1}COMP/eet_ bogus tif.Z" google_${1}_${netprod}_$$.tif.Z
+	pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/900913/${1}COMP/n0q_ bogus tif.Z" google_${1}_N0Q_CLEAN_$$.tif.Z
+	pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/900913/${1}COMP/eet_ bogus tif.Z" google_${1}_${netprod}_$$.tif.Z
 fi
 # Compress, insert
 gzip -c ${1}_N0Q_CLEAN_$$.tif > ${1}_N0Q_CLEAN_$$.tif.Z
 gzip -c ${1}_${netprod}_$$.tif > ${1}_${netprod}_$$.tif.Z
 if [ $7 = "RT" ]; then
-	/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ bogus tif.Z" ${1}_N0Q_CLEAN_$$.tif.Z
-	/home/ldm/bin/pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/eet_ bogus tif.Z" ${1}_${netprod}_$$.tif.Z
+	pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ bogus tif.Z" ${1}_N0Q_CLEAN_$$.tif.Z
+	pqinsert -p "gis r ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/eet_ bogus tif.Z" ${1}_${netprod}_$$.tif.Z
 fi
 
 # Cleanup
@@ -82,6 +82,6 @@ rm -f ${1}_N0Q_CLEAN_$$.tif.Z ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif
 
 # Only do JSON metadata when we are in realtime mode
 if [ $7 = "RT" ]; then
-	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI N0Q $STARTTIME
-	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI $netprod $STARTTIME
+	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI N0Q $STARTTIME $$
+	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI $netprod $STARTTIME $$
 fi
