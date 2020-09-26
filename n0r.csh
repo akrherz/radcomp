@@ -21,16 +21,14 @@ set lut="iem_n0r.tbl"
 set radmode="PC"
 set routes="acr"
 set realtime="t"
-set logextra=""
 if ($# == 7) then
   set realtime="f"
   set routes="a"
-set logextra='archive_'
 endif
 set fp="n0r_$$.gif"
 
 # Run nex2img to generate the nationwide composite of N0R!
-./bin/nex2img << EOF > logs/${logextra}nex2img_US_N0R.log
+./bin/nex2img << EOF > logs/nex2img_US_N0R_$$.log
  GRDAREA  = 24.02;-126.00;50.00;-66.02
  PROJ     = CED
  KXKY     = 6000;2600
@@ -61,7 +59,7 @@ convert -compress none $fp n0r_$$_in.tif >& /dev/null
 
 # Now generate NET
 set fp="net_$$.gif"
-./bin/nex2img << EOF > logs/${logextra}nex2img_US_NET.log
+./bin/nex2img << EOF > logs/nex2img_US_NET.log
  GRDAREA  = 24.02;-126.00;50.00;-66.02
  PROJ     = CED
  KXKY     = 6000;2600
@@ -149,4 +147,4 @@ endif
 rm -f net_$$_in.gtif
 rm -f n0r${ftime}.tfw test_$$.png net_$$_in.tif n0r_$$_in.tif n0r_$$_out.tif n0r_$$_out.tif.Z n0r_$$_out.gtif.Z google_n0r_$$_out.tif.Z google_n0r_$$_out.tif n0r_$$_out.gtif
 
-python scripts/create_metadata.py US $1 $2 $3 $4 $5 N0R $STARTTIME
+python scripts/create_metadata.py US $1 $2 $3 $4 $5 N0R $STARTTIME $$
