@@ -51,7 +51,7 @@ def main():
     if seconds > 300:
         sys.exit()
     prod = sys.argv[7]
-    job = sys.argv[8]
+    job = sys.argv[9]
 
     starttime = datetime.datetime.strptime(sys.argv[8], "%Y%m%d%H%M%S")
     utcnow = datetime.datetime.utcnow()
