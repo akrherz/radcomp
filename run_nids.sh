@@ -49,7 +49,7 @@ export GEMERR=gempak/error
 export RAD=/mnt/nexrad3/nexrad/
 export GEMPDF=gempak/pdf
 
-./bin/nex2img << EOF > logs/nex2img_${SECTOR}_${PROD}_$$.log
+./bin/nex2img << EOF > logs/nex2img_${SECTOR}_${PROD}_${JOB}.log
  GRDAREA  = ${GRDAREA}
  PROJ     = CED
  KXKY     = ${KXKY}
