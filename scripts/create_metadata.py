@@ -65,7 +65,6 @@ def main():
                 radars += 1
             elif line.find("Using image:") > 0:
                 used += 1
-    os.unlink(logfn)
 
     res = {
         "meta": {

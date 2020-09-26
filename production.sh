@@ -85,3 +85,6 @@ if [ $7 = "RT" ]; then
 	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI N0Q $STARTTIME $$
 	python scripts/create_metadata.py $1 $YYYY $MM $DD $HH $MI $netprod $STARTTIME $$
 fi
+
+# Remove log files
+rm -f logs/*$$.log
