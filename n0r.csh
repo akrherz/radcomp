@@ -148,3 +148,5 @@ rm -f net_$$_in.gtif
 rm -f n0r${ftime}.tfw test_$$.png net_$$_in.tif n0r_$$_in.tif n0r_$$_out.tif n0r_$$_out.tif.Z n0r_$$_out.gtif.Z google_n0r_$$_out.tif.Z google_n0r_$$_out.tif n0r_$$_out.gtif
 
 python scripts/create_metadata.py US $1 $2 $3 $4 $5 N0R $STARTTIME $$
+
+rm -f logs/nex2img_US_N0R_$$.log
