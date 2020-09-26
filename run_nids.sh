@@ -68,4 +68,4 @@ LUTFIL   = ${LUTFIL}
  exit
 EOF
 
-rm -f ${SECTOR}_${PROD}_LOCK_${JOB}
+rm -f ${SECTOR}_${PROD}_LOCK_${JOB} logs/nex2img_${SECTOR}_${PROD}_${JOB}.log
