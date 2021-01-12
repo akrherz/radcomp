@@ -44,10 +44,16 @@ def main(argv):
     LOG.debug(archivefn)
     mywkt = "SRID=4326;MULTIPOLYGON(((%s)))" % (WKT[sector],)
     cursor.execute(
-        "INSERT into nexrad_n0q_tindex(the_geom, datetime, filepath) values "
-        "(ST_GeomFromEWKT(%s), %s, %s)",
-        (mywkt, ts, archivefn),
+        "SELECT * from nexrad_n0q_tindex "
+        "WHERE datetime = %s and filepath = %s",
+        (ts, archivefn),
     )
+    if cursor.rowcount == 0:
+        cursor.execute(
+            "INSERT into nexrad_n0q_tindex(the_geom, datetime, filepath) "
+            "values (ST_GeomFromEWKT(%s), %s, %s)",
+            (mywkt, ts, archivefn),
+        )
     mydb.commit()
     mydb.close()
 
