@@ -7,7 +7,7 @@
 # 21 Apr 2005	Add something to add metadata
 
 setenv RAD /mnt/nexrad3/nexrad/
-setenv PATH "${PATH}:/home/ldm/bin:/mesonet/local/bin"
+setenv PATH "${PATH}:/home/meteor_ldm/bin"
 setenv PROD ${6}
 setenv NA_OS linux64
 setenv GEMTBL gempak/tables

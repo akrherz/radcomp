@@ -2,43 +2,42 @@
 import datetime
 import sys
 
-from pyiem.util import get_dbconn
+from pyiem.util import get_dbconn, logger
 
-v = sys.argv[1]
-ts = datetime.datetime.strptime(v, "%Y%m%d%H%M")
+LOG = logger()
 
-with open("n0r%s.tfw" % (v,), "w") as fh:
-    fh.write(
-        """0.01
-0.0
-0.0
--0.01
--126.0
-50.0"""
+
+def main(argv):
+    """Go Main Go."""
+    v = argv[1]
+    ts = datetime.datetime.strptime(v, "%Y%m%d%H%M")
+    ts = ts.replace(tzinfo=datetime.timezone.utc)
+
+    with open("n0r%s.tfw" % (v,), "w") as fh:
+        fh.write("\n".join(["0.01", "0.0", "0.0", "-0.01", "-126.0", "50.0"]))
+
+    if argv[2] != "n0r":
+        return
+
+    pgconn = get_dbconn("postgis")
+    cursor = pgconn.cursor()
+    cursor.execute(
+        "SELECT * from nexrad_n0r_tindex WHERE datetime = %s", (ts,)
     )
+    if cursor.rowcount == 0:
+        archivefn = ts.strftime(
+            "/mesonet/ARCHIVE/data/%Y/%m/%d/GIS/uscomp/n0r_%Y%m%d%H%M.png"
+        )
+        LOG.debug(archivefn)
+        cursor.execute(
+            "INSERT into nexrad_n0r_tindex (the_geom, datetime, filepath) "
+            "values (GeomFromEWKT('SRID=4326; MULTIPOLYGON(((-126 50,-66 50,"
+            "-66 24,-126 24,-126 50)))'), %s, %s)",
+            (ts, archivefn),
+        )
+    cursor.close()
+    pgconn.commit()
 
-if sys.argv[2] != "n0r":
-    sys.exit(0)
 
-pgconn = get_dbconn("postgis")
-cursor = pgconn.cursor()
-sql = """SELECT * from nexrad_n0r_tindex WHERE datetime = '%s'
-    """ % (
-    ts.strftime("%Y-%m-%d %H:%M+00"),
-)
-sql2 = """INSERT into nexrad_n0r_tindex
-    (the_geom, datetime, filepath) values
- (GeomFromEWKT('SRID=4326;
-  MULTIPOLYGON(((-126 50,-66 50,-66 24,-126 24,-126 50)))'),
-    '%s', '/mesonet/ARCHIVE/data/%s/GIS/uscomp/n0r_%s.png')
-""" % (
-    ts.strftime("%Y-%m-%d %H:%M"),
-    ts.strftime("%Y/%m/%d"),
-    ts.strftime("%Y%m%d%H%M"),
-)
-cursor.execute(sql)
-if cursor.rowcount == 0:
-    cursor.execute(sql2)
-
-cursor.close()
-pgconn.commit()
+if __name__ == "__main__":
+    main(sys.argv)

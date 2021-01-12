@@ -1,5 +1,18 @@
+
+# N0Q work flows
 2,7,12,17,22,27,32,37,42,47,52,57 * * * * cd radcomp; sh production.sh US $(date --date '3 minute' -u +'\%Y \%m \%d \%H \%M') RT
 3,8,13,18,23,28,33,38,43,48,53,58 * * * * cd radcomp; sh production.sh AK $(date --date '2 minute' -u +'\%Y \%m \%d \%H \%M') RT
 3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 15; cd radcomp; sh production.sh HI $(date --date '2 minute' -u +'\%Y \%m \%d \%H \%M') RT
 3,8,13,18,23,28,33,38,43,48,53,58 * * * * sleep 30;cd radcomp; sh production.sh PR $(date --date '2 minute' -u +'\%Y \%m \%d \%H \%M') RT
-58 * * * * cd radcomp; python ructemps.py
+57 * * * * cd radcomp; python ructemps.py
+
+# N0R work flows
+4,9,14,19,24,29,34,39,44,49,54,59 * * * * cd radcomp; ./RUNME.csh
+58 * * * * cd radcomp; python n0r_ructemps.py
+
+# Remove old RUC data
+1 1 * * *  tmpwatch 24 radcomp/data/
+
+# Check our work
+22 * * * * cd radcomp; python rerunhour.py
+
