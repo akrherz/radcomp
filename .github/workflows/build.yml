@@ -27,4 +27,8 @@ jobs:
         python schema_manager.py
         cd ..
         # Run arbitrary stuff
+        python createnc.py
         python ructemps.py
+        python n0r_runtemps.py
+        python gentfw.py 33333 US 202101121200
+        python n0r_gentfw.py 202101121200 n0r
