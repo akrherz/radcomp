@@ -1,0 +1,34 @@
+name: Install and Test
+on: [push]
+jobs:
+  build-linux:
+    name: Python (${{ matrix.PYTHON_VERSION }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        PYTHON_VERSION: ["3.6", "3.8", "3.9"]
+    env:
+      PYTHON_VERSION: ${{ matrix.PYTHON_VERSION }}
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add /etc/hosts entries
+      run: |
+        cat .github/workflows/etchosts.txt | sudo tee -a /etc/hosts
+
+    - name: Setup CI from ci-tooling
+      run: |
+        git clone --depth 1 https://github.com/akrherz/iem-database.git database
+        git clone --depth 1 https://github.com/akrherz/ci_tooling.git .ci_tooling
+        . .ci_tooling/postgres.sh
+        . .ci_tooling/miniconda.sh
+        export PATH="/usr/lib/postgresql/11/bin:$PATH"
+        cd database; sh bootstrap.sh
+        python schema_manager.py
+        cd ..
+        # Run arbitrary stuff
+        python createnc.py
+        python ructemps.py
+        python n0r_ructemps.py
+        python gentfw.py 33333 US 202101121200
+        python n0r_gentfw.py 202101121200 n0r

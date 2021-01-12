@@ -1,0 +1,6 @@
+gdal
+netCDF4
+numpy
+pygrib
+requests
+scipy
