@@ -22,6 +22,9 @@ TFW = {
     "PR": ["0.01", "0.0", "0.0", "-0.01", "-71.07", "23.1"],
 }
 
+# Augh, database is tz naive
+FMT = "%Y-%m-%d %H:%M"
+
 
 def main(argv):
     """Go Main Go."""
@@ -46,13 +49,13 @@ def main(argv):
     cursor.execute(
         "SELECT * from nexrad_n0q_tindex "
         "WHERE datetime = %s and filepath = %s",
-        (ts, archivefn),
+        (ts.strftime(FMT), archivefn),
     )
     if cursor.rowcount == 0:
         cursor.execute(
             "INSERT into nexrad_n0q_tindex(the_geom, datetime, filepath) "
             "values (ST_GeomFromEWKT(%s), %s, %s)",
-            (mywkt, ts, archivefn),
+            (mywkt, ts.strftime(FMT), archivefn),
         )
     mydb.commit()
     mydb.close()

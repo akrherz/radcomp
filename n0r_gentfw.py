@@ -5,6 +5,8 @@ import sys
 from pyiem.util import get_dbconn, logger
 
 LOG = logger()
+# Augh, database is tz naive
+FMT = "%Y-%m-%d %H:%M"
 
 
 def main(argv):
@@ -22,7 +24,8 @@ def main(argv):
     pgconn = get_dbconn("postgis")
     cursor = pgconn.cursor()
     cursor.execute(
-        "SELECT * from nexrad_n0r_tindex WHERE datetime = %s", (ts,)
+        "SELECT * from nexrad_n0r_tindex WHERE datetime = %s",
+        (ts.strftime(FMT),),
     )
     if cursor.rowcount == 0:
         archivefn = ts.strftime(
@@ -33,7 +36,7 @@ def main(argv):
             "INSERT into nexrad_n0r_tindex (the_geom, datetime, filepath) "
             "values (GeomFromEWKT('SRID=4326; MULTIPOLYGON(((-126 50,-66 50,"
             "-66 24,-126 24,-126 50)))'), %s, %s)",
-            (ts, archivefn),
+            (ts.strftime(FMT), archivefn),
         )
     cursor.close()
     pgconn.commit()
