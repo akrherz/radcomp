@@ -39,6 +39,8 @@ python process.py $HH $$ $1 $netprod
 
 # Lets insert it into LDM
 pqinsert -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
+# Copy this to data for N0R psuedo to use
+cp ${1}_N0Q_CLEAN_$$.png data/n0q_${YYYY}${MM}${DD}${HH}${MI}.png
 
 # Do TFW
 python gentfw.py $$ $1 ${YYYY}${MM}${DD}${HH}${MI}
