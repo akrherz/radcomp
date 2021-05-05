@@ -66,7 +66,7 @@ def main():
             elif line.find("Using image:") > 0:
                 used += 1
     else:
-        if prod != "N0Q":
+        if prod != "N0R":
             print(f"create_metadata log file {logfn} missing")
 
     res = {
