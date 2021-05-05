@@ -22,10 +22,10 @@ def main(argv):
     n0rd = n0r.ReadAsArray()
 
     for i in range(24):
-        ts = ts - datetime.timedelta(hours=i)
         fn = "data/ifreeze-%s.tif" % (ts.strftime("%Y%m%d%H"),)
         if os.path.isfile(fn):
             break
+        ts -= datetime.timedelta(hours=1)
     ifreeze = gdal.Open(fn, 0)
     ifr = ifreeze.ReadAsArray()
 
@@ -43,10 +43,12 @@ def main(argv):
 
     # Create output file
     png = Image.fromarray(n0rd2)
-    n0rpng = Image.open("n0r_%s.gif" % (pid,))
+    n0rpng = Image.open("n0r_%s.png" % (pid,))
     png.putpalette(n0rpng.getpalette())
     meta = PngImagePlugin.PngInfo()
-    meta.add_text("gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"))
+    meta.add_text(
+        "gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    )
     png.save("test_%s.png" % (pid,), pnginfo=meta)
 
 
