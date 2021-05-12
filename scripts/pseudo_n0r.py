@@ -25,10 +25,10 @@ def main(argv):
     while not os.path.isfile(n0qfn) and attempt < 10:
         LOG.debug("File %s missing, sleeping 10 seconds", n0qfn)
         time.sleep(10)
-        attempt += 10
+        attempt += 1
     if not os.path.isfile(n0qfn):
         LOG.info("Failed to find %s, aborting...", n0qfn)
-        return
+        sys.exit(1)
     LOG.debug("Processing %s", n0qfn)
     # Read in N0Q color index
     png = Image.open(n0qfn)
