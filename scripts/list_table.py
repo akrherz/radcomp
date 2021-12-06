@@ -68,7 +68,9 @@ for i in range(1, 254):
 
 o = open("iem_lut256.tbl", "w")
 for i in range(254):
-    o.write("%20s%6.0f %6.0f %6.0f\n" % ("", nramp[i, 0], nramp[i, 1], nramp[i, 2]))
+    o.write(
+        "%20s%6.0f %6.0f %6.0f\n" % ("", nramp[i, 0], nramp[i, 1], nramp[i, 2])
+    )
 o.close()
 
 png.putpalette(tuple(oramp.ravel()))

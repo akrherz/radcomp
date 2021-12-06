@@ -33,7 +33,11 @@ else:
 # Create output file
 out_driver = n0r.GetDriver()
 outdataset = out_driver.Create(
-    "n0r_%s_out.tif" % (n,), n0r.RasterXSize, n0r.RasterYSize, n0r.RasterCount, n0rt
+    "n0r_%s_out.tif" % (n,),
+    n0r.RasterXSize,
+    n0r.RasterYSize,
+    n0r.RasterCount,
+    n0rt,
 )
 # Set output color table to match input
 outdataset.GetRasterBand(1).SetRasterColorTable(n0rct)
