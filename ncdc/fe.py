@@ -14,7 +14,7 @@ interval = datetime.timedelta(minutes=5)
 
 now = sts
 while now < ets:
-    print now
+    print(now)
     if now.hour == 0 and now.minute == 0:
         # Extract tomorrow
         cmd = "python extract.py %s" % (now.strftime("%Y %m %d"),)

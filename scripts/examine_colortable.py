@@ -9,4 +9,4 @@ r = np.asarray(img)
 for d in r.flat:
     z[d] += 1
 for i in range(256):
-    print i, z[i]
+    print(i, z[i])
