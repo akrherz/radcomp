@@ -50,7 +50,9 @@ def main(argv):
     # png.putpalette( make_colorramp() )
     png.putpalette(n0qpng.getpalette())
     meta = PngImagePlugin.PngInfo()
-    meta.add_text("gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"))
+    meta.add_text(
+        "gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    )
     png.save("%s_N0Q_CLEAN_%s.png" % (sector, job), pnginfo=meta)
 
 

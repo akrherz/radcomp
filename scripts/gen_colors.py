@@ -22,5 +22,4 @@ for i in range(254):
     portion = float(i) / 254.0
     look0 = int(portion * 150.0)
     a = numpy.average(rgbz[look0 : (look0 + 2), :], 0)
-    print a
-    # print " %3.0f %3.0f %3.0f" %  (a[0], a[1], a[2])
+    print(a)

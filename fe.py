@@ -4,26 +4,27 @@ import subprocess
 import sys
 import datetime
 
+from pyiem.util import logger
+
+LOG = logger()
+
 
 def main(argv):
     """Go Main Go."""
-    sts = datetime.datetime(
-        int(argv[1]), int(argv[2]), int(argv[3]), int(argv[4]), int(argv[5])
-    )
-    ets = datetime.datetime(
-        int(argv[6]), int(argv[7]), int(argv[8]), int(argv[9]), int(argv[10])
-    )
+    sts = datetime.datetime(*[int(x) for x in argv[1:6]])
+    ets = datetime.datetime(*[int(x) for x in argv[6:11]])
     interval = datetime.timedelta(minutes=5)
 
     now = sts
     while now < ets:
-        print(now)
+        LOG.info(now)
         dt = now.strftime("%Y %m %d %H %M")
-        cmd = "csh n0r.csh %s n0r 1" % (dt,)
-        subprocess.call(cmd, shell=True)
         for sector in ["PR", "US", "AK", "HI"]:
-            cmd = "sh production.sh %s %s A" % (sector, dt)
+            cmd = f"sh production.sh {sector} {dt} A"
             subprocess.call(cmd, shell=True)
+        # N0R is generated off of N0Q
+        cmd = f"csh n0r.csh {dt} n0r 1"
+        subprocess.call(cmd, shell=True)
         now += interval
 
 

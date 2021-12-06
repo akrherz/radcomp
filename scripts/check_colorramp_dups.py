@@ -11,4 +11,4 @@ for line in open(sys.argv[1]):
 
 for entry, count in entries.iteritems():
     if count > 1:
-        print entry, count
+        print(entry, count)
