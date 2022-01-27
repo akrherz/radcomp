@@ -33,9 +33,9 @@ def main(argv):
     sts = argv[3]
     ts = datetime.datetime.strptime(sts, "%Y%m%d%H%M")
     ts = ts.replace(tzinfo=datetime.timezone.utc)
-    LOG.debug("parsed time: %s", ts)
+    LOG.info("parsed time: %s", ts)
 
-    with open("%s_N0Q_CLEAN_%s.tfw" % (sector, v), "w") as fh:
+    with open(f"{sector}_N0Q_CLEAN_{v}.tfw", "w", encoding="utf-8") as fh:
         fh.write("\n".join(TFW[sector]))
 
     mydb = get_dbconn("postgis")
@@ -44,8 +44,8 @@ def main(argv):
         f"/mesonet/ARCHIVE/data/%Y/%m/%d/GIS/{sector.lower()}comp/"
         "n0q_%Y%m%d%H%M.png"
     )
-    LOG.debug(archivefn)
-    mywkt = "SRID=4326;MULTIPOLYGON(((%s)))" % (WKT[sector],)
+    LOG.info(archivefn)
+    mywkt = f"SRID=4326;MULTIPOLYGON((({WKT[sector]})))"
     cursor.execute(
         "SELECT * from nexrad_n0q_tindex "
         "WHERE datetime = %s and filepath = %s",

@@ -36,11 +36,11 @@ def main():
                 "http://mesonet.agron.iastate.edu/archive/data/%Y/%m/%d/"
                 f"model/rap/%H/rap.t%Hz.awp130f{fhour:03d}.grib2"
             )
-            LOG.debug("requesting %s", uri)
+            LOG.info("requesting %s", uri)
             try:
                 req = requests.get(uri, timeout=10)
                 if req.status_code != 200:
-                    LOG.debug("got status_code %s", req.status_code)
+                    LOG.info("got status_code %s", req.status_code)
                     continue
                 with open(tmpfd.name, "wb") as fh:
                     fh.write(req.content)
@@ -50,7 +50,7 @@ def main():
                 lat, lon = grbs[0].latlons()
             except Exception as exp:
                 os.unlink(tmpfd.name)
-                LOG.debug(exp)
+                LOG.info(exp)
                 continue
             if grbs:
                 break
@@ -77,7 +77,7 @@ def main():
     n0rct.SetColorEntry(1, (255, 0, 0))
 
     out_driver = gdal.GetDriverByName("GTiff")
-    outfn = "data/ifreeze-%s.tif" % (utcnow.strftime("%Y%m%d%H"),)
+    outfn = f"data/ifreeze-{utcnow:%Y%m%d%H}.tif"
     outdataset = out_driver.Create(outfn, 6000, 2600, 1, gdalconst.GDT_Byte)
     # Set output color table to match input
     outdataset.GetRasterBand(1).SetRasterColorTable(n0rct)
