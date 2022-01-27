@@ -58,13 +58,14 @@ def main():
 
     radars = 0
     used = 0
-    logfn = "logs/nex2img_%s_%s_%s.log" % (sector, prod, job)
+    logfn = f"logs/nex2img_{sector}_{prod}_{job}.log"
     if os.path.isfile(logfn):
-        for line in open(logfn):
-            if line.find("Searching radar:") > 0:
-                radars += 1
-            elif line.find("Using image:") > 0:
-                used += 1
+        with open(logfn, encoding="utf-8") as fh:
+            for line in fh:
+                if line.find("Searching radar:") > 0:
+                    radars += 1
+                elif line.find("Using image:") > 0:
+                    used += 1
     else:
         if prod != "N0R":
             print(f"create_metadata log file {logfn} missing")

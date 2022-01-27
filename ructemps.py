@@ -30,11 +30,11 @@ def main(argv):
                 "http://mesonet.agron.iastate.edu/archive/data/%Y/%m/%d/"
                 f"model/rap/%H/rap.t%Hz.awp130f{fhour:03d}.grib2"
             )
-            LOG.debug("requesting %s", uri)
+            LOG.info("requesting %s", uri)
             try:
                 req = requests.get(uri, timeout=10)
                 if req.status_code != 200:
-                    LOG.debug("got status_code %s", req.status_code)
+                    LOG.info("got status_code %s", req.status_code)
                     continue
                 with open(tmpfd.name, "wb") as fh:
                     fh.write(req.content)
@@ -43,14 +43,14 @@ def main(argv):
                 tmpk_2m = grbs[0].values
                 lat, lon = grbs[0].latlons()
             except Exception as exp:
-                LOG.debug(exp)
+                LOG.info(exp)
                 continue
             if grbs:
                 break
     os.unlink(tmpfd.name)
 
     if tmpk_2m is None:
-        LOG.info("No data found for %s", utcnow)
+        LOG.warning("No data found for %s", utcnow)
         return
 
     with ncopen("data/ructemps.nc", "a") as nc:

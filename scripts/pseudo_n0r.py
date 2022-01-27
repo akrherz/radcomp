@@ -23,13 +23,13 @@ def main(argv):
     n0qfn = f"data/n0q_{timestamp}.png"
     attempt = 0
     while not os.path.isfile(n0qfn) and attempt < 10:
-        LOG.debug("File %s missing, sleeping 10 seconds", n0qfn)
+        LOG.info("File %s missing, sleeping 10 seconds", n0qfn)
         time.sleep(10)
         attempt += 1
     if not os.path.isfile(n0qfn):
-        LOG.info("Failed to find %s, aborting...", n0qfn)
+        LOG.warning("Failed to find %s, aborting...", n0qfn)
         sys.exit(1)
-    LOG.debug("Processing %s", n0qfn)
+    LOG.info("Processing %s", n0qfn)
     # Read in N0Q color index
     png = Image.open(n0qfn)
     sz = (png.size[1], png.size[0])
