@@ -39,6 +39,13 @@ if [ "$PROD" == "EET" ];
 	LUTFIL="iem_eet.tbl"
 fi
 
+# Use N0B for N0Q, see akrherz/radcomp#7
+REALPROD=$PROD
+if [ "$PROD" == "N0Q" ];
+	then
+	REALPROD="N0B"
+fi
+
 #source /usr/local/nawips/Gemenviron.profile
 export NA_OS=linux64
 export GEMTBL=gempak/tables
@@ -54,7 +61,7 @@ export GEMPDF=gempak/pdf
  PROJ     = CED
  KXKY     = ${KXKY}
  CPYFIL   =  
- GFUNC    = ${PROD}
+ GFUNC    = ${REALPROD}
  RADTIM   = ${YY}${MM}${DD}/${HH}${MI}
 RADDUR   = 25
  RADFRQ   =

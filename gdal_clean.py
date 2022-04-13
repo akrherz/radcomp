@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 """Use GDAL to do some cleaning"""
-from __future__ import print_function
 import os
 import sys
 import datetime
@@ -18,11 +17,11 @@ def main(argv):
     ts = ts.replace(tzinfo=pytz.utc)
 
     # Open base reflectivity layer (n0r)
-    n0r = gdal.Open("n0r_%s_in.tif" % (pid,), 0)
+    n0r = gdal.Open(f"n0r_{pid}_in.tif", 0)
     n0rd = n0r.ReadAsArray()
 
-    for i in range(24):
-        fn = "data/ifreeze-%s.tif" % (ts.strftime("%Y%m%d%H"),)
+    for _i in range(24):
+        fn = f"data/ifreeze-{ts:%Y%m%d%H}.tif"
         if os.path.isfile(fn):
             break
         ts -= datetime.timedelta(hours=1)
@@ -30,7 +29,7 @@ def main(argv):
     ifr = ifreeze.ReadAsArray()
 
     # Open net echo tops composite
-    net = gdal.Open("net_%s_in.tif" % (pid,), 0)
+    net = gdal.Open(f"net_{pid}_in.tif", 0)
     # Winter mask for now
     v = net.ReadAsArray()
     # v[:,0:2400] = 10.
@@ -43,13 +42,13 @@ def main(argv):
 
     # Create output file
     png = Image.fromarray(n0rd2)
-    n0rpng = Image.open("n0r_%s.png" % (pid,))
+    n0rpng = Image.open(f"n0r_{pid}.png")
     png.putpalette(n0rpng.getpalette())
     meta = PngImagePlugin.PngInfo()
     meta.add_text(
         "gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
     )
-    png.save("test_%s.png" % (pid,), pnginfo=meta)
+    png.save(f"test_{pid}.png", pnginfo=meta)
 
 
 if __name__ == "__main__":

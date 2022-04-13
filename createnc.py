@@ -18,11 +18,11 @@ def main():
     data.long_name = "2m Temperature"
     data.units = "Celsius"
 
-    lat = nc.createVariable("lat", np.float, ("lat"))
+    lat = nc.createVariable("lat", float, ("lat"))
     lat.long_name = "Latitude"
     lat[:] = np.arange(23.0, 50.0, 0.005)
 
-    lon = nc.createVariable("lon", np.float, ("lon"))
+    lon = nc.createVariable("lon", float, ("lon"))
     lon.long_name = "Longitude"
     lon[:] = np.arange(-126.0, -65.0, 0.005)
 

@@ -1,6 +1,5 @@
 """Look for missing recent composites and run again!"""
 import datetime
-import os
 import subprocess
 
 # third party
@@ -27,7 +26,7 @@ def main():
         req = requests.get(uri, timeout=10)
         if req.status_code != 200:
             LOG.info("Reprocess n0r: %s", now)
-            cmd = "csh n0r.csh %s n0r 1" % (now.strftime("%Y %m %d %H %M"),)
+            cmd = f"csh n0r.csh {now:%Y %m %d %H %M} n0r 1"
             subprocess.call(cmd, shell=True)
 
         uri = now.strftime(
@@ -38,11 +37,8 @@ def main():
         if req.status_code != 200:
             LOG.info("Reprocess n0q: %s", now)
             for sector in ["US", "PR", "AK", "HI"]:
-                cmd = ("sh production.sh %s %s OLD") % (
-                    sector,
-                    now.strftime("%Y %m %d %H %M"),
-                )
-                os.system(cmd)
+                cmd = f"sh production.sh {sector} {now:%Y %m %d %H %M} OLD"
+                subprocess.call(cmd, shell=True)
 
         now += interval
 
