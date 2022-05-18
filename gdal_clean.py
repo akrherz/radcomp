@@ -32,13 +32,15 @@ def main(argv):
     net = gdal.Open(f"net_{pid}_in.tif", 0)
     # Winter mask for now
     v = net.ReadAsArray()
+    # This product needs downscaled and trimmed
+    v = v[:-200:2, :-200:2]
     # v[:,0:2400] = 10.
     # v[:1300,2400:] = 10.
 
     v = numpy.where(ifr > 0, 10.0, v)
 
-    # Do the comparison of n0r vs net
-    n0rd2 = numpy.where(v < 2.0, 0, n0rd)
+    # Do the comparison of n0r vs net (EET)
+    n0rd2 = numpy.where(v < 10.0, 0, n0rd)
 
     # Create output file
     png = Image.fromarray(n0rd2)

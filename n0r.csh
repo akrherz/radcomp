@@ -33,38 +33,8 @@ python scripts/pseudo_n0r.py $ftime $fp || exit
 # Convert it to TIF for algorithm work
 convert -compress none $fp n0r_$$_in.tif >& /dev/null
 
-# Now generate NET
-set fp="net_$$.gif"
-./bin/nex2img << EOF > logs/nex2img_US_NET.log
- GRDAREA  = 24.02;-126.00;50.00;-66.02
- PROJ     = CED
- KXKY     = 6000;2600
- CPYFIL   =
- GFUNC    = NET
- RADTIM   = ${gtime}
- RADDUR   = 25
- RADFRQ   =
- STNFIL   = nexrad.tbl
- RADMODE  = ${radmode}
- RADFIL   = ${fp}
- LUTFIL   = upc_net.tbl
- list
- run
-
-
- exit
-EOF
-
-if ($realtime == "t") then
-  # Insert NET file
-  convert -define PNG:preserve-colormap $fp test_$$.png >& /dev/null
-  pqinsert -p "gis cr ${ftime} gis/images/4326/USCOMP/net_ bogus png" test_$$.png
-  rm -f test_$$.png
-endif
-
 # Convert it to TIF for algorithm work
-convert -compress none $fp net_$$_in.tif >& /dev/null
-rm -f $fp
+convert -compress none data/eet_${ftime}.gif net_$$_in.tif
 
 # Clean it! 
 python gdal_clean.py $$ $1$2$3$4$5
