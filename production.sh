@@ -41,6 +41,7 @@ python process.py $HH $$ $1 $netprod
 pqinsert -p "gis $routes ${YYYY}${MM}${DD}${HH}${MI} gis/images/4326/${1}COMP/n0q_ GIS/${1,,}comp/n0q_${YYYY}${MM}${DD}${HH}${MI}.png png" ${1}_N0Q_CLEAN_$$.png
 # Copy this to data for N0R psuedo to use
 if [ $1 = "US" ]; then
+    cp ${1}_EET_$$.gif data/eet_${YYYY}${MM}${DD}${HH}${MI}.gif
     cp ${1}_N0Q_CLEAN_$$.png data/n0q_${YYYY}${MM}${DD}${HH}${MI}.png
 fi
 
