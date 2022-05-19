@@ -48,24 +48,17 @@ pqinsert -i -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0
 if ($realtime == "t") then
   # Generate GeoTIFF
   geotifcp -e n0r.tfw n0r_$$_out.tif n0r_$$_out.gtif >& /dev/null
-  geotifcp -e n0r.tfw net_$$_in.tif net_$$_in.gtif >& /dev/null
 
   # Generate google maps variant
   cp n0r.tfw n0r_$$_out.tfw
   gdalwarp  -q -s_srs EPSG:4326 -t_srs EPSG:3857 n0r_$$_out.tif google_n0r_$$_out.tif
   rm -f n0r_$$_out.tfw
 
-    gdalwarp  -q -s_srs EPSG:4326 -t_srs EPSG:3857 net_$$_in.gtif google_net_$$_in.tif
-
   gzip -c n0r_$$_out.tif > n0r_$$_out.tif.Z
   pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/n0r_ bogus tif.Z" n0r_$$_out.tif.Z
 
   gzip -c google_n0r_$$_out.tif > google_n0r_$$_out.tif.Z
   pqinsert -p "gis r ${ftime} gis/images/900913/USCOMP/n0r_ bogus tif.Z" google_n0r_$$_out.tif.Z
-
-  gzip -c google_net_$$_in.tif > google_net_$$_in.tif.Z
-  pqinsert -p "gis r ${ftime} gis/images/900913/USCOMP/net_ bogus tif.Z" google_net_$$_in.tif.Z
-  rm -f google_net_$$_in.tif.Z google_net_$$_in.tif
 
   gzip -c n0r_$$_out.gtif > n0r_$$_out.gtif.Z
   pqinsert -p "gis r ${ftime} gis/images/4326/USCOMP/n0r_ bogus gtif.Z" n0r_$$_out.gtif.Z
