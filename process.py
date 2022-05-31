@@ -41,7 +41,8 @@ def main(argv):
 
     # Clean n0q
     if netprod == "EET":
-        n0q = np.where(net < 10, 0, n0q)
+        # EET idx 2 is 1 kft, so 6 is 5kft
+        n0q = np.where(net < 6, 0, n0q)
     else:
         n0q = np.where(net < 2, 0, n0q)
 

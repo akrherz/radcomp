@@ -1,4 +1,4 @@
-# Generate a color ramp image, please
+"""Generate a color ramp image, please."""
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 
@@ -12,14 +12,17 @@ def main():
 
     ramp = np.zeros((72, 3), np.uint8)
     data = np.zeros((30, 236), np.uint8)
-    for i, line in enumerate(open("../gempak/tables/luts/iem_eet.tbl")):
-        if i == 72:
-            break
-        tokens = line.split()
-        ramp[i, 0] = int(tokens[0])
-        ramp[i, 1] = int(tokens[1])
-        ramp[i, 2] = int(tokens[2])
-        data[0:15, (i * 3) : (i * 3) + 3] = i
+    with open("../gempak/tables/luts/iem_eet.tbl", encoding="ascii") as fh:
+        for i, line in enumerate(fh):
+            if i == 72:
+                break
+            if i == 0:
+                continue
+            tokens = line.split()
+            ramp[i, 0] = int(tokens[0])
+            ramp[i, 1] = int(tokens[1])
+            ramp[i, 2] = int(tokens[2])
+            data[0:15, (i * 3) : (i * 3) + 3] = i - 1
 
     ramp[0, 0] = 0
     ramp[0, 1] = 0
@@ -31,7 +34,7 @@ def main():
 
     for db in range(10, 71, 10):
         x = (db - 0) * 3 + 3
-        (w, h) = font.getsize(str(db))
+        (w, _h) = font.getsize(str(db))
         draw.line([x, 17, x, 10], fill=255)
         draw.text((x - (w / 2), 18), str(db), fill=255, font=font)
 

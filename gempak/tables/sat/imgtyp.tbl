@@ -744,7 +744,7 @@ FIRE_WEATHER_PROD    FIRE_WX       0    255     78 -2**31      1 wfabba.tbl
 ! Unidata GINI composite RADAR (ranges as defined in unidata/nex2gini.tbl)
 RADAR                N0Q           0    255     11  2**32      1 upc_n0q.tbl 
 RADAR                DVL           0    255     11  2**33      1 upc_dvl.tbl
-RADAR                EET           0    255     11  2**34      1 upc_net.tbl
+RADAR                EET           0     72     11  2**25      1 upc_eet70.tbl
 RADAR                N0Z           0    255     11  2**24      1 osf_ref16.tbl
 RADAR                NET           0    255     11  2**25      1 upc_net.tbl
 RADAR                N0R           0    105     11  2**26      1 upc_rad24.tbl
