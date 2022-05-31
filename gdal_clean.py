@@ -40,7 +40,8 @@ def main(argv):
     v = numpy.where(ifr > 0, 10.0, v)
 
     # Do the comparison of n0r vs net (EET)
-    n0rd2 = numpy.where(v < 10.0, 0, n0rd)
+    # EET color index 2 is 1 kft, so 6 is 5kft
+    n0rd2 = numpy.where(v < 6.0, 0, n0rd)
 
     # Create output file
     png = Image.fromarray(n0rd2)
