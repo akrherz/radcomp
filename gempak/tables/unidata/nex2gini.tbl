@@ -1,6 +1,8 @@
 !
 !
 !Prod   band ncal units,Calval_1;....;calval_n  Prod_header
+DTA       20    4 inches,0,1,-9999,-9999;1,101,0,2;101,201,2,6;201,251,6,21        TICZ99 CHIZ
+DAA       21    3 inches,0,1,-9999,-9999;1,101,0,1;101,251,1,6        TICZ99 CHIZ
 N0Q       32    1 dBZ,0,255,-32,95           TICZ99 CHIZ
 DVL       33    1 Kg/m**2,0,255,0,85         TICZ99 CHIZ
 EET       26    4 KFt,0,1,-9999,-9995;2,71,0,70;72,129,-9999,-9999;130,199,0,70        TICZ99 CHIZ
