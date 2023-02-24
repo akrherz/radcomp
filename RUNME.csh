@@ -1,5 +1,4 @@
 #!/bin/csh
-# 23 Dec 2003	Make this smarter such that it doesn't just completely stop
 
 set yyyy=`date --date '1 minute' -u +'%Y'`
 set mm=`date --date '1 minute' -u +'%m'`
@@ -16,12 +15,13 @@ endif
 
 echo $$ > /tmp/.nexcomp.lock
 
-./n0r.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} 
+# N0R created via N0Q via N0B
+./n0r.csh ${yyyy} ${mm} ${dd} ${HH} ${MM}
+# DAA one hour
+./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} daa
+# DTA storm total
+./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} dta
 ./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} n1p
 ./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} ntp
-
-#foreach rad (DMX DVN ARX MPX FSD OAX ABR UDX EAX)
-#  ./single.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} $rad
-#end
 
 rm -f /tmp/.nexcomp.lock
