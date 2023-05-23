@@ -19,7 +19,7 @@ def main(argv):
     while now < ets:
         LOG.info(now)
         dt = now.strftime("%Y %m %d %H %M")
-        for sector in ["PR", "US", "AK", "HI"]:
+        for sector in ["PR", "US", "AK", "HI", "GU"]:
             cmd = f"sh production.sh {sector} {dt} A"
             subprocess.call(cmd, shell=True)
         # N0R is generated off of N0Q

@@ -36,7 +36,7 @@ def main():
         req = requests.get(uri, timeout=10)
         if req.status_code != 200:
             LOG.info("Reprocess n0q: %s", now)
-            for sector in ["US", "PR", "AK", "HI"]:
+            for sector in ["US", "PR", "AK", "HI", "GU"]:
                 cmd = f"sh production.sh {sector} {now:%Y %m %d %H %M} OLD"
                 subprocess.call(cmd, shell=True)
 
