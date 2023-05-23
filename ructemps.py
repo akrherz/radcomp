@@ -1,15 +1,15 @@
 """Merge Grib2 RAP temps into netcdf file."""
-import os
 import datetime
+import os
 import sys
 import tempfile
 
-import requests
 import numpy as np
-from scipy import interpolate
 import pygrib
-from pyiem.util import ncopen, utc, logger
+import requests
 from metpy.units import units
+from pyiem.util import logger, ncopen, utc
+from scipy import interpolate
 
 LOG = logger()
 

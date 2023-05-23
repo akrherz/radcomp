@@ -1,8 +1,8 @@
 """Generate a color ramp image, please."""
 import sys
 
-from PIL import Image, ImageDraw, ImageFont
 import numpy as np
+from PIL import Image, ImageDraw, ImageFont
 
 
 def get_values(prod):

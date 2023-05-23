@@ -2,17 +2,17 @@
  Use the RAP model to provide a mask for use in clutter suppression by
  the NEXRAD compositer
 """
-import os
 import datetime
-import warnings
+import os
 import tempfile
+import warnings
 
 import numpy as np
-from osgeo import gdal, gdalconst
-import requests
-from pyiem.util import utc, logger
-from scipy import interpolate
 import pygrib
+import requests
+from osgeo import gdal, gdalconst
+from pyiem.util import logger, utc
+from scipy import interpolate
 
 LOG = logger()
 

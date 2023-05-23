@@ -12,38 +12,43 @@ export SECTOR="$8"
 
 
 if [ "${SECTOR}" == "US" ]; 
-	then
-	GRDAREA="23.01;-126.00;50.00;-65.01"
-	KXKY="12200;5400"
-	STNFIL="conus.tbl"
+    then
+    GRDAREA="23.01;-126.00;50.00;-65.01"
+    KXKY="12200;5400"
+    STNFIL="conus.tbl"
 elif [ "${SECTOR}" == "HI" ];
-	then
-	GRDAREA="15.44;-162.41;24.44;-152.41"
-	KXKY="2000;1800"
-	STNFIL="hawaii.tbl"
+    then
+    GRDAREA="15.44;-162.41;24.44;-152.41"
+    KXKY="2000;1800"
+    STNFIL="hawaii.tbl"
 elif [ "${SECTOR}" == "AK" ];
-	then
-	GRDAREA="53.21;-170.50;68.71;-130.50"
-	KXKY="4000;1550"
-	STNFIL="alaska.tbl"
+    then
+    GRDAREA="53.21;-170.50;68.71;-130.50"
+    KXKY="4000;1550"
+    STNFIL="alaska.tbl"
 elif [ "${SECTOR}" == "PR" ];
-	then
-	GRDAREA="13.1;-71.07;23.1;-61.07"
-	KXKY="1000;1000"
-	STNFIL="PR.tbl"
+    then
+    GRDAREA="13.1;-71.07;23.1;-61.07"
+    KXKY="1000;1000"
+    STNFIL="PR.tbl"
+elif [ "${SECTOR}" == "GU" ];
+    then
+    GRDAREA="9.20;140.5;17.70;149.0"
+    KXKY="1000;1000"
+    STNFIL="GU.tbl"
 fi
 
 LUTFIL="iem_lut256.tbl"
 if [ "$PROD" == "EET" ];
-	then
-	LUTFIL="iem_eet.tbl"
+    then
+    LUTFIL="iem_eet.tbl"
 fi
 
 # Use N0B for N0Q, see akrherz/radcomp#7
 REALPROD=$PROD
 if [ "$PROD" == "N0Q" ];
-	then
-	REALPROD="N0B"
+    then
+    REALPROD="N0B"
 fi
 
 #source /usr/local/nawips/Gemenviron.profile

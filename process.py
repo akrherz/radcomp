@@ -2,12 +2,11 @@
   tmpc in the netcdf file is stored with 0,0 in lower left
   PIL will have imagery with 0,0 in upper left
 """
-import sys
 import datetime
+import sys
 
-from PIL import Image
-from PIL import PngImagePlugin
 import numpy as np
+from PIL import Image, PngImagePlugin
 from pyiem.util import ncopen
 
 

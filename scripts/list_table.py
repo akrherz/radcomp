@@ -1,5 +1,7 @@
 from xml.etree import ElementTree
-import Image, ImageDraw
+
+import Image
+import ImageDraw
 import numpy
 
 gbase = -32.0

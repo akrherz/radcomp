@@ -1,8 +1,8 @@
 """Run timestamps over again."""
 
+import datetime
 import subprocess
 import sys
-import datetime
 
 from pyiem.util import logger
 

@@ -4,7 +4,7 @@ import subprocess
 
 # third party
 import requests
-from pyiem.util import utc, logger
+from pyiem.util import logger, utc
 
 LOG = logger()
 

@@ -1,8 +1,9 @@
 # 21 Jun 2007 - Runs in 4 seconds, good!
 
-import numpy
 import sys
+
 import mx.DateTime
+import numpy
 from osgeo import gdal, gdalconst
 
 n = sys.argv[1]

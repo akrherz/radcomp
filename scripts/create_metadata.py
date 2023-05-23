@@ -28,12 +28,12 @@ information included in the GEMPAK log file
 
 
 """
-import json
-import sys
-import os
 import datetime
-import tempfile
+import json
+import os
 import subprocess
+import sys
+import tempfile
 
 
 def main():

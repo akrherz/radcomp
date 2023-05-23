@@ -2,11 +2,11 @@
 Extract NCDC file into something we can feed to nex2img
 """
 
-import sys
 import datetime
 import glob
-import subprocess
 import os
+import subprocess
+import sys
 
 ts = datetime.datetime(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
 
