@@ -1,6 +1,7 @@
-from PIL import Image
-import numpy as np
 import sys
+
+import numpy as np
+from PIL import Image
 
 img = Image.open(sys.argv[1])
 

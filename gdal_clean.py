@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 """Use GDAL to do some cleaning"""
+import datetime
 import os
 import sys
-import datetime
 
 import numpy
 import pytz
-from PIL import Image, PngImagePlugin
 from osgeo import gdal
+from PIL import Image, PngImagePlugin
 
 
 def main(argv):
