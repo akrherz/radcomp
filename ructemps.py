@@ -64,7 +64,12 @@ def main(argv):
         )
         data = nc.variables["tmpc"]
         writehr = utcnow.hour
-        data[writehr, :, :] = (units("degK") * T).to(units("degC")).m
+        # Our netcdf storage is simple int8, so -256 to 255
+        # our usage is crude, so we set any missing values to 200 as they
+        # won't matter anyway
+        val = (units("degK") * T).to(units("degC")).m
+        val = np.where(np.isnan(val), 200, val)
+        data[writehr, :, :] = val
 
 
 if __name__ == "__main__":
