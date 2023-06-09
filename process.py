@@ -50,8 +50,10 @@ def main(argv):
     # png.putpalette( make_colorramp() )
     png.putpalette(n0qpng.getpalette())
     meta = PngImagePlugin.PngInfo()
+    # This is racy if we have another processing at the same time and are
+    # in a sector, like GU, that often produces blank images.
     meta.add_text(
-        "gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        "gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     )
     png.save(f"{sector}_N0Q_CLEAN_{job}.png", pnginfo=meta)
 
