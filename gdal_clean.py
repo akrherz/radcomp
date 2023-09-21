@@ -3,9 +3,9 @@
 import datetime
 import os
 import sys
+from zoneinfo import ZoneInfo
 
 import numpy
-import pytz
 from osgeo import gdal
 from PIL import Image, PngImagePlugin
 
@@ -14,7 +14,7 @@ def main(argv):
     """Our main method"""
     pid = argv[1]
     ts = datetime.datetime.strptime(argv[2], "%Y%m%d%H%M")
-    ts = ts.replace(tzinfo=pytz.utc)
+    ts = ts.replace(tzinfo=ZoneInfo("UTC"))
 
     # Open base reflectivity layer (n0r)
     n0r = gdal.Open(f"n0r_{pid}_in.tif", 0)

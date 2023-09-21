@@ -1,16 +1,13 @@
 """
  Proctor the reprocessing of NEXRAD data provide to me by NCDC
 """
-
 import datetime
 import subprocess
 
-import pytz
+from pyiem.util import utc
 
-sts = datetime.datetime(2003, 1, 1, 0, 0)
-sts = sts.replace(tzinfo=pytz.timezone("UTC"))
-ets = datetime.datetime(2003, 2, 1, 0, 0)
-ets = ets.replace(tzinfo=pytz.timezone("UTC"))
+sts = utc(2003, 1, 1)
+ets = utc(2003, 2, 1)
 interval = datetime.timedelta(minutes=5)
 
 now = sts
