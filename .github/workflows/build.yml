@@ -1,7 +1,17 @@
 name: Install and Test
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
 jobs:
   build-linux:
+    defaults:
+      run:
+        # Ensures environment gets sourced right
+        shell: bash -l {0}
     name: Python (${{ matrix.PYTHON_VERSION }})
     runs-on: ubuntu-latest
     strategy:
@@ -10,23 +20,36 @@ jobs:
     env:
       PYTHON_VERSION: ${{ matrix.PYTHON_VERSION }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Add /etc/hosts entries
       run: |
         cat .github/workflows/etchosts.txt | sudo tee -a /etc/hosts
 
-    - name: Setup CI from ci-tooling
+    # setup conda-forge with micromamba
+    - name: Setup Python
+      uses: mamba-org/setup-micromamba@v1
+      with:
+        environment-file: environment.yml
+        condarc: |
+          channels:
+            - conda-forge
+            - defaults
+        create-args: >-
+          python=${{ env.PYTHON_VERSION }}
+        environment-name: prod
+        cache-environment: true
+
+    - name: Setup Postgres
       run: |
         git clone --depth 1 https://github.com/akrherz/iem-database.git database
         git clone --depth 1 https://github.com/akrherz/ci_tooling.git .ci_tooling
         . .ci_tooling/postgres.sh
-        . .ci_tooling/miniconda.sh
-        export PATH="/usr/lib/postgresql/12/bin:$PATH"
         cd database; sh bootstrap.sh
         python schema_manager.py
-        cd ..
-        # Run arbitrary stuff
+  
+    - name: Run commands
+      run: |
         python createnc.py
         python ructemps.py
         python n0r_ructemps.py
