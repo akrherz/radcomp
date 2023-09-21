@@ -1,0 +1,8 @@
+dependencies:
+ - gdal
+ - netCDF4
+ - numpy
+ - pyiem
+ - pygrib
+ - requests
+ - scipy
