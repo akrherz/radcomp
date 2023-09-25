@@ -69,6 +69,11 @@ if ($realtime == "t") then
     set j = `echo "${i} + 1" | bc `
     if ( -f n0r_${i}.gif ) then
       mv n0r_${i}.gif n0r_${j}.gif
+    else
+      # We have a missing file, so try something desperate
+      set k = `echo "${i} - 1" | bc `
+      echo "Missing n0r_${i}.gif, copying n0r_${k}.gif"
+      cp n0r_${k}.gif n0r_${i}.gif
     endif
   end
   convert ../test_$$.png n0r_0.gif

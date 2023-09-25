@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        PYTHON_VERSION: ["3.9", "3.9", "3.11"]
+        PYTHON_VERSION: ["3.9", "3.10", "3.11"]
     env:
       PYTHON_VERSION: ${{ matrix.PYTHON_VERSION }}
     steps:
@@ -42,6 +42,7 @@ jobs:
 
     - name: Setup Postgres
       run: |
+        set -e
         git clone --depth 1 https://github.com/akrherz/iem-database.git database
         git clone --depth 1 https://github.com/akrherz/ci_tooling.git .ci_tooling
         . .ci_tooling/postgres.sh
@@ -50,6 +51,7 @@ jobs:
   
     - name: Run commands
       run: |
+        set -e
         python createnc.py
         python ructemps.py
         python n0r_ructemps.py
