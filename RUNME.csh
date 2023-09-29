@@ -21,7 +21,7 @@ echo $$ > /tmp/.nexcomp.lock
 ./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} daa
 # DTA storm total
 ./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} dta
-./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} n1p
-./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} ntp
+#./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} n1p
+#./grid.csh ${yyyy} ${mm} ${dd} ${HH} ${MM} ntp
 
 rm -f /tmp/.nexcomp.lock
