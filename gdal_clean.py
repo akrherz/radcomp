@@ -9,6 +9,8 @@ import numpy
 from osgeo import gdal
 from PIL import Image, PngImagePlugin
 
+gdal.UseExceptions()
+
 
 def main(argv):
     """Our main method"""
