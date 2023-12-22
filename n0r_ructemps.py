@@ -15,6 +15,7 @@ from pyiem.util import logger, utc
 from scipy import interpolate
 
 LOG = logger()
+gdal.UseExceptions()
 
 # n0r_ructemps.py:55: RuntimeWarning: invalid value encountered in less
 #  ifreezing = np.where( T < 279.0, 1., 0.)
