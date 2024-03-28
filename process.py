@@ -1,7 +1,8 @@
 """
-  tmpc in the netcdf file is stored with 0,0 in lower left
-  PIL will have imagery with 0,0 in upper left
+tmpc in the netcdf file is stored with 0,0 in lower left
+PIL will have imagery with 0,0 in upper left
 """
+
 import datetime
 import sys
 

@@ -1,7 +1,8 @@
 """
- Use the RAP model to provide a mask for use in clutter suppression by
- the NEXRAD compositer
+Use the RAP model to provide a mask for use in clutter suppression by
+the NEXRAD compositer
 """
+
 import datetime
 import os
 import tempfile

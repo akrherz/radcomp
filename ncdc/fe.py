@@ -1,6 +1,7 @@
 """
- Proctor the reprocessing of NEXRAD data provide to me by NCDC
+Proctor the reprocessing of NEXRAD data provide to me by NCDC
 """
+
 import datetime
 import subprocess
 

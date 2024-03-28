@@ -1,6 +1,6 @@
 """
- Bootstrap to setup the netcdf data file that will hold our
- RUC temperature analysis for later use by our gridders
+Bootstrap to setup the netcdf data file that will hold our
+RUC temperature analysis for later use by our gridders
 """
 
 import netCDF4

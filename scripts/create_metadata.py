@@ -1,4 +1,4 @@
-""" Create the auxillary JSON metadata that goes with this production
+"""Create the auxillary JSON metadata that goes with this production
 
 {"meta": {"vcp": 212, "product": "N0Q", "valid": "2014-06-25T20:43:55Z",
 "site": "DMX"}}
@@ -28,6 +28,7 @@ information included in the GEMPAK log file
 
 
 """
+
 import datetime
 import json
 import os

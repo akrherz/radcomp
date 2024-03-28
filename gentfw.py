@@ -1,4 +1,4 @@
-""" Generate World files """
+"""Generate World files"""
 
 import datetime
 import sys

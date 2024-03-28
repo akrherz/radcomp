@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """Use GDAL to do some cleaning"""
+
 import datetime
 import os
 import sys

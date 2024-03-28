@@ -1,4 +1,5 @@
 """Generate things."""
+
 import datetime
 import sys
 

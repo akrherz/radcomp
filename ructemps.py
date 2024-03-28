@@ -1,4 +1,5 @@
 """Merge Grib2 RAP temps into netcdf file."""
+
 import datetime
 import os
 import sys
