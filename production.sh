@@ -56,8 +56,8 @@ if [ $7 = "RT" ]; then
 fi
 
 # Now, lets create a raw TIF variant, insert compressed to save some bandwidth
-convert -compress none ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_CLEAN_$$.tif
-convert -compress none ${1}_${netprod}_$$.gif ${1}_${netprod}_$$.tif
+magick -compress none ${1}_N0Q_CLEAN_$$.png ${1}_N0Q_CLEAN_$$.tif
+magick -compress none ${1}_${netprod}_$$.gif ${1}_${netprod}_$$.tif
 
 # Now, lets create a google TIF variant
 gdalwarp  -q -s_srs EPSG:4326 -t_srs EPSG:3857 ${1}_N0Q_CLEAN_$$.tif google_${1}_N0Q_CLEAN_$$.tif

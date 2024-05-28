@@ -49,7 +49,7 @@ EOF
 end
 
 # Convert it to TIF for algorithm work
-convert -compress none $fp n0r_$$_in.tif
+magick -compress none $fp n0r_$$_in.tif
 rm -f $fp
 
 # Now generate NET
@@ -60,7 +60,7 @@ rm -f $fp
 #./gdal-clean.py $$ $1$2$3$4$5
 
 # Lets finish up, finally
-convert -depth 8 n0r_$$_in.tif test_$$.png
+magick -depth 8 n0r_$$_in.tif test_$$.png
 pqinsert -q /home/ldm/ldm.pq -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_${ftime}.png png" test_$$.png
 
 ./gentfw.py ${ftime} n0r

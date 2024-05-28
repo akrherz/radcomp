@@ -36,7 +36,7 @@ EOF
 
 
 # Convert it to TIF for algorithm work
-convert -compress none $fp n0r_$$_in.tif
+magick -compress none $fp n0r_$$_in.tif
 rm -f $fp
 
 # Now generate NET
@@ -64,15 +64,15 @@ EOF
 
 if ($2 == "01" || $2 == "02" || $2 == "03" || $2 == "04" ||  $2 == "10" || $2 == "11" || $2 == "12") then
 	# Convert it to TIF for algorithm work
-	convert -compress none $fp net_$$_in.tif
+	magick -compress none $fp net_$$_in.tif
 	
 
 	python gdal-clean.py $$ $1$2$3$4$5
 
 	# Lets finish up, finally
-	convert -depth 8 n0r_$$_out.tif test_$$.png
+	magick -depth 8 n0r_$$_out.tif test_$$.png
 else
-	convert $fp test_$$.png
+	magick $fp test_$$.png
 endif
 rm -f $fp
 /home/ldm/bin/pqinsert  -p "gis ${routes} ${ftime} gis/images/4326/USCOMP/n0r_ GIS/uscomp/n0r_${ftime}.png png" test_$$.png
