@@ -39,7 +39,7 @@ EOF
 
 if (-e $fp) then
 
-  magick -define PNG:preserve-colormap $fp test_$$.png >& /dev/null
+  python scripts/gif2png.py -i $fp -o test_$$.png
   pqinsert -i -p "gis cr ${ftime} gis/images/4326/USCOMP/${PROD}_ GIS/uscomp/${PROD}_${ftime}.png png" test_$$.png
   magick -compress none test_$$.png test.tif
   geotifcp -e n0r.tfw test.tif test.gtif >& /dev/null

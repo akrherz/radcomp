@@ -1,4 +1,5 @@
 dependencies:
+ - click
  - gdal
  - netCDF4
  - numpy
