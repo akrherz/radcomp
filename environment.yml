@@ -3,6 +3,7 @@ dependencies:
  - gdal
  - netCDF4
  - numpy
+ - psycopg
  - pyiem
  - pygrib
  - requests
