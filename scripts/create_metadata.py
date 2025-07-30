@@ -29,33 +29,33 @@ information included in the GEMPAK log file
 
 """
 
-import datetime
 import json
 import os
 import subprocess
 import sys
 import tempfile
+from datetime import datetime, timezone
 
 
 def main():
     """Go Main Go."""
     sector = sys.argv[1]
-    ts = datetime.datetime(
+    ts = datetime(
         int(sys.argv[2]),
         int(sys.argv[3]),
         int(sys.argv[4]),
         int(sys.argv[5]),
         int(sys.argv[6]),
     )
-    utcnow = datetime.datetime.utcnow()
+    utcnow = datetime.now(timezone.utc)
     seconds = (utcnow - ts).days * 86400.0 + (utcnow - ts).seconds
     if seconds > 300:
         sys.exit()
     prod = sys.argv[7]
     job = sys.argv[9]
 
-    starttime = datetime.datetime.strptime(sys.argv[8], "%Y%m%d%H%M%S")
-    utcnow = datetime.datetime.utcnow()
+    starttime = datetime.strptime(sys.argv[8], "%Y%m%d%H%M%S")
+    utcnow = datetime.now(timezone.utc)
 
     radars = 0
     used = 0

@@ -3,9 +3,9 @@ Use the RAP model to provide a mask for use in clutter suppression by
 the NEXRAD compositer
 """
 
-import datetime
 import os
 import tempfile
+from datetime import timedelta
 
 import numpy as np
 import pygrib
@@ -35,14 +35,14 @@ def get_grid(grb):
 def main():
     """Run for a valid timestamp"""
     utcnow = utc()
-    utcnow += datetime.timedelta(hours=1)
+    utcnow += timedelta(hours=1)
 
     # Search for valid file
     grbs = None
     tmpk_2m = None
     with tempfile.NamedTemporaryFile(delete=False) as tmpfd:
         for fhour in range(10):
-            ts = utcnow - datetime.timedelta(hours=fhour)
+            ts = utcnow - timedelta(hours=fhour)
             uri = ts.strftime(
                 "http://mesonet.agron.iastate.edu/archive/data/%Y/%m/%d/"
                 f"model/rap/%H/rap.t%Hz.awp130f{fhour:03d}.grib2"
