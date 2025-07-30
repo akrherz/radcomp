@@ -46,6 +46,7 @@ def main():
         int(sys.argv[4]),
         int(sys.argv[5]),
         int(sys.argv[6]),
+        tzinfo=timezone.utc,
     )
     utcnow = datetime.now(timezone.utc)
     seconds = (utcnow - ts).days * 86400.0 + (utcnow - ts).seconds
@@ -54,7 +55,9 @@ def main():
     prod = sys.argv[7]
     job = sys.argv[9]
 
-    starttime = datetime.strptime(sys.argv[8], "%Y%m%d%H%M%S")
+    starttime = datetime.strptime(sys.argv[8], "%Y%m%d%H%M%S").replace(
+        tzinfo=timezone.utc
+    )
     utcnow = datetime.now(timezone.utc)
 
     radars = 0
