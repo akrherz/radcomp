@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 """Use GDAL to do some cleaning"""
 
-import datetime
 import os
 import sys
-from zoneinfo import ZoneInfo
+from datetime import datetime, timedelta, timezone
 
 import numpy
 from osgeo import gdal
@@ -16,8 +15,8 @@ gdal.UseExceptions()
 def main(argv):
     """Our main method"""
     pid = argv[1]
-    ts = datetime.datetime.strptime(argv[2], "%Y%m%d%H%M")
-    ts = ts.replace(tzinfo=ZoneInfo("UTC"))
+    ts = datetime.strptime(argv[2], "%Y%m%d%H%M")
+    ts = ts.replace(tzinfo=timezone.utc)
 
     # Open base reflectivity layer (n0r)
     n0r = gdal.Open(f"n0r_{pid}_in.tif", 0)
@@ -27,7 +26,7 @@ def main(argv):
         fn = f"data/ifreeze-{ts:%Y%m%d%H}.tif"
         if os.path.isfile(fn):
             break
-        ts -= datetime.timedelta(hours=1)
+        ts -= timedelta(hours=1)
     ifreeze = gdal.Open(fn, 0)
     ifr = ifreeze.ReadAsArray()
 
@@ -52,7 +51,7 @@ def main(argv):
     png.putpalette(n0rpng.getpalette())
     meta = PngImagePlugin.PngInfo()
     meta.add_text(
-        "gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        "gentime", datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     )
     png.save(f"test_{pid}.png", pnginfo=meta)
 

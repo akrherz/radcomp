@@ -3,8 +3,8 @@ tmpc in the netcdf file is stored with 0,0 in lower left
 PIL will have imagery with 0,0 in upper left
 """
 
-import datetime
 import sys
+from datetime import datetime, timezone
 
 import numpy as np
 from PIL import Image, PngImagePlugin
@@ -54,7 +54,7 @@ def main(argv):
     # This is racy if we have another processing at the same time and are
     # in a sector, like GU, that often produces blank images.
     meta.add_text(
-        "gentime", datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        "gentime", datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     )
     png.save(f"{sector}_N0Q_CLEAN_{job}.png", pnginfo=meta)
 
