@@ -1,11 +1,19 @@
 dependencies:
  - click
- - gdal
- - netCDF4
+ # Temp help depsolver
+ - fiona>=1.10.1
+ # Temp help depsolver
+ - gdal=3.10
+ # Temp help depsolver
+ - hdf5=1.14.6
+ - httpx
+ # Temp help depsolver
+ - libnetcdf>=4.9.2
+ # Temp help depsolver
+ - netCDF4>=1.7.3
  - numpy
  - psycopg
  # Prevent bad solve
  - pyiem>=1.26
  - pygrib
- - requests
  - scipy
