@@ -4,7 +4,8 @@ dependencies:
  - netCDF4
  - numpy
  - psycopg
- - pyiem
+ # Prevent bad solve
+ - pyiem>=1.26
  - pygrib
  - requests
  - scipy
