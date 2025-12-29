@@ -5,10 +5,10 @@ import os
 import sys
 import tempfile
 
+import httpx
 import numpy as np
 import pygrib
 import pyproj
-import requests
 from affine import Affine
 from metpy.units import units
 from pyiem.util import logger, ncopen, utc
@@ -47,7 +47,7 @@ def main(argv):
             )
             LOG.info("requesting %s", uri)
             try:
-                req = requests.get(uri, timeout=10)
+                req = httpx.get(uri, timeout=10)
                 if req.status_code != 200:
                     LOG.info("got status_code %s", req.status_code)
                     continue
