@@ -16,7 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        PYTHON_VERSION: ["3.10", "3.13", "3.14"]
+        # 3.14 is a nightmare yet for deps
+        PYTHON_VERSION: ["3.10", "3.13"]
     env:
       PYTHON_VERSION: ${{ matrix.PYTHON_VERSION }}
     steps:
