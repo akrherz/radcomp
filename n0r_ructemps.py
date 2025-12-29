@@ -7,10 +7,10 @@ import os
 import tempfile
 from datetime import timedelta
 
+import httpx
 import numpy as np
 import pygrib
 import pyproj
-import requests
 from affine import Affine
 from osgeo import gdal, gdalconst
 from pyiem.util import logger, utc
@@ -49,7 +49,7 @@ def main():
             )
             LOG.info("requesting %s", uri)
             try:
-                req = requests.get(uri, timeout=10)
+                req = httpx.get(uri, timeout=10)
                 if req.status_code != 200:
                     LOG.info("got status_code %s", req.status_code)
                     continue
