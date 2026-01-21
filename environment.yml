@@ -1,5 +1,6 @@
 dependencies:
  - click
+ - gdal
  - httpx
  - numpy
  - psycopg
