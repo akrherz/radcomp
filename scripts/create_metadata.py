@@ -88,10 +88,16 @@ def main():
     (tmpfp, tmpfn) = tempfile.mkstemp()
     os.write(tmpfp, json.dumps(res).encode("utf-8"))
     os.close(tmpfp)
-    cmd = (
-        "pqinsert -p 'gis r %s gis/images/4326/%sCOMP/%s_ bogus json' %s"
-    ) % (ts.strftime("%Y%m%d%H%M"), sector, prod.lower(), tmpfn)
-    subprocess.call(cmd, shell=True)
+    cmd = [
+        "pqinsert",
+        "-p",
+        (
+            f"gis r {ts:%Y%m%d%H%M} "
+            f"gis/images/4326/{sector}COMP/{prod.lower()}_ bogus json"
+        ),
+        tmpfn,
+    ]
+    subprocess.run(cmd, check=True)
     os.unlink(tmpfn)
 
 
