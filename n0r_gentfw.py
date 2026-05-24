@@ -1,7 +1,7 @@
 """Generate things."""
 
-import datetime
 import sys
+from datetime import datetime, timezone
 
 from pyiem.database import get_dbconn
 from pyiem.util import logger
@@ -14,8 +14,8 @@ FMT = "%Y-%m-%d %H:%M"
 def main(argv):
     """Go Main Go."""
     v = argv[1]
-    ts = datetime.datetime.strptime(v, "%Y%m%d%H%M")
-    ts = ts.replace(tzinfo=datetime.timezone.utc)
+    ts = datetime.strptime(v, "%Y%m%d%H%M")
+    ts = ts.replace(tzinfo=timezone.utc)
 
     with open(f"n0r{v}.tfw", "w", encoding="utf-8") as fh:
         fh.write("\n".join(["0.01", "0.0", "0.0", "-0.01", "-126.0", "50.0"]))

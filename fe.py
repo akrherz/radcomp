@@ -1,8 +1,8 @@
 """Run timestamps over again."""
 
-import datetime
 import subprocess
 import sys
+from datetime import datetime, timedelta
 
 from pyiem.util import logger
 
@@ -11,9 +11,9 @@ LOG = logger()
 
 def main(argv):
     """Go Main Go."""
-    sts = datetime.datetime(*[int(x) for x in argv[1:6]])
-    ets = datetime.datetime(*[int(x) for x in argv[6:11]])
-    interval = datetime.timedelta(minutes=5)
+    sts = datetime(*[int(x) for x in argv[1:6]])
+    ets = datetime(*[int(x) for x in argv[6:11]])
+    interval = timedelta(minutes=5)
 
     now = sts
     while now < ets:

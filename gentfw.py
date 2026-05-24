@@ -1,7 +1,7 @@
 """Generate World files"""
 
-import datetime
 import sys
+from datetime import datetime, timezone
 
 from pyiem.database import get_dbconn
 from pyiem.util import logger
@@ -33,8 +33,8 @@ def main(argv):
     v = argv[1]
     sector = argv[2]
     sts = argv[3]
-    ts = datetime.datetime.strptime(sts, "%Y%m%d%H%M")
-    ts = ts.replace(tzinfo=datetime.timezone.utc)
+    ts = datetime.strptime(sts, "%Y%m%d%H%M")
+    ts = ts.replace(tzinfo=timezone.utc)
     LOG.info("parsed time: %s", ts)
 
     with open(f"{sector}_N0Q_CLEAN_{v}.tfw", "w", encoding="utf-8") as fh:

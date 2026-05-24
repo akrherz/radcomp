@@ -1,9 +1,9 @@
 """Look for missing recent composites and run again!"""
 
-import datetime
 import subprocess
+from datetime import timedelta
 
-import httpx
+import requests
 from pyiem.util import logger, utc
 
 LOG = logger()
@@ -12,10 +12,10 @@ LOG = logger()
 def main():
     """Go Main Go"""
     sts = utc()
-    sts -= datetime.timedelta(hours=6)
+    sts -= timedelta(hours=6)
     sts = sts.replace(minute=0, second=0, microsecond=0)
-    ets = sts + datetime.timedelta(hours=1)
-    interval = datetime.timedelta(minutes=5)
+    ets = sts + timedelta(hours=1)
+    interval = timedelta(minutes=5)
 
     now = sts
     while now < ets:
@@ -23,7 +23,7 @@ def main():
             "http://mesonet.agron.iastate.edu/archive/data/%Y/%m/%d/"
             "GIS/uscomp/n0r_%Y%m%d%H%M.png"
         )
-        req = httpx.get(uri, timeout=10)
+        req = requests.get(uri, timeout=10)
         if req.status_code != 200:
             LOG.info("Reprocess n0r: %s", now)
             cmd = f"csh n0r.csh {now:%Y %m %d %H %M} n0r 1"
@@ -35,7 +35,7 @@ def main():
                 "http://mesonet.agron.iastate.edu/archive/data/%Y/%m/%d/"
                 f"GIS/{sector.lower()}comp/n0q_%Y%m%d%H%M.png"
             )
-            req = httpx.get(uri, timeout=10)
+            req = requests.get(uri, timeout=10)
             if req.status_code != 200:
                 LOG.info("Reprocess n0q: %s sector: %s", now, sector)
                 cmd = f"sh production.sh {sector} {now:%Y %m %d %H %M} OLD"
