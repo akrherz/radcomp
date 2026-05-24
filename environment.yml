@@ -1,10 +1,10 @@
 dependencies:
  - click
  - gdal
- - httpx
  - numpy
  - psycopg
  # Prevent bad solve
  - pyiem>=1.26
  - pygrib
+ - requests
  - scipy
