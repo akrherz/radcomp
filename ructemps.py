@@ -1,9 +1,9 @@
 """Merge Grib2 RAP temps into netcdf file."""
 
-import datetime
 import os
 import sys
 import tempfile
+from datetime import timedelta
 
 import numpy as np
 import pygrib
@@ -33,14 +33,14 @@ def main(argv):
     """Go Main Go"""
     utcnow = utc()
     hr = 1 if len(argv) == 1 else int(argv[1])
-    utcnow += datetime.timedelta(hours=hr)
+    utcnow += timedelta(hours=hr)
 
     # Search for valid file
     grbs = None
     tmpk_2m = None
     with tempfile.NamedTemporaryFile(delete=False) as tmpfd:
         for fhour in range(10):
-            ts = utcnow - datetime.timedelta(hours=fhour)
+            ts = utcnow - timedelta(hours=fhour)
             uri = ts.strftime(
                 "http://mesonet.agron.iastate.edu/archive/data/%Y/%m/%d/"
                 f"model/rap/%H/rap.t%Hz.awp130f{fhour:03d}.grib2"

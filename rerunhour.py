@@ -1,7 +1,7 @@
 """Look for missing recent composites and run again!"""
 
-import datetime
 import subprocess
+from datetime import timedelta
 
 import requests
 from pyiem.util import logger, utc
@@ -12,10 +12,10 @@ LOG = logger()
 def main():
     """Go Main Go"""
     sts = utc()
-    sts -= datetime.timedelta(hours=6)
+    sts -= timedelta(hours=6)
     sts = sts.replace(minute=0, second=0, microsecond=0)
-    ets = sts + datetime.timedelta(hours=1)
-    interval = datetime.timedelta(minutes=5)
+    ets = sts + timedelta(hours=1)
+    interval = timedelta(minutes=5)
 
     now = sts
     while now < ets:
