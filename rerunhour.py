@@ -26,7 +26,7 @@ def main():
         req = requests.get(uri, timeout=10)
         if req.status_code != 200:
             LOG.info("Reprocess n0r: %s", now)
-            cmd = f"csh n0r.csh {now:%Y %m %d %H %M} n0r 1"
+            cmd = f"bash n0r.sh {now:%Y %m %d %H %M} n0r 1"
             subprocess.call(cmd, shell=True)
 
         # Need to ensure all sectors exist so to keep tilecache happy

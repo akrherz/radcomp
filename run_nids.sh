@@ -1,7 +1,9 @@
+#!/bin/bash
 #set -x
 
 export YYYY="$1"
-export YY="`echo $1 | cut -c 3-4`"
+yy=$(echo "$1" | cut -c 3-4)
+export YY="$yy"
 export MM="$2"
 export DD="$3"
 export HH="$4"
@@ -11,7 +13,7 @@ export PROD="$7"
 export SECTOR="$8"
 
 
-if [ "${SECTOR}" == "US" ]; 
+if [ "${SECTOR}" == "US" ];
     then
     GRDAREA="23.01;-126.00;50.00;-65.01"
     KXKY="12200;5400"
@@ -61,11 +63,11 @@ export GEMERR=gempak/error
 export RAD=/mnt/nexrad3/nexrad/
 export GEMPDF=gempak/pdf
 
-./bin/nex2img << EOF > logs/nex2img_${SECTOR}_${PROD}_${JOB}.log
+./bin/nex2img << EOF > "logs/nex2img_${SECTOR}_${PROD}_${JOB}.log"
  GRDAREA  = ${GRDAREA}
  PROJ     = CED
  KXKY     = ${KXKY}
- CPYFIL   =  
+ CPYFIL   =
  GFUNC    = ${REALPROD}
  RADTIM   = ${YY}${MM}${DD}/${HH}${MI}
 RADDUR   = 25
@@ -80,4 +82,4 @@ LUTFIL   = ${LUTFIL}
  exit
 EOF
 
-rm -f ${SECTOR}_${PROD}_LOCK_${JOB}
+rm -f "${SECTOR}_${PROD}_LOCK_${JOB}"

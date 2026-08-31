@@ -46,7 +46,7 @@ jobs:
           python=${{ env.PYTHON_VERSION }}
         environment-name: prod
         cache-environment: true
-  
+
     - name: Run commands
       run: |
         set -e

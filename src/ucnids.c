@@ -3,7 +3,7 @@
  *
  *   syntax: ucnids [options] ifile ofile
  *   ifile and ofile can be "-" to use standard input and output
- *   options: 
+ *   options:
  *     none - output uncompressed product with NOAAPORT CCB
  *     -c   - output with standard WMO CCB
  *     -r   - output with strippped WMO CCB (RPS output)
@@ -97,7 +97,7 @@ int main( int argc, char **argv ){
             out = 4;
             off++;
         }
-        else 
+        else
             break;
     }
     if( argc == 1+off || argv[1+off][0] == '-' )
@@ -151,16 +151,16 @@ int main( int argc, char **argv ){
     zs.total_out = 4000;
 
     for( i = 0; i < 1000 && (iret != Z_STREAM_END || zs.total_out == 4000); i++ ){
-        /* 
+        /*
            Read in a block of data
            */
         floc = ftell( ifile );
-        insize = fread( inbuf+off, 1, inlen-off, ifile ); 
+        insize = fread( inbuf+off, 1, inlen-off, ifile );
         if( verb == 2 ) fprintf( stderr, "Read: %X %d\n", floc, insize );
         if( off == 0 && insize == 0 ) break;
         inbytes+=insize;
         len = insize + off;
-        /* 
+        /*
            Check for 789C byte sequence denoting zlib compression
            If data are not compressed, pass through raw data
            */
@@ -216,8 +216,8 @@ int main( int argc, char **argv ){
             if( iret == 1 ) strcpy( str, "END" );
             if( iret < 0 ) strcpy( str, "ERR" );
             cmp = 1;
-            if( verb == 2 ) fprintf( stderr, "Inf: %s -- %d %d %d -- 10000 %d %d -- %2X %2X -- %2X %2X\n", 
-                    str, len, zs.avail_in, zs.total_in, zs.avail_out, zs.total_out, 
+            if( verb == 2 ) fprintf( stderr, "Inf: %s -- %d %d %d -- 10000 %d %d -- %2X %2X -- %2X %2X\n",
+                    str, len, zs.avail_in, zs.total_in, zs.avail_out, zs.total_out,
                     inbuf[0], inbuf[1], outbuf[0], outbuf[1] );
             off = zs.avail_in;
             // If return bad, assume it's uncompressed with fake positive
@@ -236,43 +236,43 @@ int main( int argc, char **argv ){
             off = 0;
             if( verb == 2 ) fprintf( stderr, "Cpy: %d - %2X %2X\n", len, inbuf[0], inbuf[1] );
         }
-        /*  
+        /*
             Process header data for first block
             WMO CCB output
             */
         if( i == 0 && out == 1 ){
             fwrite( "\001\r\r\n001\r\r\n", 1, 10, ofile );
             fwrite( outbuf+24, 1, 10000-zs.avail_out-24, ofile );
-        } 
+        }
         /*
            WXP header output
            */
         else if( i == 0 && out == 2 ){
             fprintf( ofile, "** %18.18s ***\n%s", wmo, awip );
             fwrite( outbuf+54, 1, 10000-zs.avail_out-54, ofile );
-        } 
+        }
         /*
            Raw NIDS output
            */
         else if( i == 0 && out == 3 ){
             fwrite( outbuf+54, 1, 10000-zs.avail_out-54, ofile );
             outbytes+=10000-zs.avail_out-54;
-        } 
+        }
         /*
            Stripped WMO CCB output
            */
         else if( i == 0 && out == 4 ){
             fwrite( outbuf+24, 1, 10000-zs.avail_out-24, ofile );
-        } 
+        }
         /*
            Raw output with NOAAPORT CCB
            */
         else {
             fwrite( outbuf, 1, 10000-zs.avail_out, ofile );
             outbytes+=10000-zs.avail_out;
-        } 
+        }
         /*
-           Move remaining data that still is compressed and prepared 
+           Move remaining data that still is compressed and prepared
            for next inflate
            */
         if( verb == 2 ) printf( "move %d\n", off );

@@ -56,7 +56,7 @@
 ! S. Jacobs/NCEP	12/07	Removed CAPE-CINH and LIX-PWX
 ! S. Jacobs/NCEP	12/07	Added CAPE, CINH, LI and TPW
 ! T. Piper/SAIC		03/08	Updated with new Alaska and Hawaii mosaics
-! G. Grosshans/SPC	04/08	Added GOES SOUNDER 
+! G. Grosshans/SPC	04/08	Added GOES SOUNDER
 ! S. Jacobs/NCEP	12/08	Added GOES13 entries - copied from GOES12
 ! S. Jacobs/NCEP	03/09	Added BLENDED_TPW entries
 ! X. Guo/CWS		04/10   Added 94 product
@@ -143,14 +143,14 @@ GOES13               IR3           0    255    180      4      2 watvap.tbl
 GOES13               IR4           0    255    180      8      2 GRAY
 GOES13               IR5           0    255    180     16      2 GRAY
 GOES13               IR4           0    255    180    128      2 GRAY
-GOES13 14.06         SOUNDER       0    255    180     43      1 GRAY 
-GOES13 11.03         SOUNDER       0    255    180     48      1 GRAY 
-GOES13 7.43          SOUNDER       0    255    180     50      1 GRAY 
-GOES13 7.02          SOUNDER       0    255    180     51      1 GRAY 
-GOES13 6.51          SOUNDER       0    255    180     52      1 GRAY 
-GOES13 4.45          SOUNDER       0    255    180     55      1 GRAY 
-GOES13 3.98          SOUNDER       0    255    180     57      1 GRAY 
-GOES13 SVIS          SOUNDER       0    255    180     59      1 GRAY 
+GOES13 14.06         SOUNDER       0    255    180     43      1 GRAY
+GOES13 11.03         SOUNDER       0    255    180     48      1 GRAY
+GOES13 7.43          SOUNDER       0    255    180     50      1 GRAY
+GOES13 7.02          SOUNDER       0    255    180     51      1 GRAY
+GOES13 6.51          SOUNDER       0    255    180     52      1 GRAY
+GOES13 4.45          SOUNDER       0    255    180     55      1 GRAY
+GOES13 3.98          SOUNDER       0    255    180     57      1 GRAY
+GOES13 SVIS          SOUNDER       0    255    180     59      1 GRAY
 GOES13 LI            SOUNDER       0    255    180     16      1 GRAY
 GOES13 PW            SOUNDER       0    255    180     17      1 GRAY
 GOES13 SFCSKIN T     SOUNDER       0    255    180     18      1 GRAY
@@ -171,14 +171,14 @@ GOES12               IR3           0    255     78      4      2 watvap.tbl
 GOES12               IR4           0    255     78      8      2 GRAY
 GOES12               IR5           0    255     78     16      2 GRAY
 GOES12               IR4           0    255     78    128      2 GRAY
-GOES12 14.06         SOUNDER       0    255     78     43      1 GRAY 
-GOES12 11.03         SOUNDER       0    255     78     48      1 GRAY 
-GOES12 7.43          SOUNDER       0    255     78     50      1 GRAY 
-GOES12 7.02          SOUNDER       0    255     78     51      1 GRAY 
-GOES12 6.51          SOUNDER       0    255     78     52      1 GRAY 
-GOES12 4.45          SOUNDER       0    255     78     55      1 GRAY 
-GOES12 3.98          SOUNDER       0    255     78     57      1 GRAY 
-GOES12 SVIS          SOUNDER       0    255     78     59      1 GRAY 
+GOES12 14.06         SOUNDER       0    255     78     43      1 GRAY
+GOES12 11.03         SOUNDER       0    255     78     48      1 GRAY
+GOES12 7.43          SOUNDER       0    255     78     50      1 GRAY
+GOES12 7.02          SOUNDER       0    255     78     51      1 GRAY
+GOES12 6.51          SOUNDER       0    255     78     52      1 GRAY
+GOES12 4.45          SOUNDER       0    255     78     55      1 GRAY
+GOES12 3.98          SOUNDER       0    255     78     57      1 GRAY
+GOES12 SVIS          SOUNDER       0    255     78     59      1 GRAY
 GOES12 LI            SOUNDER       0    255     78     16      1 GRAY
 GOES12 PW            SOUNDER       0    255     78     17      1 GRAY
 GOES12 SFCSKIN T     SOUNDER       0    255     78     18      1 GRAY
@@ -209,14 +209,14 @@ GOES15               IR3           0    255    184      4      2 watvap.tbl
 GOES15               IR4           0    255    184      8      2 GRAY
 GOES15               IR5           0    255    184     16      2 GRAY
 GOES15               IR4           0    255    184    128      2 GRAY
-GOES15 14.06         SOUNDER       0    255    184     43      1 GRAY 
-GOES15 11.03         SOUNDER       0    255    184     48      1 GRAY 
-GOES15 7.43          SOUNDER       0    255    184     50      1 GRAY 
-GOES15 7.02          SOUNDER       0    255    184     51      1 GRAY 
-GOES15 6.51          SOUNDER       0    255    184     52      1 GRAY 
-GOES15 4.45          SOUNDER       0    255    184     55      1 GRAY 
-GOES15 3.98          SOUNDER       0    255    184     57      1 GRAY 
-GOES15 SVIS          SOUNDER       0    255    184     59      1 GRAY 
+GOES15 14.06         SOUNDER       0    255    184     43      1 GRAY
+GOES15 11.03         SOUNDER       0    255    184     48      1 GRAY
+GOES15 7.43          SOUNDER       0    255    184     50      1 GRAY
+GOES15 7.02          SOUNDER       0    255    184     51      1 GRAY
+GOES15 6.51          SOUNDER       0    255    184     52      1 GRAY
+GOES15 4.45          SOUNDER       0    255    184     55      1 GRAY
+GOES15 3.98          SOUNDER       0    255    184     57      1 GRAY
+GOES15 SVIS          SOUNDER       0    255    184     59      1 GRAY
 GOES15 LI            SOUNDER       0    255    184     16      1 GRAY
 GOES15 PW            SOUNDER       0    255    184     17      1 GRAY
 GOES15 SFCSKIN T     SOUNDER       0    255    184     18      1 GRAY
@@ -742,7 +742,7 @@ DMSP-PWAT            PRXX          0    255     94  2**28      1 micropw.tbl
 FIRE_WEATHER_PROD    FIRE_WX       0    255     78 -2**31      1 wfabba.tbl
 !------------------------------------------------------------------------------
 ! Unidata GINI composite RADAR (ranges as defined in unidata/nex2gini.tbl)
-RADAR                N0Q           0    255     11  2**32      1 upc_n0q.tbl 
+RADAR                N0Q           0    255     11  2**32      1 upc_n0q.tbl
 RADAR                DVL           0    255     11  2**33      1 upc_dvl.tbl
 RADAR                EET           0     72     11  2**25      1 upc_eet70.tbl
 RADAR                N0Z           0    255     11  2**24      1 osf_ref16.tbl
@@ -754,7 +754,7 @@ RADAR                N1P           0    255     11  2**29      1 upc_n1p.tbl
 RADAR                NTP           0    255     11  2**30      1 upc_ntp.tbl
 !------------------------------------------------------------------------------
 ! NEXRAD High-Res Level III
-LOCAL  1 KM  BASE    REFLECT       0    255      7     94      1 upc_n0q.tbl 
+LOCAL  1 KM  BASE    REFLECT       0    255      7     94      1 upc_n0q.tbl
 LOCAL .25 KM  RADIAL VELOCITY      0    255      7     99      1 upc_vel256.tbl
 LOCAL  1 KM  DIGITAL VIL           0    255      7    134      1 upc_dvl.tbl
 LOCAL  1 KM  ECHO    TOPS          0    199      7    135      1 upc_eet.tbl
@@ -767,16 +767,16 @@ LOCAL .30 KM  BASE   TDWR_REFLECT  0    255      7    186      1 upc_n0q.tbl
 LOCAL .30 KM  BASE   TDWR_REFLECT  0     15      7    187      1 osf_ref16.tbl
 !------------------------------------------------------------------------------
 ! NEXRAD Dual-pol
-LOCAL .25 KM  ZDR     DUAL-POL     0    255      7    159      1 upc_zdr.tbl 
-LOCAL .25 KM  DCC     DUAL-POL     0    255      7    161      1 upc_dcc.tbl 
-LOCAL .25 KM  KDP     DUAL-POL     0    255      7    163      1 upc_kdp.tbl 
-LOCAL .25 KM  DHC     DUAL-POL     0    150      7    165      1 upc_dhc.tbl 
-LOCAL   2 KM  OHA     DUAL-POL     0     16      7    169      1 upc_st.tbl 
-LOCAL .25 KM  DAA     DUAL-POL     0    255      7    170      1 upc_dst.tbl 
-LOCAL   2 KM  PTA     DUAL-POL     0     16      7    171      1 upc_st.tbl 
-LOCAL .25 KM  DTA     DUAL-POL     0    255      7    172      1 upc_dst.tbl 
-LOCAL .25 KM  DUA     DUAL-POL     0    255      7    173      1 upc_dst.tbl 
-LOCAL .25 KM  DOD     DUAL-POL     0    255      7    174      1 upc_od.tbl 
-LOCAL .25 KM  DSD     DUAL-POL     0    255      7    175      1 upc_od.tbl 
-LOCAL .25 KM  INST    PRECIP_RT    0    255      7    176      1 upc_dpr.tbl 
-LOCAL .25 KM  HHC     DUAL-POL     0    150      7    177      1 upc_dhc.tbl 
+LOCAL .25 KM  ZDR     DUAL-POL     0    255      7    159      1 upc_zdr.tbl
+LOCAL .25 KM  DCC     DUAL-POL     0    255      7    161      1 upc_dcc.tbl
+LOCAL .25 KM  KDP     DUAL-POL     0    255      7    163      1 upc_kdp.tbl
+LOCAL .25 KM  DHC     DUAL-POL     0    150      7    165      1 upc_dhc.tbl
+LOCAL   2 KM  OHA     DUAL-POL     0     16      7    169      1 upc_st.tbl
+LOCAL .25 KM  DAA     DUAL-POL     0    255      7    170      1 upc_dst.tbl
+LOCAL   2 KM  PTA     DUAL-POL     0     16      7    171      1 upc_st.tbl
+LOCAL .25 KM  DTA     DUAL-POL     0    255      7    172      1 upc_dst.tbl
+LOCAL .25 KM  DUA     DUAL-POL     0    255      7    173      1 upc_dst.tbl
+LOCAL .25 KM  DOD     DUAL-POL     0    255      7    174      1 upc_od.tbl
+LOCAL .25 KM  DSD     DUAL-POL     0    255      7    175      1 upc_od.tbl
+LOCAL .25 KM  INST    PRECIP_RT    0    255      7    176      1 upc_dpr.tbl
+LOCAL .25 KM  HHC     DUAL-POL     0    150      7    177      1 upc_dhc.tbl
