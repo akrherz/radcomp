@@ -17,7 +17,7 @@ def main(argv):
     ts = datetime.strptime(v, "%Y%m%d%H%M")
     ts = ts.replace(tzinfo=timezone.utc)
 
-    with open(f"n0r{v}.tfw", "w", encoding="utf-8") as fh:
+    with open(f"n0r_{v}.tfw", "w", encoding="utf-8") as fh:
         fh.write("\n".join(["0.01", "0.0", "0.0", "-0.01", "-126.0", "50.0"]))
 
     if argv[2] != "n0r":
