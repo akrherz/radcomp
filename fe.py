@@ -20,10 +20,10 @@ def main(argv):
         LOG.info(now)
         dt = now.strftime("%Y %m %d %H %M")
         for sector in ["PR", "US", "AK", "HI", "GU"]:
-            cmd = ["bash", "production.sh", sector, dt, "A"]
+            cmd = ["bash", "production.sh", sector, *dt.split(), "A"]
             subprocess.call(cmd)
         # N0R is generated off of N0Q
-        cmd = ["bash", "n0r.sh", dt, "n0r", "1"]
+        cmd = ["bash", "n0r.sh", *dt.split(), "n0r", "1"]
         subprocess.call(cmd)
         now += interval
 

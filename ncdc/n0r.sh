@@ -4,7 +4,7 @@
 
 export RAD=/tmp/nexrad/
 
-yy=$(echo "$1" | cut -c 1-2)
+yy=$(echo "$1" | cut -c 3-4)
 gtime="$yy$2$3/$4$5"
 ftime="$1$2$3$4$5"
 
@@ -12,8 +12,10 @@ lut="iem_n0r.tbl"
 radmode="PC"
 routes="a"
 fp="radar_$$.gif"
+n0r_log=$(mktemp /tmp/nex2gini_n0r.XXXXXX.log) || exit 1
+trap 'rm -f "$n0r_log"' EXIT
 
-nex2img << EOF > /tmp/nex2gini_n0r.log
+nex2img << EOF > "$n0r_log"
  GRDAREA  = 24.02;-126.00;50.00;-66.02
  PROJ     = CED
  KXKY     = 6000;2600

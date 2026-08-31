@@ -63,12 +63,12 @@ if [ "$realtime" == "t" ]; then
   # Save a file locally for rotation
   cd tmp/ || exit 1
   for i in 10 9 8 7 6 5 4 3 2 1 0; do
-    j=$(echo "${i} + 1" | bc)
+      j=$((i + 1))
     if [ -f n0r_${i}.gif ]; then
       mv "n0r_${i}.gif" "n0r_${j}.gif"
     else
       # We have a missing file, so try something desperate
-      k=$(echo "${i} - 1" | bc)
+        k=$((i - 1))
       echo "Missing n0r_${i}.gif, copying n0r_${k}.gif"
       cp "n0r_${k}.gif" n0r_${i}.gif
     fi
