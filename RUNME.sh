@@ -16,10 +16,10 @@ fi
 echo $$ > /tmp/.nexcomp.lock
 
 # N0R created via N0Q via N0B
-./n0r.csh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}"
+bash n0r.sh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}"
 # DAA one hour
-./grid.csh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}" daa
+bash grid.sh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}" daa
 # DTA storm total
-./grid.csh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}" dta
+bash grid.sh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}" dta
 
 rm -f /tmp/.nexcomp.lock
