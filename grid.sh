@@ -1,24 +1,24 @@
-#!/bin/csh
+#!/bin/bash
 
-setenv RAD /mnt/nexrad3/nexrad/
-setenv PATH "${PATH}:/home/meteor_ldm/bin"
-setenv PROD ${6}
-setenv NA_OS linux64
-setenv GEMTBL gempak/tables
-setenv GEMPARM gempak/param
-setenv GEMPAKHOME gempak
-setenv CONFIGDIR gempak/config
-setenv GEMERR gempak/error
-setenv GEMPDF gempak/pdf
+export RAD=/mnt/nexrad3/nexrad/
+export PATH="${PATH}:/home/meteor_ldm/bin"
+export PROD=${6}
+export NA_OS=linux64
+export GEMTBL=gempak/tables
+export GEMPARM=gempak/param
+export GEMPAKHOME=gempak
+export CONFIGDIR=gempak/config
+export GEMERR=gempak/error
+export GEMPDF=gempak/pdf
 
 
-set yy="`echo $1 | cut -c 3-4`"
-set gtime="$yy$2$3/$4$5"
-set ftime="$1$2$3$4$5"
+yy=$(echo "$1" | cut -c 3-4)
+gtime="$yy$2$3/$4$5"
+ftime="$1$2$3$4$5"
 
-set fp="radar_$$.gif"
+fp="radar_$$.gif"
 
-./bin/nex2img << EOF > logs/nex2img_${PROD}.log
+./bin/nex2img << EOF > "logs/nex2img_${PROD}.log"
 GRDAREA  = 24.02;-126.00;50.00;-66.02
 PROJ     = CED
 KXKY     = 6000;2600
@@ -37,7 +37,7 @@ run
 exit
 EOF
 
-if (-e $fp) then
+if [ -e "$fp" ]; then
 
   python scripts/gif2png.py -i $fp -o test_$$.png
   pqinsert -i -p "gis cr ${ftime} gis/images/4326/USCOMP/${PROD}_ GIS/uscomp/${PROD}_${ftime}.png png" test_$$.png
@@ -49,6 +49,6 @@ if (-e $fp) then
   pqinsert -i -p "gis r ${ftime} gis/images/4326/USCOMP/${PROD}_ bogus gtif.Z" test.gtif.Z
   rm test.*tif* >& /dev/null
 
-endif
+fi
 
 rm test_$$.png radar_$$.gif test_$$.gif >& /dev/null

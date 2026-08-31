@@ -16,4 +16,3 @@
 
 # Check our work
 22 * * * * cd radcomp; python rerunhour.py
-

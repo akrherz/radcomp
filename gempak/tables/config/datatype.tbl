@@ -5,10 +5,10 @@
 !* characteristics are the directory path to the data, the template	*
 !* used to generate the output filenames, the category and subcategory	*
 !* of the data, and the default number of frames, time line range,	*
-!* time interval and time matching scheme for NMAP.			* 
+!* time interval and time matching scheme for NMAP.			*
 !*									*
 !* This table along with others are used to control NMAP2 data access	*
-!* and display options.  See the NMAP help file				* 
+!* and display options.  See the NMAP help file				*
 !* $NAWIPS/help/nmap/DataAccess_Conf.hlp for more information about how *
 !* tables are configured for NMAP2.					*
 !*									*
@@ -74,10 +74,10 @@
 !*		the time binning. BH is the hours and BM is the minutes.*
 !*		(:BM is optional)					*
 !*	AH:AM	Time in hours:minutes after frame time to include in the*
-!*		time binning.  AH is the hours and AM is the minutes.	*	
+!*		time binning.  AH is the hours and AM is the minutes.	*
 !*		(:AM is optional)					*
 !*	MSTRCT	Flag for plotting only the most recent:  "ON" or "OFF"; *
-!*		default is "OFF".					* 
+!*		default is "OFF".					*
 !*									*
 !**									*
 !* Log:									*
