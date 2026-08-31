@@ -24,8 +24,8 @@ fi
 # Our Job ID will be $$
 touch "${1}_N0Q_LOCK_$$"
 touch "${1}_${netprod}_LOCK_$$"
-sh run_nids.sh "$YYYY" "$MM" "$DD" "$HH" "$MI" $$ N0Q "$1" &
-sh run_nids.sh "$YYYY" "$MM" "$DD" "$HH" "$MI" $$ "$netprod" "$1" &
+bash run_nids.sh "$YYYY" "$MM" "$DD" "$HH" "$MI" $$ N0Q "$1" &
+bash run_nids.sh "$YYYY" "$MM" "$DD" "$HH" "$MI" $$ "$netprod" "$1" &
 
 # we need to wait for the above to finish
 while [ -e "${1}_N0Q_LOCK_$$" ]; do

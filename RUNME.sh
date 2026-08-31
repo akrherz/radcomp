@@ -6,14 +6,23 @@ dd=$(date --date '1 minute' -u +'%d')
 HH=$(date --date '1 minute' -u +'%H')
 MM=$(date --date '1 minute' -u +'%M')
 
-if [ -e /tmp/.nexcomp.lock ]; then
-  echo "Lock file exists! Evasive Manuver Rikker Gamma"
-  kill -9 "$(cat /tmp/.nexcomp.lock)"
-  killall nex2img
-  rm -f /tmp/.nexcomp.lock
+lock_dir=/tmp/.nexcomp.lock
+lock_pid_file=${lock_dir}/pid
+
+cleanup() {
+  if [[ -d "${lock_dir}" && -f "${lock_pid_file}" ]] && [[ "$(cat "${lock_pid_file}")" == "$$" ]]; then
+    rm -f "${lock_pid_file}"
+    rmdir "${lock_dir}"
+  fi
+}
+
+if ! mkdir "${lock_dir}" 2>/dev/null; then
+  echo "Lock directory exists; another RUNME.sh process is active"
+  exit 1
 fi
 
-echo $$ > /tmp/.nexcomp.lock
+printf '%s\n' "$$" > "${lock_pid_file}"
+trap cleanup EXIT HUP INT TERM
 
 # N0R created via N0Q via N0B
 bash n0r.sh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}"
@@ -21,5 +30,3 @@ bash n0r.sh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}"
 bash grid.sh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}" daa
 # DTA storm total
 bash grid.sh "${yyyy}" "${mm}" "${dd}" "${HH}" "${MM}" dta
-
-rm -f /tmp/.nexcomp.lock
