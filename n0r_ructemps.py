@@ -47,19 +47,23 @@ def main():
             if fn is None:
                 LOG.info("DL of %s failed", ppath)
                 continue
-            with pygrib.open(fn) as grib:
-                grbs = grib.select(name="2 metre temperature")
-                src_crs = grbs[0].projparams
-                xaxis, yaxis = get_grid(grbs[0])
-                src_aff = Affine(
-                    grbs[0]["DxInMetres"],
-                    0.0,
-                    xaxis[0],
-                    0.0,
-                    -grbs[0]["DyInMetres"],
-                    yaxis[-1],
-                )
-                tmpk_2m = grbs[0].values
+            try:
+                with pygrib.open(fn) as grib:
+                    grbs = grib.select(name="2 metre temperature")
+                    src_crs = grbs[0].projparams
+                    xaxis, yaxis = get_grid(grbs[0])
+                    src_aff = Affine(
+                        grbs[0]["DxInMetres"],
+                        0.0,
+                        xaxis[0],
+                        0.0,
+                        -grbs[0]["DyInMetres"],
+                        yaxis[-1],
+                    )
+                    tmpk_2m = grbs[0].values
+            except Exception as e:
+                LOG.info("Failed to read %s: %s", ppath, e)
+                continue
         if grbs:
             break
 
