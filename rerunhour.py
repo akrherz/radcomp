@@ -3,8 +3,7 @@
 import subprocess
 from datetime import timedelta
 
-import requests
-from pyiem.util import logger, utc
+from pyiem.util import archive_fetch, logger, utc
 
 LOG = logger()
 
@@ -19,27 +18,45 @@ def main():
 
     now = sts
     while now < ets:
-        uri = now.strftime(
-            "http://mesonet.agron.iastate.edu/archive/data/%Y/%m/%d/"
-            "GIS/uscomp/n0r_%Y%m%d%H%M.png"
-        )
-        req = requests.get(uri, timeout=10)
-        if req.status_code != 200:
-            LOG.info("Reprocess n0r: %s", now)
-            cmd = f"bash n0r.sh {now:%Y %m %d %H %M} n0r 1"
-            subprocess.call(cmd, shell=True)
+        ppath = now.strftime("%Y/%m/%d/GIS/uscomp/n0r_%Y%m%d%H%M.png")
+        LOG.info("Checking %s", ppath)
+        with archive_fetch(ppath, method="head") as fh:
+            if fh is None:
+                LOG.warning("Processing %s", ppath)
+                cmd = [
+                    "/usr/bin/bash",
+                    "n0r.sh",
+                    f"{now:%Y}",
+                    f"{now:%m}",
+                    f"{now:%d}",
+                    f"{now:%H}",
+                    f"{now:%M}",
+                    "n0r",
+                    "1",
+                ]
+                subprocess.call(cmd)
 
         # Need to ensure all sectors exist so to keep tilecache happy
         for sector in ["US", "PR", "AK", "HI", "GU"]:
-            uri = now.strftime(
-                "http://mesonet.agron.iastate.edu/archive/data/%Y/%m/%d/"
-                f"GIS/{sector.lower()}comp/n0q_%Y%m%d%H%M.png"
+            ppath = now.strftime(
+                f"%Y/%m/%d/GIS/{sector.lower()}comp/n0q_%Y%m%d%H%M.png"
             )
-            req = requests.get(uri, timeout=10)
-            if req.status_code != 200:
-                LOG.info("Reprocess n0q: %s sector: %s", now, sector)
-                cmd = f"sh production.sh {sector} {now:%Y %m %d %H %M} OLD"
-                subprocess.call(cmd, shell=True)
+            LOG.info("Checking %s", ppath)
+            with archive_fetch(ppath, method="head") as fh:
+                if fh is None:
+                    LOG.warning("Reprocess n0q: %s sector: %s", now, sector)
+                    cmd = [
+                        "/usr/bin/bash",
+                        "production.sh",
+                        sector,
+                        f"{now:%Y}",
+                        f"{now:%m}",
+                        f"{now:%d}",
+                        f"{now:%H}",
+                        f"{now:%M}",
+                        "OLD",
+                    ]
+                    subprocess.call(cmd)
 
         now += interval
 
