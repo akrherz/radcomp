@@ -3,8 +3,8 @@ dependencies:
  - gdal
  - numpy
  - psycopg
- # Prevent bad solve
- - pyiem>=1.26
+ # Latest and greatest
+ - pyiem>=1.28.1
  - pygrib
  - requests
  - scipy
