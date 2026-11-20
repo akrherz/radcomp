@@ -1,17 +1,14 @@
 """Merge Grib2 RAP temps into netcdf file."""
 
-import os
 import sys
-import tempfile
 from datetime import timedelta
 
 import numpy as np
 import pygrib
 import pyproj
-import requests
 from affine import Affine
 from metpy.units import units
-from pyiem.util import logger, ncopen, utc
+from pyiem.util import archive_fetch, logger, ncopen, utc
 from rasterio.warp import Resampling, reproject
 
 LOG = logger()
@@ -38,40 +35,29 @@ def main(argv):
     # Search for valid file
     grbs = None
     tmpk_2m = None
-    with tempfile.NamedTemporaryFile(delete=False) as tmpfd:
-        for fhour in range(10):
-            ts = utcnow - timedelta(hours=fhour)
-            uri = ts.strftime(
-                "http://mesonet.agron.iastate.edu/archive/data/%Y/%m/%d/"
-                f"model/rap/%H/rap.t%Hz.awp130f{fhour:03d}.grib2"
-            )
-            LOG.info("requesting %s", uri)
-            try:
-                req = requests.get(uri, timeout=10)
-                if req.status_code != 200:
-                    LOG.info("got status_code %s", req.status_code)
-                    continue
-                with open(tmpfd.name, "wb") as fh:
-                    fh.write(req.content)
-                grib = pygrib.open(tmpfd.name)
-                grbs = grib.select(name="2 metre temperature")
-                src_crs = grbs[0].projparams
-                xaxis, yaxis = get_grid(grbs[0])
-                src_aff = Affine(
-                    grbs[0]["DxInMetres"],
-                    0.0,
-                    xaxis[0],
-                    0.0,
-                    -grbs[0]["DyInMetres"],
-                    yaxis[-1],
-                )
-                tmpk_2m = grbs[0].values
-            except Exception as exp:
-                LOG.info(exp)
+    for fhour in range(10):
+        ts = utcnow - timedelta(hours=fhour)
+        ppath = ts.strftime(
+            f"%Y/%m/%d/model/rap/%H/rap.t%Hz.awp130f{fhour:03d}.grib2"
+        )
+        with archive_fetch(ppath) as fn:
+            if fn is None:
                 continue
-            if grbs:
-                break
-    os.unlink(tmpfd.name)
+            grib = pygrib.open(fn)
+            grbs = grib.select(name="2 metre temperature")
+            src_crs = grbs[0].projparams
+            xaxis, yaxis = get_grid(grbs[0])
+            src_aff = Affine(
+                grbs[0]["DxInMetres"],
+                0.0,
+                xaxis[0],
+                0.0,
+                -grbs[0]["DyInMetres"],
+                yaxis[-1],
+            )
+            tmpk_2m = grbs[0].values
+        if grbs:
+            break
 
     if tmpk_2m is None:
         LOG.warning("No data found for %s", utcnow)
