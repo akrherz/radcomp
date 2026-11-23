@@ -44,7 +44,11 @@ def main(argv):
             if fn is None:
                 continue
             grib = pygrib.open(fn)
-            grbs = grib.select(name="2 metre temperature")
+            try:
+                grbs = grib.select(name="2 metre temperature")
+            except ValueError:  # what is raised when select fails
+                LOG.info("%s found no 2m temp", ppath)
+                continue
             src_crs = grbs[0].projparams
             xaxis, yaxis = get_grid(grbs[0])
             src_aff = Affine(
